@@ -3,7 +3,29 @@ img{
     max-height:100px;
 }
 .divs{
-    border: 2px solid grey;
+
+    border: 1px solid grey;
     max-width: 300px;
     margin-bottom: 10px;
+    padding: 10px;
+}
+.maindiv{
+    display: flex;
+    width: 70%;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
+.maindiv form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 30px;
+}
+
+.div2{
+    width: 50%;
+}
+li{
+    padding: auto;
 }

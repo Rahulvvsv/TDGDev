@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL,getBlob } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -34,19 +34,27 @@ export const fetchData = async () => {
 
 export const upLoadData = async (formData) =>{
         try {
-      // Upload image to Firebase Storage
-      const imageRef = ref(storage, `images/${formData.image.name}`);
-      await uploadBytes(imageRef, formData.image);
+          const imageUrls = [];
 
-      // Add data (including image URL) to Firebase Firestore
-      const docRef = await addDoc(collection(db, 'formData'), {
-        name: formData.name,
-        email: formData.email,
-        age: formData.age,
-        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/images%2F${encodeURIComponent(formData.image.name)}?alt=media`
-      });
-      console.log('Document written with ID: ', docRef.id);
-    //   setFormData({ name: '', email: '', age: '', image: null });
+          // Loop through each image in the formData
+          for (const image of formData.image) {
+            // Upload image to Firebase Storage
+            const imageRef = ref(storage, `images/${image.name}`);
+            await uploadBytes(imageRef, image);
+
+            // Get the download URL for the uploaded image
+            const downloadURL = await getDownloadURL(imageRef);
+            imageUrls.push(downloadURL);
+          }
+          // Add data (including image URL) to Firebase Firestore
+          const docRef = await addDoc(collection(db, 'formData'), {
+            name: formData.name,
+            email: formData.email,
+            age: formData.age,
+            imageUrl: imageUrls
+          });
+          console.log('Document written with ID: ', docRef.id);
+
     } catch (error) {
       console.error('Error adding document: ', error);
     }
