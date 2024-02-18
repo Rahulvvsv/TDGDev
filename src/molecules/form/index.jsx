@@ -71,8 +71,8 @@ const Form = () => {
             <div className={Style.divs}>
 
                 <div>Name: {item.name}</div> 
-                <br />
-                <div>Email: {item.email}</div> 
+                {/* <br /> */}
+                {/* <div>Email: {item.email}</div>  */}
                 <br />
               
                 <img src={item.imageUrl} alt="Uploaded" /> 
