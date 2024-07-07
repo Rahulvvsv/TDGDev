@@ -1,5 +1,6 @@
 import { fetchData } from "@/lib/firebase";
 import { updateDocument } from "@/lib/firebase";
+import { EmailHelperForBulkMailSending } from "@/lib/emailjs";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
@@ -11,8 +12,9 @@ export default async function handler(req, res) {
       userDetails.forEach((element) => {
         if (element?.emailCount != undefined) {
           if (element.emailCount === 0) {
-            // sendEmail();
             if (element.emailSentDate - currentDate >= 5) {
+              // sendEmail();
+              EmailHelperForBulkMailSending(element)
               const newEmailCount = element.emailCount + 1;
               const currentDate = new Date();
               updateDocument(element.id, {
@@ -23,7 +25,9 @@ export default async function handler(req, res) {
           } else if (element.emailCount > 0 && element.emailCount < 3) {
             if (element.emailSentDate - currentDate == 10) {
               const newEmailCount = element.emailCount + 1;
+              
               // sendEmail();
+              EmailHelperForBulkMailSending(element)
               const currentDate = new Date();
               updateDocument(element.id, {
                 emailCount: newEmailCount,

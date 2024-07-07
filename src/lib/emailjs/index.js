@@ -82,3 +82,22 @@ export const Emailer2 = async (data) =>{
     html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
     });
 }
+
+
+export const EmailHelperForBulkMailSending = async (data) =>{
+  // console.log(data);
+const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    emailjs.send(serviceId, templateId,data, {
+        publicKey: publicKey,
+      })
+      .then(
+        () => {
+          //console.log('SUCCESS!');
+        },
+        (error) => {
+          //console.log('FAILED...', error.text);
+        },
+      );
+  };
