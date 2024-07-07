@@ -131,6 +131,9 @@ export const upLoadData = async (formData) => {
       imageUrl: imageUrls,
       date: new Date(),
       status: "hidden",
+      emailCount:0,
+      emailSentDate:null,
+      
     });
     //console.log("Document written with ID: ", docRef.id);
   } catch (error) {
@@ -172,9 +175,10 @@ export const fetchSingleBasedOnId = async (donarId) => {
     let donarDetails = querySnapshot.data();
     return { donarDetails: donarDetails };
   }catch(e){
-    console.log(e)
+    // console.log(e)
     console.log(
       "invalid donar"
     )
+    return "invalid user"
   }
 };
