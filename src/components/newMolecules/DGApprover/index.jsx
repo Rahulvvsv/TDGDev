@@ -10,6 +10,7 @@ import style from "./index.module.css";
 import Desc from "@/components/newMolecules/DGDescription";
 import Status from "@/components/newMolecules/DGStatus";
 import Reviewer from "@/components/newMolecules/DGReviewer";
+import RecipientDetails from "../DGRecipient";
 
 const columns = [
   {
@@ -20,7 +21,6 @@ const columns = [
 
     headerClassName: style.header,
     renderCell: (params) => <DGImage data={params.value}></DGImage>,
-    
   },
 
   {
@@ -42,7 +42,7 @@ const columns = [
   {
     field: "Location",
     headerName: "Location",
-    width: 200,
+    width: 100,
 
     renderCell: (params) => (
       <p style={{ marginLeft: 20, marginTop: 50 }}>{params.value}</p>
@@ -101,15 +101,19 @@ const columns = [
     field: "Status",
     headerName: "Status",
     width: 220,
-    renderCell: (params) => <Status data={params}></Status>
+    renderCell: (params) => <Status data={params}></Status>,
   },
   {
     field: "Reviewer",
     headerName: "Reviewer",
+    width: 250,
+    renderCell: (params) => <Reviewer data={params}></Reviewer>,
+  },
+  {
+    field: "Recipient",
+    headerName: "Recipient Details",
     width: 350,
-    renderCell:(params) => (
-      <Reviewer data={params}></Reviewer>
-    )
+    renderCell: (params) => <RecipientDetails data={params}></RecipientDetails>,
   },
 ];
 
@@ -136,17 +140,23 @@ export default function DataGridApprover() {
             mail: e.email,
           },
           Phone: e.phone,
-          Status: {"status":e.status,"id":e.id},
-          Reviewer:e.location
+          Status: { status: e.status, id: e.id },
+          Reviewer: e.location,
+          Recipient: {
+            name: e.recName,
+            contact: e.recContact,
+            recDate: e.recipientReceivedDate,
+            itemStatus: e.itemStatus,
+          },
         };
         return value;
       });
       setRows(rowValues);
-      setFilteredRows(rowValues)
+      setFilteredRows(rowValues);
     };
     fetcher();
   }, []);
-    const handleSearchChange = (event) => {
+  const handleSearchChange = (event) => {
     const value = event.target.value.toLowerCase();
     const filtered = rows.filter((row) => {
       // console.log(row.productName)

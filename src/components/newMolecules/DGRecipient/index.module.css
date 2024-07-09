@@ -1,0 +1,22 @@
+.main{
+    display: flex;
+    flex-direction: column !important;
+    height: 100px;
+    gap: 5px;
+    
+}
+.main p{
+    height: 15px;
+}
+.main2{
+    margin-left: 50px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+.main222{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    /* background-color: red; */
+}

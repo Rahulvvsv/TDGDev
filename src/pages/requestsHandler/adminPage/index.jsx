@@ -1,112 +1,12 @@
-// "use client"
-// import style from "./index.module.css"
-// import { useState } from "react";
-// import DataGridApprover from "@/components/newMolecules/DGApprover";
-// import DataGridEmailApprover from "@/components/newMolecules/DGEmail";
-
-// const AdminPage = () => {
-//   const [item, setItem] = useState(1);
-//   const [authenticated, setAuthenticated] = useState(false);
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-
-//     const response = await fetch("/api/authenticate", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ username, password }),
-//     });
-
-//     const data = await response.json();
-
-//     if (data.success) {
-//       setAuthenticated(true);
-//       setError("");
-//     } else {
-//       setError("Invalid username or password");
-//       if(data.message){
-
-//         setError(data.message)
-//         }
-//     }
-//   };
-
-//   return (
-//     <>
-//       {!authenticated ? (
-//         <form onSubmit={handleLogin} className={style.formDiv}>
-//           <div className={style.formDivinside} >
-//             <label htmlFor="username">Username:</label>
-//             <input
-//               type="text"
-//               id="username"
-//               value={username}
-//               onChange={(e) => setUsername(e.target.value)}
-
-//               className={style.input}
-//               required
-//             />
-//           </div>
-//           <div className={style.formDivinside}>
-//             <label htmlFor="password">Password:</label>
-//             <input
-//               type="password"
-//               id="password"
-//               value={password}
-//               className={style.input}
-//               onChange={(e) => setPassword(e.target.value)}
-//               required
-//             />
-//           </div>
-//           {error && <p style={{ color: "red" }}>{error}</p>}
-//           <button type="submit" className={style.btn1 + " " + style.btn55}>Login</button>
-//         </form>
-//       ) : (
-//         <>
-//           <button
-//             onClick={() => {
-//               setItem(1);
-//             }}
-//             className={item?style.btn1:style.btn2}
-//             style={{ marginLeft: 100, marginBottom: 50 }}
-//           >
-//             Approve Image
-//           </button>
-
-//           <button
-//             onClick={() => {
-//               setItem(0);
-//             }}
-
-
-//             className={item?style.btn2:style.btn1}
-//             style={{ marginLeft: 50, marginBottom: 50 }}
-//           >
-//             Email Handler
-//           </button>
-//           <br />
-//           {item ? <DataGridApprover /> : <DataGridEmailApprover />}
-//         </>
-//       )}
-//     </>
-//   );
-// };
-
-// export default AdminPage;
-
 "use client";
 import style from "./index.module.css";
 import { useState, useEffect } from "react";
 import DataGridApprover from "@/components/newMolecules/DGApprover";
 import DataGridEmailApprover from "@/components/newMolecules/DGEmail";
+import DataGridTestimonialApprover from "@/components/newMolecules/DGTestimonials";
 
 const AdminPage = () => {
-  const [item, setItem] = useState(1);
+  const [item, setItem] = useState("approveImageHandler");
   const [authenticated, setAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -116,7 +16,8 @@ const AdminPage = () => {
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     const storedPassword = localStorage.getItem("password");
-    const storedAuthenticated = localStorage.getItem("authenticated") === "true";
+    const storedAuthenticated =
+      localStorage.getItem("authenticated") === "true";
 
     if (storedUsername && storedPassword && storedAuthenticated) {
       setUsername(storedUsername);
@@ -125,7 +26,12 @@ const AdminPage = () => {
     }
   }, []);
 
-  const handleLogin = async (e, cachedUsername = username, cachedPassword = password, initialLoad = false) => {
+  const handleLogin = async (
+    e,
+    cachedUsername = username,
+    cachedPassword = password,
+    initialLoad = false
+  ) => {
     if (e) e.preventDefault();
 
     const response = await fetch("/api/authenticate", {
@@ -133,7 +39,10 @@ const AdminPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: cachedUsername, password: cachedPassword }),
+      body: JSON.stringify({
+        username: cachedUsername,
+        password: cachedPassword,
+      }),
     });
 
     const data = await response.json();
@@ -203,15 +112,17 @@ const AdminPage = () => {
             <label htmlFor="rememberMe">Remember Me</label>
           </div>
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit" className={style.btn1 + " " + style.btn55}>Login</button>
+          <button type="submit" className={style.btn1 + " " + style.btn55}>
+            Login
+          </button>
         </form>
       ) : (
         <>
           <button
             onClick={() => {
-              setItem(1);
+              setItem("approveImageHandler");
             }}
-            className={item ? style.btn1 : style.btn2}
+            className={item == "approveImageHandler" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
             Approve Image
@@ -219,18 +130,36 @@ const AdminPage = () => {
 
           <button
             onClick={() => {
-              setItem(0);
+              setItem("emailHandler");
             }}
-            className={item ? style.btn2 : style.btn1}
+            className={item == "emailHandler" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
             Email Handler
           </button>
-          <button onClick={handleLogout} className={style.btn1} style={{ position:"absolute",right:"50px" }}>
+
+          <button
+            onClick={() => {
+              setItem("testimonialHandler");
+            }}
+            className={item == "testimonialHandler" ? style.btn1 : style.btn2}
+            style={{ marginLeft: 50, marginBottom: 50 }}
+          >
+            Testimonial Handler
+          </button>
+
+          <button
+            onClick={handleLogout}
+            className={style.btn1}
+            style={{ position: "absolute", right: "50px" }}
+          >
             Logout
           </button>
           <br />
-          {item ? <DataGridApprover /> : <DataGridEmailApprover />}
+
+          {item=="approveImageHandler" && <DataGridApprover />}
+          {item=="emailHandler" && <DataGridEmailApprover />}
+          {item=="testimonialHandler" && <DataGridTestimonialApprover />}
         </>
       )}
     </>
@@ -238,4 +167,3 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
-

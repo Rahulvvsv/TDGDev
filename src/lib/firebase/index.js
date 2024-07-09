@@ -29,13 +29,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   storageBucket: "gs://tdgdev.appspot.com",
 };
-// function sortByTimestamp(array) {
-//     return array.sort((a, b) => {
-//         const timestampA = new Date(a.timestamp);
-//         const timestampB = new Date(b.timestamp);
-//         return timestampB - timestampA; // Sort in descending order (newer data first)
-//     });
-// }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -46,10 +39,12 @@ export const Firebase = async () => {
   //console.log(app);
 };
 export const updateDocument = async (documentId, newData) => {
-  // Reference to the document you want to update
   let docRef = doc(db, "newData", documentId);
+  let result = await setDoc(docRef, newData, { merge: true });
+};
 
-  // Update the document
+export const updateTestimonialDocument = async (documentId, newData) => {
+  let docRef = doc(db, "testimonials", documentId);
   let result = await setDoc(docRef, newData, { merge: true });
 };
 
@@ -111,6 +106,17 @@ export const fetchData = async () => {
   return sortedElements;
 };
 
+
+export const fetchTestimonialData = async () => {
+  const querySnapshot = await getDocs(collection(db, "testimonials"));
+  const fetchedData = [];
+  querySnapshot.forEach((doc) => {
+    fetchedData.push({ id: doc.id, ...doc.data() });
+  });
+  let sortedElements = sortByTimestamp(fetchedData);
+  return sortedElements;
+};
+
 export const upLoadData = async (formData) => {
   try {
     const imageUrls = [];
@@ -122,7 +128,7 @@ export const upLoadData = async (formData) => {
       imageUrls.push(downloadURL);
     }
     const docRef = await addDoc(collection(db, "newData"), {
-      name: formData.fullname || "",
+      name: formData.fullName || "",
       productName: formData.tof || "",
       description: formData.desc || "",
       email: formData.email || "",
@@ -133,6 +139,23 @@ export const upLoadData = async (formData) => {
       status: "hidden",
       emailCount:0,
       emailSentDate:null,
+      
+    });
+    //console.log("Document written with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+};
+
+export const uploadTestimonial = async (formData) => {
+  try {
+    const docRef = await addDoc(collection(db, "testimonials"), {
+      name: formData.fullName || "",
+      email: formData.email || "",
+      location: formData.location || "",
+      date: new Date(),
+      status: "hidden",
+      testimonial:formData.testimonial
       
     });
     //console.log("Document written with ID: ", docRef.id);

@@ -1,6 +1,6 @@
 .something{
     height: 150px !important;
-    margin-top: 30px;
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
@@ -10,15 +10,15 @@
 }
 
 .heading{
-    font-size: 12px;
+    font-size: 14px;
     margin-block-end: 0px !important;
     margin-block-start: 0px !important;
 
     line-height: 1px !important;
 }
 
-.hh2 .desc{
-    font-size: 6px !important;
+.hh2 {
+    font-size: 12px !important;
     margin-block-end: 0px !important;
     
     margin-block-start: 0px !important;

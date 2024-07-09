@@ -8,6 +8,7 @@ import SingleTestimonial from "../SingleTestimonial";
 import style from "./index.module.css"
 // Import Swiper styles
 import "swiper/css";
+import { fetchTestimonialData } from "@/lib/firebase";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
@@ -17,10 +18,11 @@ import { Autoplay } from "swiper/modules";
 export default function App() {
   const [slidesPerView, setSlidesPerView] = useState(2.4);
   const [isVisible, setIsVisible] = useState(false);
-  const arr = [1,2,3,4,5,6,7];
+  const [arr,setArr] = useState([]);
   useEffect(() => {
+    
     const handleResize = () => {
-        if (window.innerWidth<420){
+        if (window.innerWidth<460){
             setSlidesPerView(1);
           }
         else if (window.innerWidth < 980) {
@@ -29,19 +31,18 @@ export default function App() {
         else {
         setSlidesPerView(2.9);
       }
+      const fetchData = async () =>{
+        const data = await fetchTestimonialData();
+        setArr(data)
+      };
+      fetchData();
+      console.log(arr)
     };
 
-    // const delay = 1 * 90;
-    // const timeoutId = setTimeout(() => {
-    //   setIsVisible(true);
-    // }, delay);
-    
     handleResize();
-    
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
-      // clearTimeout(timeoutId);
     };
   }, []);
   return (
@@ -60,55 +61,17 @@ export default function App() {
         modules={[Autoplay]}
         className={style.Swiper}
       >
-
-        {/* {arr.map((e,key)=>{
-
+        {arr.filter(e=>e.status=="showOnPage").map(e=>{
           return(
 
             <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Furniture exchange was smooth and perfect and very nice wow fantastic delivery service loved the process furniture also was nice not damaged and fast delivery"}  name={""} surname={""} ></SingleTestimonial>
+        <SingleTestimonial index={0}  testimonial={e.testimonial}  name={e.name} surname={e.location} ></SingleTestimonial>
         </SwiperSlide>
             )
-          })
-        } */}
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"TDG Furniture Exchange provided a beautiful bedroom set for a child battling cancer, uplifting her spirits immensely. Grateful for their incredible work!"}  name={"Malki L"} surname={"Toronto"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"As a single parent, TDG Furniture Exchange restored my faith in humanity with quality furniture donations. A beacon of hope in our community"}  name={"Dani K."} surname={"Ontario Boro Park"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"TDG Furniture Exchange transformed my apartment into a home with essential pieces. Grateful for their kindness and seamless experience!."}  name={"Eli G."} surname={" New York Lakewood"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Thanks to TDG Furniture Exchange, I furnished my first apartment on a tight budget. Essential pieces in great condition made it possible!"}  name={"Aaryaa Joshi"} surname={"Baltimore"} ></SingleTestimonial>
-        </SwiperSlide>
+        })}
 
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"TDG Furniture Exchange provided a beautiful bedroom set for a child battling cancer, uplifting her spirits immensely. Grateful for their incredible work!"}  name={"Malki L"} surname={"Toronto"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"As a single parent, TDG Furniture Exchange restored my faith in humanity with quality furniture donations. A beacon of hope in our community"}  name={"Dani K."} surname={"Ontario Boro Park"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"TDG Furniture Exchange transformed my apartment into a home with essential pieces. Grateful for their kindness and seamless experience!."}  name={"Eli G."} surname={" New York Lakewood"} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Thanks to TDG Furniture Exchange, I furnished my first apartment on a tight budget. Essential pieces in great condition made it possible!"}  name={"Aaryaa Joshi"} surname={"Baltimore"} ></SingleTestimonial>
-        </SwiperSlide>
-            {/* <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Grateful for TDG Furniture Exchange's smart initiative and the armchair they found for our new home. Thank you for your investment!"}  name={"Aaryaa Joshi"} surname={"Baltimore"} ></SingleTestimonial>
-        </SwiperSlide> */}
-            {/* <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Thank you for investing so much time, effort and energy into your amazing furniture initiative! Such a smart initiative, really appreciate the armchair that you found us for our new home. We’re grateful for you!"}  name={""} surname={""} ></SingleTestimonial>
-        </SwiperSlide> */}
-            {/* <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Furniture exchange was smooth and perfect and very nice wow fantastic delivery service loved the process furniture also was nice not damaged and fast delivery"}  name={""} surname={""} ></SingleTestimonial>
-        </SwiperSlide>
-            <SwiperSlide>
-        <SingleTestimonial index={0}  testimonial={"Furniture exchange was smooth and perfect and very nice wow fantastic delivery service loved the process furniture also was nice not damaged and fast delivery"}  name={""} surname={""} ></SingleTestimonial>
-        </SwiperSlide> */}
-       </Swiper>
+         
+       </Swiper> 
     <br></br>
     </>
   );

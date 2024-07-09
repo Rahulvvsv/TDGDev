@@ -56,6 +56,10 @@ width: 50%;
     font-weight: 500;
     margin-bottom: 10px;
 }
+.heading4{
+    font-size: 32px ;
+    width: 100%;
+}
 @media screen and ( max-width:600px) {
     
     .main{

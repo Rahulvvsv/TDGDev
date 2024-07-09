@@ -1,27 +1,16 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
 import style from "./index.module.css";
 import InputField from "../../atoms/inputField";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Button from "../../atoms/button";
+import { uploadTestimonial } from "@/lib/firebase";
 import { useEffect, useState } from "react";
 
 const TestimonialForm = ({ href }) => {
-  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    if (searchParams.has("donation")) {
-      let value = searchParams.get("donation");
-      if (value === "1") {
-        setSubmitted(true);
-      }
-    }
-  }, [searchParams]);
 
   const validateForm = () => {
     let isValid = true;
@@ -35,22 +24,19 @@ const TestimonialForm = ({ href }) => {
 
     // Validate email
     if (!data.email || !data.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Contact details are required";
       isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-      newErrors.email = "Invalid email address";
-      isValid = false;
-    }
+    } 
 
     // Validate phone
-    if (!data.phone || data.phone.trim() === "") {
-      newErrors.phone = "Phone number is required";
+    if (!data.location || data.location.trim() === "") {
+      newErrors.location = "Location  is required";
       isValid = false;
     }
 
     // Validate service
-    if (!data.service || data.service.trim() === "") {
-      newErrors.service = "Service is required";
+    if (!data.testimonial || data.testimonial.trim() === "") {
+      newErrors.service = "Testimonial is required";
       isValid = false;
     }
 
@@ -66,23 +52,22 @@ const TestimonialForm = ({ href }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      uploadTestimonial(data);
       setSubmitted(true);
-      if (href !== "") {
-        window.location.href = href;
-      }
     }
   };
 
   return (
     <div className={style.main2}>
+      {!submitted ? (
+        <>
+
       <section className={style.secc}>
         
       <h1 className={style.heading2 +" " + style.heading3} > Share Your Experience</h1>
       <h1 className={style.heading2}>We would love to hear about your experience with the TDG Furniture Exchange. </h1>
       <h1 className={style.heading2}>Your testimonial helps us inspire others and improve our service. Thank you for your support!</h1>
       </section>
-      {!submitted ? (
-        <>
           <InputField
             onChange={dataSetter}
             placeholder={"FULL NAME*"}
@@ -108,21 +93,17 @@ const TestimonialForm = ({ href }) => {
             onChange={dataSetter}
             name="location"
           />
-          {errors.phone && (
+          {errors.location && (
             <div className={style.error} style={{ marginTop: 10 }}>
-              {errors.phone}
+              {errors.location}
             </div>
           )}
                   <InputField
-            placeholder={"FURNITURE ITEM DONATED*"}
+            placeholder={"FURNITURE ITEM DONATED "}
             onChange={dataSetter}
             name="donatedItem"
           />
-          {errors.phone && (
-            <div className={style.error} style={{ marginTop: 10 }}>
-              {errors.phone}
-            </div>
-          )}
+      
 
           <InputField
             type="text-area"
@@ -142,15 +123,9 @@ const TestimonialForm = ({ href }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={style.main5}
           >
-            <Image alt=" " src={"/Icon/4.png"} width={190} height={190} />
-            <h1 className={style.heading}>
-              Thank you for your generous donation to our furniture exchange
-              initiative.
-            </h1>
-            <h1 className={style.heading}>
-              Your support helps transform houses into homes for those in need.
+            <h1 className={style.heading4}>
+              Thank you for your valuable feedback.
             </h1>
           </motion.div>
         </>
