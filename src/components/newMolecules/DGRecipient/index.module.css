@@ -10,13 +10,18 @@
 }
 .main2{
     margin-left: 50px;
-    margin-top: 10px;
+    margin-top: 30px;
     font-weight: 700;
 }
 .main222{
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    /* align-items:center; */
+    vertical-align: center;
     justify-content: center;
     /* background-color: red; */
+    margin-top: 15px;
+}
+.main333{
+    margin-top: 20px;
 }

@@ -11,12 +11,13 @@ const Status = (props) => {
   const getDropdownValue = (status) => {
     switch (status) {
       case "showOnPage":
-        return "published on website";
+        return "Published On Website";
       case "hidden":
         return "New Request";
       case "declined":
-        return "removed from website";
-
+        return "Removed From Website";
+      case "donorFound":
+        return "Donor Found";
       default:
         return "";
     }
@@ -41,10 +42,9 @@ const Status = (props) => {
           { value: "donorFound", label: "donor Found" },
         ];
 
-        
       case "donorFound":
         return [
-            { value: "showOnPage", label: "publish on the website" },
+          { value: "showOnPage", label: "publish on the website" },
           { value: "declined", label: "remove from website" },
           { value: "donorFound", label: "donor Found" },
         ];
@@ -71,7 +71,7 @@ const Status = (props) => {
 
   useEffect(() => {
     // console.log(props, status);
-  }, [ status]);
+  }, [status]);
 
   const dropdownValue = getDropdownValue(initialStatus);
   const dropdownOptions = getDropdownOptions(initialStatus);
@@ -80,7 +80,7 @@ const Status = (props) => {
     <div className={style.status + " " + style[status]}>
       <div className={style.dropdownContainer}>
         <select
-          className={style.dropdown +" " + style[status]}
+          className={style.dropdown + " " + style[status]}
           value={status}
           onChange={handleChange}
         >

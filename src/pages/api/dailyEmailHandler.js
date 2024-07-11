@@ -33,14 +33,7 @@ export default async function handler(req, res) {
             );
             let dateDifference = currentDate - emailSentDate;
             dateDifference = dateDifference / (1000 * 60 * 60 * 24);
-            console.log(
-              emailSentDate,
-              currentDate,
-              dateDifference.toFixed(),
-              "from date difference"
-            );
-            if (dateDifference.toFixed() == 0) {
-              console.log("in here")
+            if (dateDifference.toFixed() == 3) {
               EmailHelperForBulkMailSending(dataToSend);
               const newEmailCount = element.emailCount + 1;
               const currentDate = new Date();

@@ -46,6 +46,9 @@ const ReceipientForm = ({
   }, [submitted]);
   useEffect(() => {
     updateDocument(productId, { itemStatus: itemStatus });
+    if(itemStatus == "donorFound"){
+    updateDocument(productId, { status : itemStatus });
+    }
   }, []);
 
   const validateForm = () => {
