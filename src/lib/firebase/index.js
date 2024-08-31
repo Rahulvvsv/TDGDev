@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
+
 import {
   getFirestore,
   collection,
@@ -34,10 +36,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
+
+export { auth };
 
 export const Firebase = async () => {
   //console.log(app);
 };
+
 export const updateDocument = async (documentId, newData) => {
   let docRef = doc(db, "newData", documentId);
   let result = await setDoc(docRef, newData, { merge: true });
@@ -56,6 +62,7 @@ export function sortByTimestamp(data) {
     return b?.date?.seconds - a?.date?.seconds;
   });
 }
+
 export const updateClientDetails = async (documentId, newData) => {
   // Reference to the document you want to update
   let docRef = doc(db, "contactDonarList", documentId);
@@ -77,6 +84,7 @@ export const fetchDataLocation = async (location) => {
   let sortedElements = sortByTimestamp(fetchedData);
   return sortedElements;
 };
+
 export const fetchDataBasedOnId = async () => {
   let AllData = await fetchClientData();
 
@@ -105,7 +113,6 @@ export const fetchData = async () => {
   console.log("running");
   return sortedElements;
 };
-
 
 export const fetchTestimonialData = async () => {
   const querySnapshot = await getDocs(collection(db, "testimonials"));
