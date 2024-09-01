@@ -38,7 +38,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { auth };
+export { auth,app,db,storage };
 
 export const Firebase = async () => {
   //console.log(app);
