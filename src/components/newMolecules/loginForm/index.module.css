@@ -1,0 +1,9 @@
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 60%;
+}
+.right > div > div {
+  width: 100% !important;
+}

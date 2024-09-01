@@ -1,0 +1,21 @@
+.right {
+  position: relative;
+  /* width: 732px; */
+  width: 100%;
+  /* height: 500px; */
+  height: 831px;
+}
+.left {
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rightMain {
+  width: 50vw;
+  background-color: red;
+}
+.container {
+  display: flex;
+  height: 831px;
+}
