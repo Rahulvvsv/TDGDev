@@ -30,6 +30,8 @@ const Header = () => {
       setSelected(3);
     } else if (search.includes("adminPage")) {
       setSelected(10);
+    } else if (search.includes("login")) {
+      setSelected(11);
     } else {
       setSelected(0);
     }
@@ -37,7 +39,10 @@ const Header = () => {
   return (
     <div style={{ position: "relative" }}>
       <AnimatePresence>
-        <div className={style.main}>
+        <div
+          className={style.main}
+          style={selected == 11 ? { marginBottom: 0 } : {}}
+        >
           <div
             className={style.main2}
             onClick={() => {
