@@ -20,3 +20,19 @@
 .error {
   color: red;
 }
+
+.forgot{
+  color: rgba(41, 41, 41, 1);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.forgot1{
+  color: rgba(41, 41, 41, 1);
+  font-size: 16px;
+}
+.signUp{
+  font-weight: 600 !important;
+  cursor: pointer;
+  /* background-color: red; */
+}

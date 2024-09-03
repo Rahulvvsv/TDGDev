@@ -4,13 +4,17 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import InputField from "@/components/atoms/inputField";
 import Button from "@/components/atoms/button";
+import { useRouter } from "next/router";
 import AxiosService from "@/lib/services/axios";
 
-const LoginForm = () => {
+const LoginForm = ({ onSignUpClick }) => {
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const apiService = new AxiosService();
+  const router = useRouter();
 
   const dataSetter = (e) => {
     const { name, value } = e.target;
@@ -21,11 +25,22 @@ const LoginForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        // Call the signup function from AxiosService
-        const response = await apiService.login(data);
-        console.log("Signup successful:", response);
-        setSubmitted(true);
-        // Here you might want to redirect the user or show a success message
+        // // Call the signup function from AxiosService
+        // const response = await apiService.login(data);
+        // console.log("Signup successful:", response);
+        // setSubmitted(true);
+        // // Here you might want to redirect the user or show a success message
+        const { message, error } = await apiService.login(data);
+        if (!error) {
+          if (message == "success") {
+            router.push("/");
+            console.log("loggedIn");
+          }
+          setSubmitted(true);
+        } else {
+          setErrors({ backend: message });
+          console.log(errors, "hello there");
+        }
       } catch (error) {
         console.error("Signup failed:", error);
         // Here you might want to show an error message to the user
@@ -71,13 +86,20 @@ const LoginForm = () => {
         name={"password"}
       />
       {errors.password && <div className={style.error}>{errors.password}</div>}
+      <p className={style.forgot}>Forgot Password?</p>
       <Button
         onClick={handleSubmit}
         placeholder={"SUBMIT"}
-        content={"SUBMIT"}
+        content={isLoading ? "SUBMITTING..." : "SUBMIT"}
         href={""}
         fontColor={"white"}
       />
+      <p className={style.forgot1}>
+        Don't have an account?{" "}
+        <span className={style.signUp} onClick={onSignUpClick}>
+          Sign Up
+        </span>
+      </p>
     </motion.div>
   );
 };

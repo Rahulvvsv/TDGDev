@@ -5,13 +5,15 @@ import { motion } from "framer-motion";
 import InputField from "@/components/atoms/inputField";
 import Button from "@/components/atoms/button";
 import AxiosService from "@/lib/services/axios";
+import { useRouter } from "next/router";
 
-const SignUpForm = () => {
+const SignUpForm = ({ onLoginClick }) => {
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const apiService = new AxiosService();
 
   const dataSetter = (e) => {
@@ -24,14 +26,20 @@ const SignUpForm = () => {
     if (validateForm()) {
       setIsLoading(true);
       try {
-        // Call the signup function from AxiosService
-        const response = await apiService.signUp(data);
-        console.log("Signup successful:", response);
-        setSubmitted(true);
-        // Here you might want to redirect the user or show a success message
+        const { message, error } = await apiService.signUp(data);
+        if (!error) {
+          if (message == "success") {
+            router.push("/");
+            console.log("loggedIn");
+          }
+          setSubmitted(true);
+        } else {
+          setErrors({ backend: message });
+          console.log(errors, "hello there");
+        }
       } catch (error) {
         console.error("Signup failed:", error);
-        // Here you might want to show an error message to the user
+        console.log(errors, "hello there");
       } finally {
         setIsLoading(false);
       }
@@ -45,8 +53,8 @@ const SignUpForm = () => {
     const newErrors = {};
 
     // Validate full name
-    if (!data.fullName || data.fullName.trim() === "") {
-      newErrors.fullName = "Full name is required";
+    if (!data.name || data.name.trim() === "") {
+      newErrors.name = "Full name is required";
       isValid = false;
     }
 
@@ -96,9 +104,9 @@ const SignUpForm = () => {
       <InputField
         onChange={dataSetter}
         placeholder={"FULL NAME*"}
-        name={"fullName"}
+        name={"name"}
       />
-      {errors.fullName && <div className={style.error}>{errors.fullName}</div>}
+      {errors.name && <div className={style.error}>{errors.name}</div>}
       <InputField onChange={dataSetter} placeholder={"EMAIL*"} name={"email"} />
       {errors.email && <div className={style.error}>{errors.email}</div>}
       <InputField onChange={dataSetter} placeholder={"PHONE*"} name={"phone"} />
@@ -127,6 +135,13 @@ const SignUpForm = () => {
         fontColor={"white"}
         disabled={isLoading}
       />
+      <p className={style.forgot1}>
+        Already have an account?{" "}
+        <span className={style.signUp} onClick={onLoginClick}>
+          Login
+        </span>
+      </p>
+      {errors.backend && <div className={style.error}>{errors.backend}</div>}
     </motion.div>
   );
 };

@@ -12,7 +12,7 @@ import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET;
 
-export async function signUp(email, password) {
+export async function signUp(email, password, name, phone) {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -20,9 +20,9 @@ export async function signUp(email, password) {
   );
 
   const docRef = await addDoc(collection(db, "users"), {
-    // name: name,
     email: email,
-    // name: decodedToken.name,
+    name,
+    phone,
     createdAt: new Date(),
   });
 

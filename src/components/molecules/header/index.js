@@ -13,11 +13,15 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import { parseCookies } from "nookies";
 const Header = () => {
   const [selected, setSelected] = useState(0);
   const [toggleNavbar, setToggleNavbar] = useState(false);
+  const [authCookie, setAuthCookes] = useState(false);
   const router = useRouter();
   const search = router.asPath;
+
+  const cookies = parseCookies();
   useEffect(() => {
     if (search.includes("donate")) {
       setSelected(1);
@@ -35,7 +39,10 @@ const Header = () => {
     } else {
       setSelected(0);
     }
-  }, [search]);
+
+    setAuthCookes(cookies["loggedIn"]);
+    console.log(authCookie, cookies, "from here");
+  }, [search, cookies]);
   return (
     <div style={{ position: "relative" }}>
       <AnimatePresence>
@@ -52,7 +59,7 @@ const Header = () => {
             <Image alt=" " src={"/Icon/logo2.png"} fill></Image>
           </div>
 
-          {selected == 0 && (
+          {/* {selected == 0 && (
             <div
               className={style.main999}
               onClick={() => {
@@ -61,6 +68,20 @@ const Header = () => {
             >
               <Image src={"/Icon/person.png"} width={16} height={16}></Image>
               <p>Admin Login</p>
+            </div>
+          )} */}
+
+          {selected == 0 && (
+            <div
+              className={style.main999}
+              onClick={() => {
+                const route = !authCookie ? "/login" : "/profile";
+
+                router.push(route);
+              }}
+            >
+              <Image src={"/Icon/person.png"} width={16} height={16}></Image>
+              {!authCookie && <p> Login</p>}
             </div>
           )}
           <div className={style.main3}>

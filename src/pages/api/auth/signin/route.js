@@ -1,18 +1,23 @@
 // pages/api/auth/signin.ts
-import { signIn } from '@/lib/auth/auth';
+import { signIn } from "@/lib/auth/auth";
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const { email, password } = req.body;
     try {
       const { user, token } = await signIn(email, password);
-      res.setHeader('Set-Cookie', `access_token=${token}; HttpOnly; Path=/; Max-Age=3600`);
+      res.setHeader("Set-Cookie", [
+        `access_token=${token}; HttpOnly; Path=/; Max-Age=3600`,
+        `loggedIn=true; Path=/; Max-Age=3600`,
+      ]);
 
-      res.status(200).json({ user, token });
+      res.status(200).json({ data: user, message: "success", error: false });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(200).json({ message: error.message, data: [], error: true });
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    res
+      .status(405)
+      .json({ message: "Method not allowed", data: [], error: true });
   }
 }
