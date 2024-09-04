@@ -157,9 +157,9 @@ const AdminPage = () => {
           </button>
           <br />
 
-          {item=="approveImageHandler" && <DataGridApprover />}
-          {item=="emailHandler" && <DataGridEmailApprover />}
-          {item=="testimonialHandler" && <DataGridTestimonialApprover />}
+          {item == "approveImageHandler" && <DataGridApprover />}
+          {item == "emailHandler" && <DataGridEmailApprover />}
+          {item == "testimonialHandler" && <DataGridTestimonialApprover />}
         </>
       )}
     </>

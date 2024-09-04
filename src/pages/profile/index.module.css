@@ -1,0 +1,31 @@
+.btn1 {
+  width: 240px;
+  color: white;
+  background: rgba(121, 117, 114, 1);
+  height: 53px;
+  outline: none;
+  border: 0px solid white;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.btn2 {
+  width: 240px;
+  background-color: white;
+  color: rgba(121, 117, 114, 1);
+  height: 53px;
+  outline: none;
+  border: 1px solid rgba(121, 117, 114, 1);
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.main3 {
+}
+.main2 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 400px;
+}

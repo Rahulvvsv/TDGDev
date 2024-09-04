@@ -11,7 +11,9 @@ export default async function handler(req, res) {
         `loggedIn=true; Path=/; Max-Age=3600`,
       ]);
 
-      res.status(200).json({ data: user, message: "success", error: false });
+      res
+        .status(200)
+        .json({ data: { user, token }, message: "success", error: false });
     } catch (error) {
       res.status(200).json({ message: error.message, data: [], error: true });
     }

@@ -41,6 +41,16 @@ class AxiosService {
       throw error;
     }
   }
+
+  async getAllUploads() {
+    try {
+      const response = await this.api.get("getAllUploads/route");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching all uploads:", error);
+      throw error;
+    }
+  }
 }
 
 export default AxiosService;
