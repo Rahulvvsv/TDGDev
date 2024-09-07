@@ -18,6 +18,7 @@ export async function signUp(email, password, name, phone) {
     email,
     password
   );
+  console.log(userCredential, "userCredential");
 
   const docRef = await addDoc(collection(db, "users"), {
     email: email,

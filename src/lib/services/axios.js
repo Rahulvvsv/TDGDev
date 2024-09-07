@@ -51,6 +51,25 @@ class AxiosService {
       throw error;
     }
   }
+  async getMyProfile() {
+    try {
+      const response = await this.api.get("getMyProfile/route");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching my profile:", error);
+      throw error;
+    }
+  }
+
+  async getFurnitureById(id) {
+    try {
+      const response = await this.api.get(`getFurnitureById/route?id=${id}`);
+      return { data: response.data, error: null };
+    } catch (error) {
+      console.error("Error fetching furniture by ID:", error.message);
+      return { data: null, error: error.message || "An error occurred" };
+    }
+  }
 }
 
 export default AxiosService;

@@ -22,10 +22,21 @@
 }
 
 .main3 {
+  display: flex;
+  gap: 20px;
 }
 .main2 {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.main3 > button {
+  margin-left: 0px !important;
+}
+.furnitureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }

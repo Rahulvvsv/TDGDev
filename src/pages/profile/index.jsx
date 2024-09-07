@@ -7,13 +7,19 @@ import AxiosService from "@/lib/services/axios";
 const Proflie = () => {
   const [item, setItem] = useState("yourUploads");
   const [uploads, setUploads] = useState([]);
+  const [favourites, setFavourites] = useState([]);
+  const [data, setData] = useState([]);
+  const [myRequests, setMyRequests] = useState([]);
   const axiosService = new AxiosService();
   useEffect(() => {
     const fetchUploads = async () => {
       try {
-        const data = await axiosService.getAllUploads();
+        const data = await axiosService.getMyProfile();
         console.log(data);
-        setUploads(data);
+        setUploads(data?.uploads);
+        setMyRequests(data?.myRequests);
+        setFavourites(data?.favourites);
+        setData(data?.uploads);
       } catch (error) {
         console.error("Error fetching uploads:", error);
       }
@@ -21,7 +27,6 @@ const Proflie = () => {
 
     fetchUploads();
   }, []);
-  console.log(uploads);
 
   return (
     <div className={style.main}>
@@ -30,6 +35,7 @@ const Proflie = () => {
           <button
             onClick={() => {
               setItem("yourUploads");
+              setData(uploads);
             }}
             className={item == "yourUploads" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
@@ -40,13 +46,13 @@ const Proflie = () => {
           <button
             onClick={() => {
               setItem("yourRequests");
+              setData(myRequests);
             }}
-            className={item == "yourRequests" ? style.btn1 : style.btn2}
+            className={item === "yourRequests" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
             Your Requests
           </button>
-
           <button
             onClick={() => {
               setItem("yourFavourites");
@@ -56,6 +62,21 @@ const Proflie = () => {
           >
             Your Favourites
           </button>
+        </div>
+        <div className={style.furnitureList}>
+          {data.map((item) => (
+            <FurnitureComp
+              key={item.id}
+              key1={item.id}
+              Img={item.files}
+              name={item.typeOfFurniture}
+              desc={item.description}
+              unqId={item.id}
+              date={item.createdAt}
+              location={item.location}
+              showButton={false}
+            />
+          ))}
         </div>
       </div>
     </div>

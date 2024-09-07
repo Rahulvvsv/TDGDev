@@ -14,12 +14,30 @@ const FurnitureComp = ({
   Img,
   name = "None",
   desc = "None",
-  key = "",
+  key1,
   showButton = true,
   unqId,
   date = new Date(),
   location,
 }) => {
+  console.log(
+    Img,
+    "img",
+    name,
+    "name",
+    desc,
+    "desc",
+
+    "key",
+    showButton,
+    "showButton",
+    unqId,
+    "unqId",
+    date,
+    "date",
+    location,
+    "location"
+  );
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
   const [ImageLink, setImage] = useState();
@@ -34,7 +52,7 @@ const FurnitureComp = ({
     const { zoomIn, zoomOut, resetTransform } = useControls();
 
     return (
-      <div className={style.tools}>
+      <div className={style.tools} key={key1}>
         <button onClick={() => zoomIn()}>Zoom In </button>
         <button onClick={() => zoomOut()}>Zoom out</button>
         <button onClick={() => resetTransform()}>Reset</button>
@@ -64,15 +82,19 @@ const FurnitureComp = ({
   }
 
   const handleImageNavigation = (direction) => {
-    console.log("clickedd")
+    console.log("clickedd");
     if (direction === "left") {
-      setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? ImageLink.length - 1 : prevIndex - 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? ImageLink.length - 1 : prevIndex - 1
+      );
     } else if (direction === "right") {
-      setCurrentImageIndex((prevIndex) => (prevIndex === ImageLink.length - 1 ? 0 : prevIndex + 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === ImageLink.length - 1 ? 0 : prevIndex + 1
+      );
     }
   };
   return (
-    <div className={style.main} id={style.something} key={key}>
+    <div className={style.main} id={style.something} key={key1}>
       <div
         className={style.image}
         onClick={() => {
@@ -80,23 +102,22 @@ const FurnitureComp = ({
           setImage(Img);
         }}
       >
-       { Img.length>1 &&
-
-        <>
-              <section className={style.smallBtndiv} id={style.smallbdiv}>
-                  {Img.map((e,index)=>{
-                    return(
-
-                      <div key={index} className={index ==0 ?style.smallBtn:style.smallBtn2} >
-
-                    </div>
-                    )
-                  })}
-              </section>
-        </>
-      } 
-<Image alt=" " src={Img[0]} fill></Image>
-         </div>
+        {Img.length > 1 && (
+          <>
+            <section className={style.smallBtndiv} id={style.smallbdiv}>
+              {Img.map((e, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={index == 0 ? style.smallBtn : style.smallBtn2}
+                  ></div>
+                );
+              })}
+            </section>
+          </>
+        )}
+        <Image alt=" " src={Img[0]} fill></Image>
+      </div>
       <h1 className={style.heading}>{name}</h1>
       <div className={style.headingAndDate}>
         <h1 className={style.hh2}>{dateTimeFormateer(date)}</h1>
@@ -153,20 +174,27 @@ const FurnitureComp = ({
                 top: 15,
                 zIndex: 10,
                 filter: "invert(1)",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
               onClick={closeImageModal}
             ></Image>
 
-                { ImageLink?.length > 1 &&
-
-                  <div className={style.navbuttondiv}>
-
-
-                  <button onClick={() => handleImageNavigation("left")} className={style.navButton}>{"<"}</button>
-                  <button onClick={() => handleImageNavigation("right")} className={style.navButton}>{">"}</button>
-                </div>
-                }
+            {ImageLink?.length > 1 && (
+              <div className={style.navbuttondiv}>
+                <button
+                  onClick={() => handleImageNavigation("left")}
+                  className={style.navButton}
+                >
+                  {"<"}
+                </button>
+                <button
+                  onClick={() => handleImageNavigation("right")}
+                  className={style.navButton}
+                >
+                  {">"}
+                </button>
+              </div>
+            )}
             <TransformWrapper
               initialScale={1}
               initialPositionX={0}
@@ -176,13 +204,14 @@ const FurnitureComp = ({
               {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <>
                   <Controls />
-                  <TransformComponent
-
-              style={{width:"100%",height:"100%"}}
-                   >
-              <div className={style.modalImage}>
-                      <Image alt=" " src={ImageLink[currentImageIndex]} fill ></Image>
-              </div>
+                  <TransformComponent style={{ width: "100%", height: "100%" }}>
+                    <div className={style.modalImage}>
+                      <Image
+                        alt=" "
+                        src={ImageLink[currentImageIndex]}
+                        fill
+                      ></Image>
+                    </div>
                   </TransformComponent>
                 </>
               )}

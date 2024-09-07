@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
+import { getAuth } from "firebase/auth";
 
 import {
   getFirestore,
@@ -38,7 +38,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { auth,app,db,storage };
+export { auth, app, db, storage };
 
 export const Firebase = async () => {
   //console.log(app);
@@ -73,7 +73,7 @@ export const updateClientDetails = async (documentId, newData) => {
 
 export const fetchDataLocation = async (location) => {
   //console.log("heree")
-  const q = query(collection(db, "newData"), where("location", "==", location));
+  const q = query(collection(db, "uploads"), where("location", "==", location));
 
   const querySnapshot = await getDocs(q);
   const fetchedData = [];
@@ -101,11 +101,12 @@ export const fetchDataBasedOnId = async () => {
 };
 
 export const fetchData = async () => {
-  const querySnapshot = await getDocs(collection(db, "newData"));
+  const querySnapshot = await getDocs(collection(db, "uploads"));
   const fetchedData = [];
   console.log("calling");
   querySnapshot.forEach((doc) => {
     fetchedData.push({ id: doc.id, ...doc.data() });
+    delete fetchedData.userRef;
   });
   let sortedElements = sortByTimestamp(fetchedData);
   // //console.log(sortedElements)
@@ -144,9 +145,8 @@ export const upLoadData = async (formData) => {
       imageUrl: imageUrls,
       date: new Date(),
       status: "hidden",
-      emailCount:0,
-      emailSentDate:null,
-      
+      emailCount: 0,
+      emailSentDate: null,
     });
     //console.log("Document written with ID: ", docRef.id);
   } catch (error) {
@@ -162,8 +162,7 @@ export const uploadTestimonial = async (formData) => {
       location: formData.location || "",
       date: new Date(),
       status: "hidden",
-      testimonial:formData.testimonial
-      
+      testimonial: formData.testimonial,
     });
     //console.log("Document written with ID: ", docRef.id);
   } catch (error) {
@@ -198,17 +197,14 @@ export const fetchClientData = async () => {
 };
 
 export const fetchSingleBasedOnId = async (donarId) => {
-  try{
-
+  try {
     let docRef = doc(db, "newData", donarId);
     const querySnapshot = await getDoc(docRef);
     let donarDetails = querySnapshot.data();
     return { donarDetails: donarDetails };
-  }catch(e){
+  } catch (e) {
     // console.log(e)
-    console.log(
-      "invalid donar"
-    )
-    return "invalid user"
+    console.log("invalid donar");
+    return "invalid user";
   }
 };

@@ -91,36 +91,97 @@ export default async function handler(req, res) {
     return;
   }
 
-  const form = formidable();
+  const form = formidable({ multiples: true });
   form.parse(req, async (err, fields, files) => {
     if (err) {
-      res.status(500).json({ error: "Error parsing the file" });
+      res.status(500).json({ error: "Error parsing the files" });
       return;
     }
 
-    const file = files["files"][0]; // Get the file object
+    const fileArray = Array.isArray(files["files"])
+      ? files["files"]
+      : [files["files"]];
     try {
+      console.log(decodedToken, "decodedToken");
       const userRefId = decodedToken.userRefId;
+      const uploadedFiles = [];
 
-      const { downloadURL, fileName } = await uploadImageWithCorrectMimeType(
-        file,
-        userRefId
-      );
-      const docRef = await uploadImageWithReferences(
+      for (const file of fileArray) {
+        const { downloadURL, fileName } = await uploadImageWithCorrectMimeType(
+          file,
+          userRefId
+        );
+        uploadedFiles.push(downloadURL);
+      }
+
+      const {
+        fullName,
+        email,
+        phone,
+        location,
+        address,
+        typeOfFurniture,
+        description,
+      } = fields;
+      const docRef = await uploadImagesWithReferences(
         db,
         userRefId,
-        downloadURL,
-        fileName
+        uploadedFiles,
+        fullName[0],
+        email[0],
+        phone[0],
+        location[0],
+        address[0],
+        typeOfFurniture[0],
+        description[0]
       );
-
+      console.log(docRef, "docRef");
       res.status(200).json({
-        message: "File uploaded successfully",
+        message: "Files uploaded successfully",
         fileId: docRef.id,
-        url: downloadURL,
+        uploadedFiles,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: "Error uploading the file" });
+      res.status(500).json({ error: "Error uploading the files" });
     }
   });
+}
+
+async function uploadImagesWithReferences(
+  db,
+  userId,
+  uploadedFiles,
+  fullName,
+  email,
+  phone,
+  location,
+  address,
+  typeOfFurniture,
+  description
+) {
+  console.log(userId, "userId");
+  const userRef = doc(db, "users", userId);
+  console.log(userRef, "userRef");
+  const uploadDocRef = await addDoc(collection(db, "uploads"), {
+    files: uploadedFiles,
+    userRef: userRef,
+    createdAt: serverTimestamp(),
+    fullName,
+    email,
+    phone,
+    location,
+    address,
+    typeOfFurniture,
+    description,
+    status: "showOnPage",
+  });
+
+  const uploadRef = doc(db, "uploads", uploadDocRef.id);
+
+  await updateDoc(userRef, {
+    uploads: arrayUnion(uploadRef),
+  });
+
+  return uploadDocRef;
 }
