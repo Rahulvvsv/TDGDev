@@ -187,11 +187,11 @@ export default function DataGridEmailApprover() {
     let FinalRunner = async () => {
       let fetchedData = await fetcher();
 
-      // console.log(fetchedData);
+      // //console.log(fetchedData);
       let finalRow = fetchedData
         .filter((e) => e !== undefined)
         .map((e) => {
-          // console.log(e)
+          // //console.log(e)
           let value = {
             id: e.client.id,
             Image: e.owner.imageUrl,
@@ -212,10 +212,10 @@ export default function DataGridEmailApprover() {
               clientEmail: e.client.email,
               donarId: e.client.donarId,
               clientId: e.client.id,
-              donarEmail:e.owner.email,
-              donarPhone:e.owner.phone,
-              productImage:e.owner.imageUrl[0],
-              donarName:e.owner.name
+              donarEmail: e.owner.email,
+              donarPhone: e.owner.phone,
+              productImage: e.owner.imageUrl[0],
+              donarName: e.owner.name,
             },
             Reviewer: e.owner.location,
             Date: e.client.date,
@@ -228,7 +228,7 @@ export default function DataGridEmailApprover() {
           };
           return value;
         });
-      // console.log(finalRow);
+      // //console.log(finalRow);
       setRows(finalRow);
     };
     FinalRunner();

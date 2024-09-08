@@ -30,9 +30,9 @@ const ReceipientForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setData((prev) => ({ ...prev, recipientReceivedDate: startDate }));
-    console.log(data);
+    //console.log(data);
     if (validateForm()) {
-      console.log(data, startDate);
+      //console.log(data, startDate);
       // upLoadData(data);
       setSubmitted(true);
     } else {
@@ -46,8 +46,8 @@ const ReceipientForm = ({
   }, [submitted]);
   useEffect(() => {
     updateDocument(productId, { itemStatus: itemStatus });
-    if(itemStatus == "donorFound"){
-    updateDocument(productId, { status : itemStatus });
+    if (itemStatus == "donorFound") {
+      updateDocument(productId, { status: itemStatus });
     }
   }, []);
 

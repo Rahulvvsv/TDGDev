@@ -1,0 +1,167 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.breadcrumb ul {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.imageContainer {
+  position: relative;
+  width: 50%;
+}
+.buttonContainer {
+  margin-top: 1rem;
+}
+.container input {
+  border: 1px solid rgba(146, 135, 123, 1) !important;
+}
+.imageContainer > div > div {
+  /* background-color: red; */
+  width: 540px !important;
+  height: 540px !important;
+  margin-left: 0px !important;
+}
+
+.imageContainer > div {
+  width: 540px !important;
+  height: 540px !important;
+}
+.productImage {
+  border-radius: 0.5rem;
+}
+
+.likeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.productDetails {
+  flex: 1;
+}
+
+.titleContainer {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.titleAbove {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.title {
+  font-family: Montserrat;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 37.8px;
+  text-align: left;
+}
+
+.availability {
+  margin-top: 6.5px;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.38px;
+  letter-spacing: -0.09527089446783066px;
+  text-align: center;
+  color: #797572;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+.section {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  text-align: left;
+}
+
+.buttonContainer {
+  /* display: flex;
+  justify-content: center;
+  margin-top: 1.5rem; */
+  /* background-color: red; */
+  display: flex;
+  margin-bottom: 2rem;
+}
+.buttonContainer > div > div {
+  width: 331px !important;
+}
+.descriptionProduct2 {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.8px;
+  text-align: left;
+  margin-top: 6px;
+  color: rgba(121, 117, 114, 1);
+}
+.descriptionProduct {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.8px;
+  text-align: left;
+  margin-top: 6px;
+}
+.section2 {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+  }
+
+  /* .imageContainer {
+    width: 50%;
+  } */
+
+  .productDetails {
+    width: 50%;
+  }
+}

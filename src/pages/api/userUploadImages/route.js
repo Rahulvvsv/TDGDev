@@ -37,6 +37,7 @@ async function uploadImageWithReferences(db, userId, downloadURL, fileName) {
 
 async function uploadImageWithCorrectMimeType(file, userId) {
   // Function to get the file extension
+  // console.log(file, "file", "fomrfile");
   const getFileExtension = (filename) => {
     return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
   };
@@ -72,10 +73,10 @@ async function uploadImageWithCorrectMimeType(file, userId) {
 
     const snapshot = await uploadBytes(storageRef, fileBuffer, metadata);
     const downloadURL = await getDownloadURL(snapshot.ref);
-    console.log("File uploaded successfully");
+    //console.log("File uploaded successfully");
     return { downloadURL, fileName: file.originalFilename };
   } catch (error) {
-    console.error("Error uploading file: ", error);
+    console.error("Error uploading file: ", error.message);
     throw error;
   }
 }
@@ -102,7 +103,7 @@ export default async function handler(req, res) {
       ? files["files"]
       : [files["files"]];
     try {
-      console.log(decodedToken, "decodedToken");
+      //console.log(decodedToken, "decodedToken");
       const userRefId = decodedToken.userRefId;
       const uploadedFiles = [];
 
@@ -135,14 +136,13 @@ export default async function handler(req, res) {
         typeOfFurniture[0],
         description[0]
       );
-      console.log(docRef, "docRef");
       res.status(200).json({
         message: "Files uploaded successfully",
         fileId: docRef.id,
         uploadedFiles,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       res.status(500).json({ error: "Error uploading the files" });
     }
   });
@@ -160,9 +160,9 @@ async function uploadImagesWithReferences(
   typeOfFurniture,
   description
 ) {
-  console.log(userId, "userId");
+  //console.log(userId, "userId");
   const userRef = doc(db, "users", userId);
-  console.log(userRef, "userRef");
+  //console.log(userRef, "userRef");
   const uploadDocRef = await addDoc(collection(db, "uploads"), {
     files: uploadedFiles,
     userRef: userRef,

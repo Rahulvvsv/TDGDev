@@ -18,7 +18,7 @@ export async function signUp(email, password, name, phone) {
     email,
     password
   );
-  console.log(userCredential, "userCredential");
+  //console.log(userCredential, "userCredential");
 
   const docRef = await addDoc(collection(db, "users"), {
     email: email,
@@ -47,7 +47,7 @@ export async function signIn(email, password) {
   const q = query(usersRef, where("email", "==", email));
   const querySnapshot = await getDocs(q);
   if (querySnapshot.empty) {
-    console.log("No user found with this email");
+    //console.log("No user found with this email");
   } else {
     const userDoc = querySnapshot.docs[0];
     userRefId = userDoc.id;

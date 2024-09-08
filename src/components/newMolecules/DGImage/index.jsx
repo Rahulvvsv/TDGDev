@@ -1,4 +1,3 @@
-
 import style from "./index.module.css";
 import Image from "next/image";
 import Button from "../../atoms/button";
@@ -10,9 +9,8 @@ import {
   useControls,
 } from "react-zoom-pan-pinch";
 
-const FurnitureComp = (params,key=1) => {
-    
-let Img = params["data"]
+const FurnitureComp = (params, key = 1) => {
+  let Img = params["data"];
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
   const [ImageLink, setImage] = useState();
@@ -57,15 +55,19 @@ let Img = params["data"]
   }
 
   const handleImageNavigation = (direction) => {
-    // console.log("clickedd")
+    // //console.log("clickedd")
     if (direction === "left") {
-      setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? ImageLink.length - 1 : prevIndex - 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? ImageLink.length - 1 : prevIndex - 1
+      );
     } else if (direction === "right") {
-      setCurrentImageIndex((prevIndex) => (prevIndex === ImageLink.length - 1 ? 0 : prevIndex + 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === ImageLink.length - 1 ? 0 : prevIndex + 1
+      );
     }
   };
   return (
-    <div  key={key}>
+    <div key={key}>
       <div
         className={style.image}
         onClick={() => {
@@ -73,9 +75,8 @@ let Img = params["data"]
           setImage(Img);
         }}
       >
-        <Image width={75} height={75} src={Img[0]} ></Image>
-         </div>
-
+        <Image width={75} height={75} src={Img[0]}></Image>
+      </div>
 
       <Modal
         isOpen={imageModalIsOpen}
@@ -98,20 +99,27 @@ let Img = params["data"]
                 top: 15,
                 zIndex: 10,
                 filter: "invert(1)",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
               onClick={closeImageModal}
             ></Image>
 
-                { ImageLink?.length > 1 &&
-
-                  <div className={style.navbuttondiv}>
-
-
-                  <button onClick={() => handleImageNavigation("left")} className={style.navButton}>{"<"}</button>
-                  <button onClick={() => handleImageNavigation("right")} className={style.navButton}>{">"}</button>
-                </div>
-                }
+            {ImageLink?.length > 1 && (
+              <div className={style.navbuttondiv}>
+                <button
+                  onClick={() => handleImageNavigation("left")}
+                  className={style.navButton}
+                >
+                  {"<"}
+                </button>
+                <button
+                  onClick={() => handleImageNavigation("right")}
+                  className={style.navButton}
+                >
+                  {">"}
+                </button>
+              </div>
+            )}
             <TransformWrapper
               initialScale={1}
               initialPositionX={0}
@@ -121,13 +129,14 @@ let Img = params["data"]
               {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <>
                   <Controls />
-                  <TransformComponent
-
-              style={{width:"100%",height:"100%"}}
-                   >
-              <div className={style.modalImage}>
-                      <Image alt=" " src={ImageLink[currentImageIndex]} fill ></Image>
-              </div>
+                  <TransformComponent style={{ width: "100%", height: "100%" }}>
+                    <div className={style.modalImage}>
+                      <Image
+                        alt=" "
+                        src={ImageLink[currentImageIndex]}
+                        fill
+                      ></Image>
+                    </div>
                   </TransformComponent>
                 </>
               )}

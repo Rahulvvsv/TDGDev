@@ -10,8 +10,8 @@ import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import { Emailer } from "@/lib/emailjs";
 
-const UploadRequestHandlerComp = ({ client, owner, status,key }) => {
-  // //console.log(unqid, "from here");
+const UploadRequestHandlerComp = ({ client, owner, status, key }) => {
+  // ////console.log(unqid, "from here");
   const router = useRouter();
 
   const acceptHandler = (id) => {
@@ -42,22 +42,24 @@ const UploadRequestHandlerComp = ({ client, owner, status,key }) => {
                 Owner Information
               </h1>
               <h1 className={style.heading}>
-                Date-{owner?.date?.toDate().toString().slice(0,16)}
+                Date-{owner?.date?.toDate().toString().slice(0, 16)}
               </h1>
-              <h1 className={style.heading}>Location-{owner.location || `None`}</h1>
+              <h1 className={style.heading}>
+                Location-{owner.location || `None`}
+              </h1>
               <h1 className={style.heading}>Email-{owner.email || `None`}</h1>
-              <h1 className={style.heading}>Phone-{owner.phone|| `None`}</h1>
+              <h1 className={style.heading}>Phone-{owner.phone || `None`}</h1>
             </div>
             <div className={style.right}>
               <h1 className={style.heading + " " + style.heading2}>
                 Client Information
               </h1>
               <h1 className={style.heading}>
-                Date-{client?.date?.toDate().toString().slice(0,16)}
+                Date-{client?.date?.toDate().toString().slice(0, 16)}
               </h1>
-              <h1 className={style.heading}>Name-{client.name|| `None`}</h1>
-              <h1 className={style.heading}>Email-{client.email|| `None`}</h1>
-              <h1 className={style.heading}>Phone-{client.phone|| `None`}</h1>
+              <h1 className={style.heading}>Name-{client.name || `None`}</h1>
+              <h1 className={style.heading}>Email-{client.email || `None`}</h1>
+              <h1 className={style.heading}>Phone-{client.phone || `None`}</h1>
             </div>
           </div>
           {client.status == "newReq" ? (
@@ -69,8 +71,8 @@ const UploadRequestHandlerComp = ({ client, owner, status,key }) => {
                     name: owner.name,
                     image: owner.imageUrl[0],
                     to_email: client.email,
-                    email:owner.email,
-                    phone:owner.phone
+                    email: owner.email,
+                    phone: owner.phone,
                   });
                 }}
                 content={"Send"}
@@ -122,7 +124,6 @@ const EmailApprover = () => {
 
   const [received, setReceived] = useState(false);
   useEffect(() => {
-
     function sortByTimestamp(data) {
       return data.sort((a, b) => {
         if (a.client.date.seconds === b.client.date.seconds) {
@@ -141,10 +142,10 @@ const EmailApprover = () => {
     const DataCheckers = async (data3) => {
       if (selectedButton == 1) {
         let newArr = data3.map((e) => {
-          // //console.log(e)
+          // ////console.log(e)
           if (e != undefined) {
             if (e.client.status == "newReq") {
-              //console.log(e.client);
+              ////console.log(e.client);
               return e;
             }
           }
@@ -162,12 +163,12 @@ const EmailApprover = () => {
         });
         setDataToShow(newArr);
       }
-      //console.log(dataToShow);
+      ////console.log(dataToShow);
     };
 
     let FinalRunner = async () => {
       let fetchedData = await fetcher();
-      //console.log(fetchedData);
+      ////console.log(fetchedData);
       let runner = await DataCheckers(fetchedData);
     };
     FinalRunner();
@@ -203,19 +204,19 @@ const EmailApprover = () => {
         </div>
       </div>
       <Suspense fallback={<h1>Loading</h1>}>
-      {dataToShow.map((e, key) => {
+        {dataToShow.map((e, key) => {
           if (e != undefined) {
-              return (
-                  <UploadRequestHandlerComp
-                  unqid={e.id}
-                  key={e.id}
-                  client={e.client}
-                  owner={e.owner}
-                  ></UploadRequestHandlerComp>
-                  );
-                }
-            })}
-            </Suspense>
+            return (
+              <UploadRequestHandlerComp
+                unqid={e.id}
+                key={e.id}
+                client={e.client}
+                owner={e.owner}
+              ></UploadRequestHandlerComp>
+            );
+          }
+        })}
+      </Suspense>
     </section>
   );
 };

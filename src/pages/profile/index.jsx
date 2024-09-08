@@ -10,12 +10,13 @@ const Proflie = () => {
   const [favourites, setFavourites] = useState([]);
   const [data, setData] = useState([]);
   const [myRequests, setMyRequests] = useState([]);
+  const [href, setHref] = useState("/profile/viewUpload");
   const axiosService = new AxiosService();
+
   useEffect(() => {
     const fetchUploads = async () => {
       try {
         const data = await axiosService.getMyProfile();
-        console.log(data);
         setUploads(data?.uploads);
         setMyRequests(data?.myRequests);
         setFavourites(data?.favourites);
@@ -27,16 +28,22 @@ const Proflie = () => {
 
     fetchUploads();
   }, []);
+  console.log(uploads);
+
+  const handleItemChange = (newItem, newData, newHrefPrefix) => {
+    setItem(newItem);
+    setData(newData);
+    setHref(newHrefPrefix);
+  };
 
   return (
     <div className={style.main}>
       <div className={style.main2}>
         <div className={style.main3}>
           <button
-            onClick={() => {
-              setItem("yourUploads");
-              setData(uploads);
-            }}
+            onClick={() =>
+              handleItemChange("yourUploads", uploads, "/profile/viewUpload")
+            }
             className={item == "yourUploads" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
@@ -44,10 +51,13 @@ const Proflie = () => {
           </button>
 
           <button
-            onClick={() => {
-              setItem("yourRequests");
-              setData(myRequests);
-            }}
+            onClick={() =>
+              handleItemChange(
+                "yourRequests",
+                myRequests,
+                "/profile/viewRequest"
+              )
+            }
             className={item === "yourRequests" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
@@ -64,19 +74,24 @@ const Proflie = () => {
           </button>
         </div>
         <div className={style.furnitureList}>
-          {data.map((item) => (
-            <FurnitureComp
-              key={item.id}
-              key1={item.id}
-              Img={item.files}
-              name={item.typeOfFurniture}
-              desc={item.description}
-              unqId={item.id}
-              date={item.createdAt}
-              location={item.location}
-              showButton={false}
-            />
-          ))}
+          {data
+            .filter((item) => item.files != undefined)
+            .map((item) => (
+              <FurnitureComp
+                key={item.id}
+                key1={item.id}
+                Img={item.files}
+                name={item.typeOfFurniture}
+                desc={item.description}
+                unqId={item.id}
+                date={item.createdAt}
+                location={item.location}
+                showButton={true}
+                content={"View Furniture"}
+                showDetails={false}
+                href={`${href}/${item.id}`}
+              />
+            ))}
         </div>
       </div>
     </div>

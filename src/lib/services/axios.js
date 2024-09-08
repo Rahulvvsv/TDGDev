@@ -61,13 +61,53 @@ class AxiosService {
     }
   }
 
-  async getFurnitureById(id) {
+  async getFurnitureById(id, cookie) {
     try {
-      const response = await this.api.get(`getFurnitureById/route?id=${id}`);
+      const response = await this.api.get(`getFurnitureById/route?id=${id}`, {
+        headers: {
+          Cookie: cookie,
+        },
+      });
       return { data: response.data, error: null };
     } catch (error) {
       console.error("Error fetching furniture by ID:", error.message);
-      return { data: null, error: error.message || "An error occurred" };
+      return { data: {}, error: error.message || "An error occurred" };
+    }
+  }
+  async userRequest(data) {
+    try {
+      const response = await this.api.post("userRequests/route", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error making user request:", error);
+      throw error;
+    }
+  }
+  async uploadUserImages(data) {
+    try {
+      const formData = new FormData();
+
+      // Append all properties from the data object to formData
+      for (const key in data) {
+        if (key === "image") {
+          // Assuming 'image' is an array of File objects
+          data[key].forEach((file, index) => {
+            formData.append(`files`, file);
+          });
+        } else {
+          formData.append(key, data[key]);
+        }
+      }
+
+      const response = await this.api.post("userUploadImages/route", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading user images:", error);
+      throw error;
     }
   }
 }

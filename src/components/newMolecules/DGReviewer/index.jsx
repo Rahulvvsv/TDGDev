@@ -1,6 +1,5 @@
-
 const Reviewer = (data) => {
-    // console.log(data,'from reviewer')
+  // //console.log(data,'from reviewer')
   function lwr(str) {
     // Remove spaces from the input string
     let str2 = str.replace(/\s/g, "");
@@ -17,6 +16,11 @@ const Reviewer = (data) => {
     return { lowerStr, mail };
   }
 
-  return <p style={{marginTop:50,marginLeft:0}}> {lwr(data["data"].value).mail + "@tdgfurnitureexchange.com"}</p>;
+  return (
+    <p style={{ marginTop: 50, marginLeft: 0 }}>
+      {" "}
+      {lwr(data["data"].value).mail + "@tdgfurnitureexchange.com"}
+    </p>
+  );
 };
 export default Reviewer;

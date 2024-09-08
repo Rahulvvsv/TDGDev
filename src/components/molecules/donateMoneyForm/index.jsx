@@ -14,11 +14,11 @@
 
 //       if(searchParams.has("donation")){
 //           let value = searchParams.get("donation")
-//           //console.log("it has")
+//           ////console.log("it has")
 //           if(value=="1"){
-//               //console.log('hello there')
+//               ////console.log('hello there')
 //               setSubmitted(true);
-              
+
 //             }
 //         }
 //     },[searchParams])
@@ -27,7 +27,7 @@
 //     let name = e.target.name;
 //     let value = e.target.value;
 //     setData((prev) => ({ ...prev, [name]: value }));
-//     //console.log(data);
+//     ////console.log(data);
 //   };
 //   return (
 //     <div className={style.main}>
@@ -122,13 +122,13 @@ const DonateMoneyForm = ({ href }) => {
     }
 
     // Validate email
-       if (!data.email || !data.email.trim()) {
-            newErrors.email = "Email is required";
-            isValid = false;
-        } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-            newErrors.email = "Invalid email address";
-            isValid = false;
-        }
+    if (!data.email || !data.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      newErrors.email = "Invalid email address";
+      isValid = false;
+    }
 
     // Validate phone
     if (!data.phone || data.phone.trim() === "") {
@@ -165,49 +165,52 @@ const DonateMoneyForm = ({ href }) => {
     <div className={style.main}>
       {!submitted ? (
         <>
-            <InputField
-              onChange={dataSetter}
-              placeholder={"FULL NAME*"}
-              name="fullName"
-            />
-            {errors.fullName && (
-              <div className={style.error}>{errors.fullName}</div>
-            )}
-            <div className={style.main2}>
-              <div>
-                <InputField
-                  onChange={dataSetter}
-                  placeholder={"EMAIL*"}
-                  name="email"
-                />
-                {errors.email && (
-                  <div className={style.error} style={{marginTop:10}}>{errors.email}</div>
-                  
-                )}
-              </div>
-
-              <div>
-                <InputField
-                  placeholder={"PHONE*"}
-                  onChange={dataSetter}
-                  name="phone"
-                />
-                {errors.phone && (
-                  <div className={style.error}style={{marginTop:10}}>{errors.phone}</div>
-                )}
-              </div>
+          <InputField
+            onChange={dataSetter}
+            placeholder={"FULL NAME*"}
+            name="fullName"
+          />
+          {errors.fullName && (
+            <div className={style.error}>{errors.fullName}</div>
+          )}
+          <div className={style.main2}>
+            <div>
+              <InputField
+                onChange={dataSetter}
+                placeholder={"EMAIL*"}
+                name="email"
+              />
+              {errors.email && (
+                <div className={style.error} style={{ marginTop: 10 }}>
+                  {errors.email}
+                </div>
+              )}
             </div>
-            <InputField
-              type="text-area"
-              height={100}
-              onChange={dataSetter}
-              placeholder={"ENTER SERVICE*"}
-              name="service"
-            />
-            {errors.service && (
-              <div className={style.error}>{errors.service}</div>
-            )}
-            <Button type="submit" content={"SUBMIT"} onClick={handleSubmit} />
+
+            <div>
+              <InputField
+                placeholder={"PHONE*"}
+                onChange={dataSetter}
+                name="phone"
+              />
+              {errors.phone && (
+                <div className={style.error} style={{ marginTop: 10 }}>
+                  {errors.phone}
+                </div>
+              )}
+            </div>
+          </div>
+          <InputField
+            type="text-area"
+            height={100}
+            onChange={dataSetter}
+            placeholder={"ENTER SERVICE*"}
+            name="service"
+          />
+          {errors.service && (
+            <div className={style.error}>{errors.service}</div>
+          )}
+          <Button type="submit" content={"SUBMIT"} onClick={handleSubmit} />
         </>
       ) : (
         <>
@@ -219,11 +222,12 @@ const DonateMoneyForm = ({ href }) => {
           >
             <Image alt=" " src={"/Icon/4.png"} width={190} height={190} />
             <h1 className={style.heading}>
-              Thank you for your generous donation to our furniture exchange initiative.
-              </h1>
-              <h1 className={style.heading}>
-                Your support helps transform houses into homes for those in need.
-              </h1>
+              Thank you for your generous donation to our furniture exchange
+              initiative.
+            </h1>
+            <h1 className={style.heading}>
+              Your support helps transform houses into homes for those in need.
+            </h1>
           </motion.div>
         </>
       )}

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import style from "./index.module.css";
 
 const Status = (props) => {
-  // console.log("props", props);
+  // //console.log("props", props);
   const initialStatus = props.data.value.status;
   const [status, setStatus] = useState(initialStatus);
 
@@ -55,22 +55,22 @@ const Status = (props) => {
 
   const handleChange = (event) => {
     let value = event.target.value;
-    // console.log("loggin values", value,typeof(value), id);
+    // //console.log("loggin values", value,typeof(value), id);
     if (value === "showOnPage") {
-      // console.log("in here", id);
+      // //console.log("in here", id);
       updateDocument(id, { status: "showOnPage" });
     } else if (value === "declined") {
-      // console.log("in here 2", id);
+      // //console.log("in here 2", id);
       updateDocument(id, { status: "declined" });
     } else if (value === "donorFound") {
-      // console.log("in here 3", id);
+      // //console.log("in here 3", id);
       updateDocument(id, { status: "donorFound" });
     }
     setStatus(event.target.value);
   };
 
   useEffect(() => {
-    // console.log(props, status);
+    // //console.log(props, status);
   }, [status]);
 
   const dropdownValue = getDropdownValue(initialStatus);

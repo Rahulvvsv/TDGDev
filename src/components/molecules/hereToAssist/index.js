@@ -41,7 +41,7 @@ const HereToAssist = ({ openModal, setEmail }) => {
           {StatesList.map((e, key) => (
             <Button
               onClick={() => {
-                // console.log("inside this buttton");
+                // //console.log("inside this buttton");
                 openModal(true);
                 setEmail(lwr(e).mail + "@tdgfurnitureexchange.com");
               }}

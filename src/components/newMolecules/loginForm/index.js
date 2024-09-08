@@ -27,19 +27,19 @@ const LoginForm = ({ onSignUpClick }) => {
       try {
         // // Call the signup function from AxiosService
         // const response = await apiService.login(data);
-        // console.log("Signup successful:", response);
+        // //console.log("Signup successful:", response);
         // setSubmitted(true);
         // // Here you might want to redirect the user or show a success message
         const { message, error } = await apiService.login(data);
         if (!error) {
           if (message == "success") {
             router.push("/");
-            console.log("loggedIn");
+            //console.log("loggedIn");
           }
           setSubmitted(true);
         } else {
           setErrors({ backend: message });
-          console.log(errors, "hello there");
+          //console.log(errors, "hello there");
         }
       } catch (error) {
         console.error("Signup failed:", error);

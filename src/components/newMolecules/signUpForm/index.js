@@ -30,16 +30,16 @@ const SignUpForm = ({ onLoginClick }) => {
         if (!error) {
           if (message == "success") {
             router.push("/");
-            console.log("loggedIn");
+            //console.log("loggedIn");
           }
           setSubmitted(true);
         } else {
           setErrors({ backend: message });
-          console.log(errors, "hello there");
+          //console.log(errors, "hello there");
         }
       } catch (error) {
         console.error("Signup failed:", error);
-        console.log(errors, "hello there");
+        //console.log(errors, "hello there");
       } finally {
         setIsLoading(false);
       }

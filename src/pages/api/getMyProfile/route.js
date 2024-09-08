@@ -76,13 +76,14 @@ export default async function handler(req, res) {
               uploadedImageData = uploadedImageSnapshot.data();
               uploadedImageData = {
                 id: uploadedImageSnapshot.id,
-                url: uploadedImageData.url,
+                ...uploadedImageData,
               };
+              delete uploadedImageData.userRef;
+              delete uploadedImageData.allRequests;
             }
 
             let data = {
-              id: requestSnapshot.id,
-              uploadedImage: uploadedImageData,
+              ...uploadedImageData,
             };
 
             return data;

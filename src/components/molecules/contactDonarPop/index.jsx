@@ -13,11 +13,11 @@ const ContactDonarPopUP = ({ data, setData, modalCloser }) => {
     let name = e.target.name;
     let value = e.target.value;
     setData((prev) => ({ ...prev, [name]: value }));
-    //console.log(data);
+    ////console.log(data);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log("clicked", data);
+    ////console.log("clicked", data);
     uploadContactForm(data);
     setSubmitted(true);
     toast.success("Your request is received");
@@ -47,13 +47,17 @@ const ContactDonarPopUP = ({ data, setData, modalCloser }) => {
               {/* Thank you for your generous offer to donate your service. We will
               notify you as soon as an opportunity comes up, and you can confirm
               your intent to donate. We appreciate your support! */}
-              Your request is received. Our team will review and get back to you.
+              Your request is received. Our team will review and get back to
+              you.
             </h1>
             <Button content={"Back"} onClick={modalCloser}></Button>
           </div>
         ) : (
           <>
-            <p>Fill out the form if you're interested in this furniture piece or if you have any questions.</p>
+            <p>
+              Fill out the form if you're interested in this furniture piece or
+              if you have any questions.
+            </p>
             <InputField
               onChange={dataSetter}
               placeholder={"NAME"}

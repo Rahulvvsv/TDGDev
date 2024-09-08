@@ -1,4 +1,3 @@
-
 import style from "./index.module.css";
 import InputField from "../../atoms/inputField";
 import Button from "../../atoms/button";
@@ -48,14 +47,14 @@ const ContactForm = () => {
   const dataSetter = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
-    //console.log(data);
+    ////console.log(data);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       // SUBMIT the form data
-      //console.log("Form submitted:", data);
+      ////console.log("Form submitted:", data);
       // Reset form after submission if needed
       //   setData({
       //     name: "",
@@ -64,7 +63,7 @@ const ContactForm = () => {
       //   });
       setErrors({});
       setSubmitted(true);
-      ContactEmailer(data)
+      ContactEmailer(data);
     }
   };
 
@@ -107,14 +106,8 @@ const ContactForm = () => {
       ) : (
         <div className={style.main2}>
           <Image alt=" " src={"/Icon/4.png"} width={190} height={190} />
-          <p>
-            Thank you for submitting the Contact Form.
-          </p>
-          <p>
-
-              Our team will reach out
-            to you soon!
-          </p>
+          <p>Thank you for submitting the Contact Form.</p>
+          <p>Our team will reach out to you soon!</p>
         </div>
       )}
       <div className={style.main3}>

@@ -1,25 +1,32 @@
-
-import style from "./index.module.css"
+import style from "./index.module.css";
 import AllFurnitureProducts from "@/components/molecules/allFurnitureProducts";
 import { fetchDataLocation } from "@/lib/firebase";
 import BackButton from "@/components/molecules/backButton";
-export const locationsData = ["Baltimore","Cleveland","Jerusalem","Lakewood","Los Angeles","Miami","New Jersey","New York","Toronto"]
+export const locationsData = [
+  "Baltimore",
+  "Cleveland",
+  "Jerusalem",
+  "Lakewood",
+  "Los Angeles",
+  "Miami",
+  "New Jersey",
+  "New York",
+  "Toronto",
+];
 import { Suspense } from "react";
-const index = ({data,id}) => {
-    return (
-        <section className={style.main}>
-          <section className={style.internal}>
-          <BackButton></BackButton>
-          </section>
-          <h1 className={style.heading}>{id}</h1>
-          <Suspense fallback={<h1>Loading</h1>}>
-
-          
-          <AllFurnitureProducts data={JSON.parse(data)}></AllFurnitureProducts>
-          </Suspense>
-        </section>
-      );
-}
+const index = ({ data, id }) => {
+  return (
+    <section className={style.main}>
+      <section className={style.internal}>
+        <BackButton></BackButton>
+      </section>
+      <h1 className={style.heading}>{id}</h1>
+      <Suspense fallback={<h1>Loading</h1>}>
+        <AllFurnitureProducts data={JSON.parse(data)}></AllFurnitureProducts>
+      </Suspense>
+    </section>
+  );
+};
 
 // export async function getStaticPaths(context) {
 //     let mappedData = [];
@@ -35,16 +42,17 @@ const index = ({data,id}) => {
 //   }
 
 export async function getServerSideProps(context) {
-    const {params} = context;
-    let id  = params.location;
-    //console.log(id)
-    let data = await fetchDataLocation(id);
-    data =JSON.stringify(data)
+  const { params } = context;
+  let id = params.location;
+  ////console.log(id)
+  let data = await fetchDataLocation(id);
+  data = JSON.stringify(data);
 
   return {
     props: {
-      data,id
-    }
+      data,
+      id,
+    },
   };
-} 
+}
 export default index;

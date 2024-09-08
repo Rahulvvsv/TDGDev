@@ -15,29 +15,15 @@ const FurnitureComp = ({
   name = "None",
   desc = "None",
   key1,
+  content = "REQUEST ITEM",
   showButton = true,
+  showDetails = true,
   unqId,
   date = new Date(),
   location,
+  href = `/donate/getFurnitureById/${unqId}`,
 }) => {
-  console.log(
-    Img,
-    "img",
-    name,
-    "name",
-    desc,
-    "desc",
-
-    "key",
-    showButton,
-    "showButton",
-    unqId,
-    "unqId",
-    date,
-    "date",
-    location,
-    "location"
-  );
+  //console.log(Img, "img");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
   const [ImageLink, setImage] = useState();
@@ -82,7 +68,7 @@ const FurnitureComp = ({
   }
 
   const handleImageNavigation = (direction) => {
-    console.log("clickedd");
+    //console.log("clickedd");
     if (direction === "left") {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === 0 ? ImageLink.length - 1 : prevIndex - 1
@@ -102,7 +88,7 @@ const FurnitureComp = ({
           setImage(Img);
         }}
       >
-        {Img.length > 1 && (
+        {Img != undefined && Img.length > 1 && (
           <>
             <section className={style.smallBtndiv} id={style.smallbdiv}>
               {Img.map((e, index) => {
@@ -118,21 +104,24 @@ const FurnitureComp = ({
         )}
         <Image alt=" " src={Img[0]} fill></Image>
       </div>
-      <h1 className={style.heading}>{name}</h1>
-      <div className={style.headingAndDate}>
-        <h1 className={style.hh2}>{dateTimeFormateer(date)}</h1>
-        <h1 className={style.hh2}>{location}</h1>
-      </div>
-      <h1 className={style.desc}>{desc}</h1>
-
+      {showDetails && (
+        <>
+          <h1 className={style.heading}>{name}</h1>
+          <div className={style.headingAndDate}>
+            <h1 className={style.hh2}>{dateTimeFormateer(date)}</h1>
+            <h1 className={style.hh2}>{location}</h1>
+          </div>
+          <h1 className={style.desc}>{desc}</h1>
+        </>
+      )}
       {showButton && (
         <Button
           width={270}
-          href={""}
           backgroundColor={"white"}
-          content={"REQUEST ITEM"}
+          content={content}
           fontColor={"rgba(121, 117, 114, 1)"}
-          onClick={openModal}
+          // onClick={openModal}
+          href={href}
           btnClass={2}
         ></Button>
       )}

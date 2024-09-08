@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
       // const userDetails = await fetchSingleBasedOnId(donorId);
       // updateDocument(donorId,{itemStatus:itemStatus})
-      // console.log(userDetails)
+      // //console.log(userDetails)
       res.status(200).send("<h1>Thank you for your input</h1>");
     } catch (e) {
       res.status(200).json({ message: "something went wrong" });

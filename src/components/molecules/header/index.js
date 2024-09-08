@@ -41,7 +41,7 @@ const Header = () => {
     }
 
     setAuthCookes(cookies["loggedIn"]);
-    console.log(authCookie, cookies, "from here");
+    //console.log(authCookie, cookies, "from here");
   }, [search, cookies]);
   return (
     <div style={{ position: "relative" }}>

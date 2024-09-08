@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import style from "./index.module.css";
 import { updateTestimonialDocument } from "@/lib/firebase";
 const Status = (props) => {
-  // console.log("props", props);
+  // //console.log("props", props);
   const initialStatus = props.data.value.status;
   const [status, setStatus] = useState(initialStatus);
 
@@ -26,21 +26,16 @@ const Status = (props) => {
 
   const getDropdownOptions = (status) => {
     switch (status) {
-
       case "showOnPage":
-        return [
-          { value: "declined", label: "remove from website" },
-        ];
+        return [{ value: "declined", label: "remove from website" }];
       case "hidden":
         return [
           { value: "declined", label: "remove from website" },
           { value: "showOnPage", label: "publish on the website" },
         ];
       case "declined":
-        return [
-          { value: "showOnPage", label: "publish on the website" },
-        ];
-        
+        return [{ value: "showOnPage", label: "publish on the website" }];
+
       default:
         return [];
     }
@@ -48,23 +43,23 @@ const Status = (props) => {
 
   const handleChange = (event) => {
     let value = event.target.value;
-    // console.log("loggin values", value,typeof(value), id);
+    // //console.log("loggin values", value,typeof(value), id);
     if (value === "showOnPage") {
-      // console.log("in here", id);
+      // //console.log("in here", id);
       updateTestimonialDocument(id, { status: "showOnPage" });
     } else if (value === "declined") {
-      // console.log("in here 2", id);
+      // //console.log("in here 2", id);
       updateTestimonialDocument(id, { status: "declined" });
     } else if (value === "donorFound") {
-      // console.log("in here 3", id);
+      // //console.log("in here 3", id);
       updateTestimonialDocument(id, { status: "donorFound" });
     }
     setStatus(event.target.value);
   };
 
   useEffect(() => {
-    // console.log(props, status);
-  }, [ status]);
+    // //console.log(props, status);
+  }, [status]);
 
   const dropdownValue = getDropdownValue(initialStatus);
   const dropdownOptions = getDropdownOptions(initialStatus);
@@ -73,7 +68,7 @@ const Status = (props) => {
     <div className={style.status + " " + style[status]}>
       <div className={style.dropdownContainer}>
         <select
-          className={style.dropdown +" " + style[status]}
+          className={style.dropdown + " " + style[status]}
           value={status}
           onChange={handleChange}
         >

@@ -13,7 +13,7 @@
 //         let name = e.target.name;
 //         let value = e.target.value;
 //         setData(prev => ({...prev,[name]:value}))
-//         //console.log(data)
+//         ////console.log(data)
 //     }
 //     return (
 //         <div className={style.main}>

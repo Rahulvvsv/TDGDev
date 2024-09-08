@@ -4,8 +4,16 @@ import style from "./index.module.css";
 import { updateClientDetails } from "@/lib/firebase";
 import { Emailer } from "@/lib/emailjs";
 const Status = (props) => {
-  let {clientEmail,clientId,donarId, donarEmail,donarPhone,productImage,donarName} = props.data.value;
-  // console.log("props", clientEmail,clientId,donarId);
+  let {
+    clientEmail,
+    clientId,
+    donarId,
+    donarEmail,
+    donarPhone,
+    productImage,
+    donarName,
+  } = props.data.value;
+  // //console.log("props", clientEmail,clientId,donarId);
   const initialStatus = props.data.value.status;
   const [status, setStatus] = useState(initialStatus);
 
@@ -29,9 +37,7 @@ const Status = (props) => {
   const getDropdownOptions = (status) => {
     switch (status) {
       case "Sent":
-        return [
-          { value: "Sent", label: "Resend Email" },
-        ];
+        return [{ value: "Sent", label: "Resend Email" }];
       case "newReq":
         return [
           { value: "Sent", label: "Send Email" },
@@ -44,10 +50,8 @@ const Status = (props) => {
           { value: "donorFound", label: "donor Found" },
         ];
 
-        
       case "donorFound":
-        return [
-        ];
+        return [];
       default:
         return [];
     }
@@ -55,34 +59,34 @@ const Status = (props) => {
 
   const handleChange = (event) => {
     let value = event.target.value;
-    // console.log("loggin values", value,typeof(value), id);
+    // //console.log("loggin values", value,typeof(value), id);
     if (value === "Sent") {
-      // console.log("in here", id);
+      // //console.log("in here", id);
       // updateDocument(id, { status: "showOnPage" });
 
-    updateClientDetails(clientId, { status: "Sent" });
-                  Emailer({
-                    name: donarName,
-                    image: productImage,
-                    to_email: clientEmail,
-                    email:donarEmail,
-                    phone:donarPhone
-                  });
+      updateClientDetails(clientId, { status: "Sent" });
+      Emailer({
+        name: donarName,
+        image: productImage,
+        to_email: clientEmail,
+        email: donarEmail,
+        phone: donarPhone,
+      });
     } else if (value === "Declined") {
-      // console.log("in here 2", id);
+      // //console.log("in here 2", id);
 
-    updateClientDetails(clientId, { status: "Declined" });
+      updateClientDetails(clientId, { status: "Declined" });
       // updateDocument(id, { status: "Declined" });
     } else if (value === "donorFound") {
-      // console.log("in here 3", id);
+      // //console.log("in here 3", id);
       // updateDocument(id, { status: "donorFound" });
     }
     setStatus(event.target.value);
   };
 
   useEffect(() => {
-    // console.log(props, status);
-  }, [ status]);
+    // //console.log(props, status);
+  }, [status]);
 
   const dropdownValue = getDropdownValue(initialStatus);
   const dropdownOptions = getDropdownOptions(initialStatus);
@@ -91,7 +95,7 @@ const Status = (props) => {
     <div className={style.status + " " + style[status]}>
       <div className={style.dropdownContainer}>
         <select
-          className={style.dropdown+  " " + style[status]}
+          className={style.dropdown + " " + style[status]}
           value={status}
           onChange={handleChange}
         >

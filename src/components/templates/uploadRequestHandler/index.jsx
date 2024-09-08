@@ -7,7 +7,7 @@ import Button from "../../atoms/button";
 import { updateDocument } from "../../../lib/firebase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 const UploadRequestHandlerComp = ({
   img,
@@ -18,20 +18,20 @@ const UploadRequestHandlerComp = ({
   email,
   unqid,
   status,
-  udate
+  udate,
 }) => {
-  // //console.log(unqid, "from here");
+  // ////console.log(unqid, "from here");
   const router = useRouter();
 
   const acceptHandler = (id) => {
-    // //console.log("clickedd", id);
+    // ////console.log("clickedd", id);
     updateDocument(id, { status: "showOnPage" });
     // router.push("")
-    toast.success("Item added to page")
+    toast.success("Item added to page");
   };
   const declineHandler = (id) => {
     updateDocument(id, { status: "declined" });
-    toast.success("Item removed from main page")
+    toast.success("Item removed from main page");
     // router.push("")
   };
 
@@ -48,7 +48,9 @@ const UploadRequestHandlerComp = ({
           ></FurnitureComp>
         </div>
         <div className={style.right}>
-          <h1 className={style.heading}>Date-{udate?.toDate().toString().slice(0,16) || `None`}</h1>
+          <h1 className={style.heading}>
+            Date-{udate?.toDate().toString().slice(0, 16) || `None`}
+          </h1>
           <h1 className={style.heading}>Location-{location || `None`} </h1>
           <h1 className={style.heading}>Email-{email || `None`}</h1>
 
@@ -104,17 +106,15 @@ const UploadRequestHandlerComp = ({
 
 const UploadRequestHandler = () => {
   const [dataToShow, setDataToShow] = useState([]);
-  const [data,setData] = useState([])
+  const [data, setData] = useState([]);
   const [selectedButton, setSelectedButton] = useState(1);
 
-
   useEffect(() => {
-
-    const fetcher = async () =>{
+    const fetcher = async () => {
       let data = await fetchData();
-      setData(data)
-    }
-     fetcher();
+      setData(data);
+    };
+    fetcher();
     if (selectedButton == 1) {
       let newArr = data.map((e) => {
         if (e.status == "hidden") {
@@ -131,10 +131,10 @@ const UploadRequestHandler = () => {
         }
       });
       setDataToShow(newArr);
-      console.log("hi")
+      //console.log("hi")
     }
   }, [selectedButton]);
-return (
+  return (
     <section className={style.main3}>
       <div className={style.main2}>
         <h1 className={style.heading1}>APPROVE IMAGES </h1>
@@ -165,28 +165,25 @@ return (
         </div>
       </div>
       <Suspense fallback={<h1>Loading</h1>}>
-
-      {dataToShow.map((e, key) => {
-        if(e!=undefined){
-          
-          return (
-            
-            <UploadRequestHandlerComp
-            unqid={e.id}
-            key={e.id}
-            img={e.imageUrl || "/"}
-            name={e.name}
-            desc={e.description}
-            date={e.timestamp}
-            location={e.location}
-            email={e.email}
-            status={e.status}
-            udate={e.date}
-            ></UploadRequestHandlerComp>
+        {dataToShow.map((e, key) => {
+          if (e != undefined) {
+            return (
+              <UploadRequestHandlerComp
+                unqid={e.id}
+                key={e.id}
+                img={e.imageUrl || "/"}
+                name={e.name}
+                desc={e.description}
+                date={e.timestamp}
+                location={e.location}
+                email={e.email}
+                status={e.status}
+                udate={e.date}
+              ></UploadRequestHandlerComp>
             );
           }
         })}
-        </Suspense>
+      </Suspense>
     </section>
   );
 };

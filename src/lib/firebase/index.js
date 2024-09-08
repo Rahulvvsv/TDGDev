@@ -41,7 +41,7 @@ const auth = getAuth(app);
 export { auth, app, db, storage };
 
 export const Firebase = async () => {
-  //console.log(app);
+  ////console.log(app);
 };
 
 export const updateDocument = async (documentId, newData) => {
@@ -72,7 +72,7 @@ export const updateClientDetails = async (documentId, newData) => {
 };
 
 export const fetchDataLocation = async (location) => {
-  //console.log("heree")
+  ////console.log("heree")
   const q = query(collection(db, "uploads"), where("location", "==", location));
 
   const querySnapshot = await getDocs(q);
@@ -103,15 +103,15 @@ export const fetchDataBasedOnId = async () => {
 export const fetchData = async () => {
   const querySnapshot = await getDocs(collection(db, "uploads"));
   const fetchedData = [];
-  console.log("calling");
+  //console.log("calling");
   querySnapshot.forEach((doc) => {
     fetchedData.push({ id: doc.id, ...doc.data() });
     delete fetchedData.userRef;
   });
   let sortedElements = sortByTimestamp(fetchedData);
-  // //console.log(sortedElements)
-  // console.log(fetchedData)
-  console.log("running");
+  // ////console.log(sortedElements)
+  // //console.log(fetchedData)
+  //console.log("running");
   return sortedElements;
 };
 
@@ -148,7 +148,7 @@ export const upLoadData = async (formData) => {
       emailCount: 0,
       emailSentDate: null,
     });
-    //console.log("Document written with ID: ", docRef.id);
+    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -164,7 +164,7 @@ export const uploadTestimonial = async (formData) => {
       status: "hidden",
       testimonial: formData.testimonial,
     });
-    //console.log("Document written with ID: ", docRef.id);
+    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -181,7 +181,7 @@ export const uploadContactForm = async (formData) => {
       date: new Date(),
       status: "newReq",
     });
-    //console.log("Document written with ID: ", docRef.id);
+    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -203,8 +203,8 @@ export const fetchSingleBasedOnId = async (donarId) => {
     let donarDetails = querySnapshot.data();
     return { donarDetails: donarDetails };
   } catch (e) {
-    // console.log(e)
-    console.log("invalid donar");
+    // //console.log(e)
+    //console.log("invalid donar");
     return "invalid user";
   }
 };

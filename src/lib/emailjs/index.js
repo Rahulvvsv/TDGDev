@@ -1,5 +1,5 @@
 import emailjs from "@emailjs/browser";
-import  EmailjsNode from '@emailjs/nodejs';
+import EmailjsNode from "@emailjs/nodejs";
 
 import { Resend } from "resend";
 
@@ -16,7 +16,7 @@ function objectToFormData(obj) {
 }
 
 export const Emailer = async (data) => {
-  // console.log(data);
+  // //console.log(data);
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -26,16 +26,16 @@ export const Emailer = async (data) => {
     })
     .then(
       () => {
-        //console.log('SUCCESS!');
+        ////console.log('SUCCESS!');
       },
       (error) => {
-        //console.log('FAILED...', error.text);
+        ////console.log('FAILED...', error.text);
       }
     );
 };
 
 export const ContactEmailer = async (data) => {
-  //console.log(data);
+  ////console.log(data);
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT_ID;
@@ -45,16 +45,16 @@ export const ContactEmailer = async (data) => {
     })
     .then(
       () => {
-        //console.log('SUCCESS!');
+        ////console.log('SUCCESS!');
       },
       (error) => {
-        //console.log('FAILED...', error.text);
+        ////console.log('FAILED...', error.text);
       }
     );
 };
 
 export const ServiceEmailer = async (data) => {
-  //console.log(data);
+  ////console.log(data);
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_SERVICE_ID;
@@ -64,10 +64,10 @@ export const ServiceEmailer = async (data) => {
     })
     .then(
       () => {
-        //console.log('SUCCESS!');
+        ////console.log('SUCCESS!');
       },
       (error) => {
-        //console.log('FAILED...', error.text);
+        ////console.log('FAILED...', error.text);
       }
     );
 };
@@ -84,23 +84,21 @@ export const Emailer2 = async (data) => {
 };
 
 export const EmailHelperForBulkMailSending = async (data) => {
-  // console.log(data);
+  // //console.log(data);
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
   const privateKey = process.env.NEXT_PUBLIC_EMAILJS_PRIVATE_KEY;
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_DONOR_DETAILS;
-  EmailjsNode
-    .send(serviceId, templateId, data, {
-      publicKey: publicKey,
-      privateKey:privateKey
-    })
-    .then(
-      () => {
-        console.log("SUCCESS!");
-      },
-      (error) => {
-        console.log("FAILED...", error.text, error);
-      }
-    );
+  EmailjsNode.send(serviceId, templateId, data, {
+    publicKey: publicKey,
+    privateKey: privateKey,
+  }).then(
+    () => {
+      //console.log("SUCCESS!");
+    },
+    (error) => {
+      //console.log("FAILED...", error.text, error);
+    }
+  );
 };
