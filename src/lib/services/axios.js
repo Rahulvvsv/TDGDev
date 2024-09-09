@@ -51,9 +51,13 @@ class AxiosService {
       throw error;
     }
   }
-  async getMyProfile() {
+  async getMyProfile(cookie) {
     try {
-      const response = await this.api.get("getMyProfile/route");
+      const response = await this.api.get("getMyProfile/route", {
+        headers: {
+          Cookie: cookie,
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("Error fetching my profile:", error);
@@ -61,13 +65,16 @@ class AxiosService {
     }
   }
 
-  async getFurnitureById(id, cookie) {
+  async getFurnitureById(id, cookie, sendEnquiries = false) {
     try {
-      const response = await this.api.get(`getFurnitureById/route?id=${id}`, {
-        headers: {
-          Cookie: cookie,
-        },
-      });
+      const response = await this.api.get(
+        `getFurnitureById/route?id=${id}&sendEnquiries=${sendEnquiries}`,
+        {
+          headers: {
+            Cookie: cookie,
+          },
+        }
+      );
       return { data: response.data, error: null };
     } catch (error) {
       console.error("Error fetching furniture by ID:", error.message);
@@ -107,6 +114,19 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error uploading user images:", error);
+      throw error;
+    }
+  }
+  async updateItemStatus(uploadedId, status) {
+    try {
+      const response = await this.api.post("updateFurnitureStatus/route", {
+        uploadedId,
+        status,
+      });
+      console.log(response, "response");
+      return response.data;
+    } catch (error) {
+      console.error("Error updating item status:", error);
       throw error;
     }
   }

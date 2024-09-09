@@ -12,7 +12,6 @@ import {
   getDocs,
   getDoc,
 } from "firebase/firestore";
-
 import { db } from "@/lib/firebase";
 import { verifyToken } from "../auth/middleware/verifyToken/route";
 
@@ -55,22 +54,27 @@ export default async function handler(req, res) {
       res.status(500).json({ error: "Internal server error" });
     }
   } else if (req.method === "GET") {
-    const { uploadId } = req.query;
-
-    if (!uploadId) {
-      return res.status(400).json({ error: "Missing uploadId" });
+    const decodedToken = await verifyToken(req, res);
+    if (!decodedToken) {
+      return;
     }
+    const userRefId = decodedToken.userRefId;
 
     try {
-      const uploadRef = doc(db, "uploads", uploadId);
-      const result = await getLikesCount(uploadRef);
-      if (result.success) {
-        res.status(200).json(result);
-      } else {
-        res.status(404).json(result);
-      }
+      const likesQuery = query(
+        collection(db, "likes"),
+        where("userId", "==", doc(db, "users", userRefId))
+      );
+      const likesSnapshot = await getDocs(likesQuery);
+
+      const userLikes = likesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      res.status(200).json({ success: true, userLikes });
     } catch (error) {
-      console.error("Error getting likes count:", error);
+      console.error("Error getting user likes:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   } else {

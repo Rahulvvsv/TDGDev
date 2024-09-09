@@ -4,29 +4,21 @@ import FurnitureComp from "@/components/molecules/furnitureComp";
 import { useEffect, useState } from "react";
 import AxiosService from "@/lib/services/axios";
 
-const Proflie = () => {
+const Proflie = ({ furnitureData }) => {
+  console.log(furnitureData, "from here");
   const [item, setItem] = useState("yourUploads");
   const [uploads, setUploads] = useState([]);
   const [favourites, setFavourites] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(furnitureData?.uploads);
   const [myRequests, setMyRequests] = useState([]);
   const [href, setHref] = useState("/profile/viewUpload");
   const axiosService = new AxiosService();
 
   useEffect(() => {
-    const fetchUploads = async () => {
-      try {
-        const data = await axiosService.getMyProfile();
-        setUploads(data?.uploads);
-        setMyRequests(data?.myRequests);
-        setFavourites(data?.favourites);
-        setData(data?.uploads);
-      } catch (error) {
-        console.error("Error fetching uploads:", error);
-      }
-    };
-
-    fetchUploads();
+    setUploads(furnitureData?.uploads);
+    setMyRequests(furnitureData?.myRequests);
+    setFavourites(furnitureData?.favourites);
+    setData(furnitureData?.uploads);
   }, []);
   console.log(uploads);
 
@@ -55,7 +47,7 @@ const Proflie = () => {
               handleItemChange(
                 "yourRequests",
                 myRequests,
-                "/profile/viewRequest"
+                "/donate/getFurnitureById"
               )
             }
             className={item === "yourRequests" ? style.btn1 : style.btn2}
@@ -63,6 +55,7 @@ const Proflie = () => {
           >
             Your Requests
           </button>
+
           <button
             onClick={() => {
               setItem("yourFavourites");
@@ -97,4 +90,27 @@ const Proflie = () => {
     </div>
   );
 };
+export async function getServerSideProps(context) {
+  try {
+    const apiService = new AxiosService();
+    const cookie = context.req.headers.cookie;
+
+    const data = await apiService.getMyProfile(cookie);
+
+    console.log(data, "from here data");
+
+    return {
+      props: {
+        furnitureData: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching furniture data:", error);
+    return {
+      props: {
+        furnitureData: {},
+      },
+    };
+  }
+}
 export default Proflie;

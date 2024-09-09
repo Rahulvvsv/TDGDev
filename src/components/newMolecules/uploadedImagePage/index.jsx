@@ -8,12 +8,25 @@ import Button from "@/components/atoms/button";
 import { useRouter } from "next/router";
 import InputField from "@/components/atoms/inputField";
 import { useState } from "react";
+import style from "./index.module.css";
 
-const ProductPage = ({ furnitureData }) => {
-  console.log(furnitureData);
+const ProductPage = ({ furnitureData, furnitureId }) => {
+  console.log(furnitureData, "furnitureData");
+  const [item, setItem] = useState(furnitureData.itemStatus);
   const [question, setQuestion] = useState("");
   const [donorDetails, setDonorDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(null);
+  const [detailData, setDetailData] = useState(null);
+  const [enquiryDetails, setEnquiryDetails] = useState(
+    furnitureData.allRequests
+  );
   const router = useRouter();
+  const axiosService = new AxiosService();
+  const handleItemChange = async (newItem, status, newHrefPrefix) => {
+    setItem(newItem);
+    await axiosService.updateItemStatus(furnitureId, status);
+    // setHref(newHrefPrefix);
+  };
   const ask = async () => {
     const isLoggedIn = document.cookie
       .split(";")
@@ -71,9 +84,7 @@ const ProductPage = ({ furnitureData }) => {
             <div className={styles.titleContainer}>
               <h1 className={styles.title}>{furnitureData?.typeOfFurniture}</h1>
               <span className={styles.availability}> | </span>
-              <span className={styles.availability}>
-                {furnitureData?.itemStatus}
-              </span>
+              <span className={styles.availability}>{item}</span>
             </div>
 
             <div className={styles.stats}>
@@ -90,7 +101,7 @@ const ProductPage = ({ furnitureData }) => {
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>Product Description</h2>
             <p className={styles.descriptionProduct}>
-              {furnitureData?.description}
+              {furnitureData?.descriptio}
             </p>
           </section>
           {furnitureData.alreadyRequested && (
@@ -100,59 +111,76 @@ const ProductPage = ({ furnitureData }) => {
             </p>
           )}
           <br />
-          {!donorDetails && (
-            <>
-              <InputField
-                type="text"
-                placeholder="Ask a question"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-              ></InputField>
-              <br />
-              <div className={styles.buttonContainer}>
-                <Button
-                  backgroundColor={"white"}
-                  content={"Get Donor Details"}
-                  fontColor={"rgba(121, 117, 114, 1)"}
-                  onClick={ask}
-                  btnClass={2}
-                />
-              </div>
-            </>
-          )}
-          {donorDetails && (
-            <>
-              <div className={styles.buttonContainer}>
-                <Button
-                  backgroundColor={"white"}
-                  effect={false}
-                  width={"500px"}
-                  content={"Your request has been sent"}
-                  fontColor={"rgba(121, 117, 114, 1)"}
-                  onClick={() => {
-                    console.log("clicked");
-                  }}
-                  href={""}
-                  btnClass={2}
-                />
-              </div>
-            </>
-          )}
-
           <hr />
-          {donorDetails && (
-            <section className={styles.section2}>
-              <h2 className={styles.sectionTitle}>Donor Details</h2>
-              <p classsName={styles.descriptionProduct}>
-                Name: {furnitureData.fullName}
+          <>
+            <div className={styles.buttonContainer}>
+              <button
+                onClick={() =>
+                  handleItemChange(
+                    "Taken",
+                    "Taken",
+                    // uploads,
+                    "/profile/viewUpload"
+                  )
+                }
+                className={item == "Taken" ? style.btn1 : style.btn2}
+              >
+                Mark as Taken
+              </button>
+
+              <button
+                onClick={() =>
+                  handleItemChange(
+                    "Available",
+                    "Available",
+                    "/profile/viewRequest"
+                  )
+                }
+                className={item === "Available" ? style.btn1 : style.btn2}
+              >
+                Mark as Available
+              </button>
+            </div>
+            <p>Note: You can only select one option</p>
+          </>
+          <br />
+          <hr />
+          <p className={styles.enquiryText}>Enquired By</p>
+
+          <div className={styles.enquiryCircles}>
+            {enquiryDetails &&
+              enquiryDetails.map((detail, index) => (
+                <div
+                  className={`${styles.circle} ${styles.circleKP}`}
+                  onClick={() => {
+                    setShowDetails(index);
+                    setDetailData(detail);
+                  }}
+                >
+                  <span className={styles.circleText}>
+                    {detail.name
+                      .split(" ")
+                      .slice(0, 2)
+                      .map((word) => word[0])
+                      .join("")}
+                  </span>
+                </div>
+              ))}
+          </div>
+
+          {detailData && (
+            <div className={styles.enquiryDetails}>
+              <p>Name: {detailData.name}</p>
+              <p>Email: {detailData.email}</p>
+              <p>Phone: {detailData.phone}</p>
+              <p>Location: {detailData.location}</p>
+              <p>Questions:</p>
+              <p>
+                {detailData.questions.map((q, qIndex) => (
+                  <li key={qIndex}>{q}</li>
+                ))}
               </p>
-              <p classsName={styles.descriptionProduct}>
-                Email: {furnitureData.email}
-              </p>
-              <p classsName={styles.descriptionProduct}>
-                Location: {furnitureData.location}
-              </p>
-            </section>
+            </div>
           )}
         </div>
       </div>

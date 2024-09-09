@@ -16,6 +16,7 @@ export async function GET(request, res) {
 
     const url = new URL(request.url, baseUrl);
     const id = url.searchParams.get("id");
+    const sendEnquiries = url.searchParams.get("sendEnquiries") === "true";
     // Print the cookies in the request
     const cookies = request.cookies;
     console.log("Cookies:", cookies);
@@ -50,12 +51,44 @@ export async function GET(request, res) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
+      const furnitureData = docSnap.data();
+      const responseData = {
+        ...furnitureData,
+        id: docSnap.id,
+        alreadyRequested,
+      };
+
+      if (sendEnquiries && furnitureData.allRequests) {
+        const allRequestsData = await Promise.all(
+          furnitureData.allRequests.map(async (requestRef) => {
+            const requestSnap = await getDoc(requestRef);
+            if (requestSnap.exists()) {
+              const requestData = requestSnap.data();
+              if (requestData.userRef) {
+                const userSnap = await getDoc(requestData.userRef);
+                if (userSnap.exists()) {
+                  let userData = userSnap.data();
+                  delete requestData.userRef;
+                  return {
+                    ...requestData,
+                    name: userData.name,
+                    email: userData.email,
+                    phone: userData.phone,
+                  };
+                }
+              }
+              return requestData;
+            }
+            return null;
+          })
+        );
+        responseData.allRequests = allRequestsData.filter(Boolean);
+      } else {
+        delete responseData.allRequests;
+      }
+
       return res.status(200).json({
-        data: {
-          ...docSnap.data(),
-          id: docSnap.id,
-          alreadyRequested,
-        },
+        data: responseData,
         error: false,
         message: "data",
       });

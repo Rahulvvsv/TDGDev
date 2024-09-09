@@ -9,6 +9,7 @@ import {
   TransformComponent,
   useControls,
 } from "react-zoom-pan-pinch";
+import { Heart } from "react-feather";
 
 const FurnitureComp = ({
   Img,
@@ -81,6 +82,9 @@ const FurnitureComp = ({
   };
   return (
     <div className={style.main} id={style.something} key={key1}>
+      <div className={style.likeButton}>
+        <Heart />
+      </div>
       <div
         className={style.image}
         onClick={() => {

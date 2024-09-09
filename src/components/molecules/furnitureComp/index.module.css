@@ -3,16 +3,26 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
   /* align-items: center;
+  
     justify-content: center; */
   /* gap: 10px; */
 }
 
-.hh990{
+.hh990 {
   position: absolute;
   z-index: 10;
   right: 25%;
   bottom: 5px;
+  font-size: 16px;
+}
+.likeButton {
+  position: absolute;
+  z-index: 99;
+  right: 20px;
+  top: 20px;
+  color: rgba(121, 117, 114, 1);
   font-size: 16px;
 }
 
@@ -25,29 +35,27 @@
   cursor: pointer;
 }
 
-.smallBtn{
+.smallBtn {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   z-index: 10;
   background-color: grey;
-  
 }
-.smallBtn2{
+.smallBtn2 {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   z-index: 10;
   background-color: rgb(255, 255, 255);
   border: 1px solid grey;
-  
 }
-.smallBtndiv{
+.smallBtndiv {
   position: absolute;
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 4px; 
+  gap: 4px;
   z-index: 9;
   align-items: center;
   left: 45%;
@@ -66,10 +74,10 @@
   font-size: clamp(0.875rem, 0.787rem + 0.2817vw, 1.125rem);
   margin-left: 15px;
   height: 25px;
-  overflow-y:hidden ;
+  overflow-y: hidden;
   margin-top: 10px;
 }
-.headingAndDate{
+.headingAndDate {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -79,37 +87,36 @@
   margin-bottom: 5px;
 
   margin-top: 5px;
-
 }
-.btn22{
+.btn22 {
   margin-left: 15px;
 }
-.headingAndDate > h1{
+.headingAndDate > h1 {
   /* /* font-weight: 500; */
 
-  font-size: 12px; 
-  color:#505050;; 
- }
-.main20{
+  font-size: 12px;
+  color: #505050;
+}
+.main20 {
   width: 100%;
   height: 70vh;
   background-color: white;
   border-radius: 50%;
   /* cursor: pointer; */
 }
-.modalImage{
-  width:100% ;
+.modalImage {
+  width: 100%;
   position: relative;
   height: 100%;
 }
-.modalImage> img{
-  object-fit: contain  !important;
+.modalImage > img {
+  object-fit: contain !important;
 }
-.wrapper{
+.wrapper {
   width: 100% !important;
   height: 100% !important;
 }
-.tools{
+.tools {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -122,13 +129,12 @@
   gap: 5px;
   z-index: 1;
 }
-.tools button{
+.tools button {
   width: 10%;
   background-color: white;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.363) ;
+  border: 1px solid rgba(0, 0, 0, 0.363);
   padding: 5px !important;
-  
 }
 .desc {
   line-height: 20px;
@@ -137,11 +143,11 @@
   margin-left: 15px;
   font-weight: 400;
   height: 40px;
-  overflow-y:hidden ;
+  overflow-y: hidden;
   /* width: 270px !important; */
 }
 
-.navButton{
+.navButton {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -151,13 +157,13 @@
   z-index: 10;
   cursor: pointer;
   /* height: 16px; */
-  
+
   background-color: white;
   border: 1px solid grey;
   color: grey;
   font-size: 20px;
 }
-.navbuttondiv{
+.navbuttondiv {
   width: 98%;
   /* background-color: red; */
   z-index: 9;
@@ -170,7 +176,7 @@
   margin-right: 10px !important;
   /* transform: translateY(-50%) !important; */
 }
-.main>div:last-child {
+.main > div:last-child {
   /* background-color: red; */
   margin-left: 15px;
 }
@@ -219,14 +225,13 @@
   z-index: 11;
 }
 
-
 @media screen and (max-width: 700px) {
   .main8 {
     width: 70%;
 
     /* background-color: red; */
   }
-  .btn22{
+  .btn22 {
     margin-left: 0px;
   }
   .main18 {
@@ -247,23 +252,23 @@
   .main10 {
     /* height: 70vh; */
   }
-.tools button{
-  width: 25%;
-  background-color: white;
-  cursor: pointer;
-}
-.smallBtndiv{
-  transform: translateX(-10%); 
-  /* background-color: red; */
-}
-#smallbdiv div{
-  width: 8px !important;
-  height: 8px !important;
-}
+  .tools button {
+    width: 25%;
+    background-color: white;
+    cursor: pointer;
+  }
+  .smallBtndiv {
+    transform: translateX(-10%);
+    /* background-color: red; */
+  }
+  #smallbdiv div {
+    width: 8px !important;
+    height: 8px !important;
+  }
 }
 
 @media screen and (max-width: 460px) {
-  .tools{
+  .tools {
     flex-direction: column;
     gap: 10px;
     right: 5px;
@@ -280,22 +285,22 @@
     height: 180px !important;
   }
 
-  .headingAndDate{
+  .headingAndDate {
     flex-direction: column;
     gap: 3px;
     margin-top: 0px;
   }
 
-  .desc{
+  .desc {
     line-height: 14px;
     height: 28px;
     margin-bottom: 14px;
   }
-  .modalImage{
+  .modalImage {
     margin-top: 30px;
   }
-  .main20{
-    height:60vh;
+  .main20 {
+    height: 60vh;
   }
   .image img {
     object-fit: cover;
@@ -304,10 +309,10 @@
     /* width: 135px !important; */
   }
 
-.main>div:last-child {
-  /* background-color: red; */
-  margin-left: 0px;
-}
+  .main > div:last-child {
+    /* background-color: red; */
+    margin-left: 0px;
+  }
   .main8 {
     width: 90vw !important;
     height: 90vh !important;
@@ -317,43 +322,39 @@
     width: 90vw !important;
     height: 70vh !important;
   }
-  .heading{
+  .heading {
     height: 36px;
     overflow: hidden;
   }
-.smallBtn{
-  width: 8px !important;
-  height: 8px !important;
-  border-radius: 50%;
-  z-index: 10;
-  background-color: grey;
-  border: 1px solid grey;
-  
-}
-.smallBtn2{
-  width: 8px !important;
-  height: 8px !important;
-  border-radius: 50%;
-  z-index: 10;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid grey;
-  
-}
-.smallBtndiv{
-  transform: translateX(-10%); 
-  /* background-color: red; */
-}
-#smallbdiv div{
-  width: 8px !important;
-  height: 8px !important;
-}
-.navbuttondiv{
-
-  /* margin-top: 90%; */
-  /* background-color: red; */
-  width: 99%;
-  margin-left: 2px  !important;
-  margin-right: 10px !important;
-}
-
+  .smallBtn {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50%;
+    z-index: 10;
+    background-color: grey;
+    border: 1px solid grey;
+  }
+  .smallBtn2 {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50%;
+    z-index: 10;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+  }
+  .smallBtndiv {
+    transform: translateX(-10%);
+    /* background-color: red; */
+  }
+  #smallbdiv div {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .navbuttondiv {
+    /* margin-top: 90%; */
+    /* background-color: red; */
+    width: 99%;
+    margin-left: 2px !important;
+    margin-right: 10px !important;
+  }
 }

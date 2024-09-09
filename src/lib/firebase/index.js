@@ -109,9 +109,6 @@ export const fetchData = async () => {
     delete fetchedData.userRef;
   });
   let sortedElements = sortByTimestamp(fetchedData);
-  // ////console.log(sortedElements)
-  // //console.log(fetchedData)
-  //console.log("running");
   return sortedElements;
 };
 
@@ -148,7 +145,6 @@ export const upLoadData = async (formData) => {
       emailCount: 0,
       emailSentDate: null,
     });
-    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -164,7 +160,6 @@ export const uploadTestimonial = async (formData) => {
       status: "hidden",
       testimonial: formData.testimonial,
     });
-    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -181,7 +176,6 @@ export const uploadContactForm = async (formData) => {
       date: new Date(),
       status: "newReq",
     });
-    ////console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -203,8 +197,6 @@ export const fetchSingleBasedOnId = async (donarId) => {
     let donarDetails = querySnapshot.data();
     return { donarDetails: donarDetails };
   } catch (e) {
-    // //console.log(e)
-    //console.log("invalid donar");
     return "invalid user";
   }
 };

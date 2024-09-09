@@ -1,8 +1,10 @@
 import AxiosService from "@/lib/services/axios";
 import ProductPage from "@/components/newMolecules/uploadedImagePage";
 
-const ViewUploadPage = ({ furnitureData }) => {
-  return <ProductPage furnitureData={furnitureData} />;
+const ViewUploadPage = ({ furnitureData, furnitureId }) => {
+  return (
+    <ProductPage furnitureData={furnitureData} furnitureId={furnitureId} />
+  );
 };
 
 export async function getServerSideProps(context) {
@@ -13,7 +15,8 @@ export async function getServerSideProps(context) {
     const apiService = new AxiosService();
     const { data, error } = await apiService.getFurnitureById(
       uploadedId,
-      cookie
+      cookie,
+      true
     );
     const finalData = data.data;
     if (error) {
@@ -23,6 +26,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         furnitureData: finalData,
+        furnitureId: uploadedId,
       },
     };
   } catch (error) {
