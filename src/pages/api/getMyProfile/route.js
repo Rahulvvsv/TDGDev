@@ -1,5 +1,6 @@
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { query, where } from "firebase/firestore";
 import { verifyToken } from "../auth/middleware/verifyToken/route";
 
 export default async function handler(req, res) {
@@ -92,17 +93,48 @@ export default async function handler(req, res) {
         myRequests = await Promise.all(myRequestsPromises);
       }
 
+      let likes = [];
+      const likesCollection = collection(db, "likes");
+      const likesQuery = query(
+        likesCollection,
+        where("userId", "==", doc(db, "users", userRefId))
+      );
+      const likesSnapshot = await getDocs(likesQuery);
+
+      const likesPromises = likesSnapshot.docs.map(async (likeDoc) => {
+        const likeData = likeDoc.data();
+        const uploadSnapshot = await getDoc(likeData.uploadRef);
+        let uploadedImageData = null;
+        if (uploadSnapshot.exists()) {
+          uploadedImageData = {
+            id: uploadSnapshot.id,
+            ...uploadSnapshot.data(),
+          };
+          // console.log("Upload snapshot:", uploadSnapshot);
+          // console.log("Upload snapshot ID:", uploadSnapshot.id);
+          if (uploadedImageData.data && uploadedImageData.data.id) {
+            uploadedImageData.data.id = uploadSnapshot.id;
+          }
+          delete uploadedImageData.userRef;
+          delete uploadedImageData.allRequests;
+        }
+        return uploadedImageData;
+      });
+
+      likes = await Promise.all(likesPromises);
+
       // Prepare the response
       const response = {
         email: userData.email,
         createdAt: userData.createdAt.toDate().toISOString(),
         uploads,
         myRequests,
+        likes,
       };
 
       res.status(200).json(response);
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.error("Error fetching user profile:", error.message);
       res.status(500).json({ error: "Failed to fetch user profile" });
     }
   } else {

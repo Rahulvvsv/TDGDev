@@ -58,11 +58,11 @@ export default function App() {
       >
         {arr
           .filter((e) => e.status == "showOnPage")
-          .map((e) => {
+          .map((e, index) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide key={index}>
                 <SingleTestimonial
-                  index={0}
+                  index={index}
                   testimonial={e.testimonial}
                   name={e.name}
                   surname={e.location}

@@ -7,7 +7,7 @@ export const updateDocument = async (documentId, newData) => {
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { uploadedId, status } = req.body;
-    console.log(uploadedId, status, "uploadedId, status request received");
+    // console.log(uploadedId, status, "uploadedId, status request received");
     try {
       await updateDocument(uploadedId, { itemStatus: status });
       res.status(200).json({ data: user, error: false, message: "success" });

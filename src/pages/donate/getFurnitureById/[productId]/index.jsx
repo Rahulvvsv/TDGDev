@@ -8,6 +8,23 @@ const FurnitureByIdPage = ({ furnitureData }) => {
 export async function getServerSideProps(context) {
   const { productId } = context.params;
   const cookie = context.req.headers.cookie;
+  const parsedCookie = {};
+  if (cookie) {
+    cookie.split(";").forEach((pair) => {
+      const [key, value] = pair.trim().split("=");
+      parsedCookie[key] = value;
+    });
+  }
+
+  const isLoggedIn = parsedCookie.loggedIn === "true";
+  if (!isLoggedIn) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   try {
     const apiService = new AxiosService();

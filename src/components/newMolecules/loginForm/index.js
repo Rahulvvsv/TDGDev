@@ -7,7 +7,8 @@ import Button from "@/components/atoms/button";
 import { useRouter } from "next/router";
 import AxiosService from "@/lib/services/axios";
 
-const LoginForm = ({ onSignUpClick }) => {
+const LoginForm = ({ onSignUpClick, isSignUp }) => {
+  console.log(isSignUp, "isSignUp from login form");
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -77,6 +78,11 @@ const LoginForm = ({ onSignUpClick }) => {
 
   return (
     <motion.div className={style.right}>
+      {isSignUp ? (
+        <p>Your Account is created successfully, please login</p>
+      ) : (
+        ""
+      )}
       <h1 className={style.heading}>Login</h1>
       <InputField onChange={dataSetter} placeholder={"EMAIL*"} name={"email"} />
       {errors.email && <div className={style.error}>{errors.email}</div>}
@@ -84,6 +90,7 @@ const LoginForm = ({ onSignUpClick }) => {
         onChange={dataSetter}
         placeholder={"PASSWORD*"}
         name={"password"}
+        type={"password"}
       />
       {errors.password && <div className={style.error}>{errors.password}</div>}
       <p className={style.forgot}>Forgot Password?</p>

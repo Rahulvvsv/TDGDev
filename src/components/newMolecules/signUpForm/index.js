@@ -29,7 +29,7 @@ const SignUpForm = ({ onLoginClick }) => {
         const { message, error } = await apiService.signUp(data);
         if (!error) {
           if (message == "success") {
-            router.push("/");
+            router.push("/login?signUp=true");
             //console.log("loggedIn");
           }
           setSubmitted(true);
@@ -115,14 +115,14 @@ const SignUpForm = ({ onLoginClick }) => {
         onChange={dataSetter}
         placeholder={"PASSWORD*"}
         name={"password"}
-        // type="password"
+        type="password"
       />
       {errors.password && <div className={style.error}>{errors.password}</div>}
       <InputField
         onChange={dataSetter}
         placeholder={"RETYPE PASSWORD*"}
         name={"retypePassword"}
-        // type="password"
+        type="password"
       />
       {errors.retypePassword && (
         <div className={style.error}>{errors.retypePassword}</div>

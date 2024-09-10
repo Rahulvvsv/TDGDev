@@ -2,9 +2,9 @@ import AllFurnitureProducts from "@/components/molecules/allFurnitureProducts";
 import style from "./index.module.css";
 import { fetchData } from "@/lib/firebase";
 import { locationsData } from "../[location]";
+import AxiosService from "@/lib/services/axios";
 import Link from "next/link";
 const index = ({ data }) => {
-  ////console.log(locationsData)
   return (
     <section className={style.main}>
       <section className={style.left}>
@@ -24,22 +24,26 @@ const index = ({ data }) => {
         })}
       </section>
       <section className={style.right}>
-        <AllFurnitureProducts data={JSON.parse(data)}></AllFurnitureProducts>
+        <AllFurnitureProducts data={data}></AllFurnitureProducts>
       </section>
     </section>
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
   // Fetch data for the specified page
-  let data = await fetchData();
-  data = JSON.stringify(data);
+  // let data = await fetchData();
+  let axios = new AxiosService();
+  const cookie = context.req.headers.cookie;
+
+  let allUploads = await axios.getAllUploads(cookie);
+  // allUploads = JSON.stringify(allUploads);
   // setDataList(data)
   // Example data fetching, replace this with your actual data fetching logic
 
   return {
     props: {
-      data,
+      data: allUploads.data,
     },
   };
 }

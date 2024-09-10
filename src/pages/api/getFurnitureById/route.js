@@ -2,7 +2,7 @@ import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
-
+import { updateDoc, increment } from "firebase/firestore";
 import { verifyToken } from "../auth/middleware/verifyToken/route";
 export async function GET(request, res) {
   if (request.method !== "GET") {
@@ -22,10 +22,10 @@ export async function GET(request, res) {
     console.log("Cookies:", cookies);
     const decodedToken = await verifyToken(request, res, false);
     let alreadyRequested = false;
+    let liked = false;
 
     if (decodedToken != null) {
       const userRefId = decodedToken.userRefId;
-      console.log(userRefId, "from here man");
 
       if (userRefId) {
         const userRequestsRef = collection(db, "userRequests");
@@ -39,6 +39,15 @@ export async function GET(request, res) {
         if (!querySnapshot.empty) {
           alreadyRequested = true;
         }
+
+        const likesRef = collection(db, "likes");
+        const likeQuery = query(
+          likesRef,
+          where("userId", "==", doc(db, "users", userRefId)),
+          where("uploadRef", "==", doc(db, "uploads", id))
+        );
+        const likeSnapshot = await getDocs(likeQuery);
+        liked = !likeSnapshot.empty;
       }
     }
     if (!id) {
@@ -51,11 +60,15 @@ export async function GET(request, res) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
+      await updateDoc(docRef, {
+        viewCount: increment(1),
+      });
       const furnitureData = docSnap.data();
       const responseData = {
         ...furnitureData,
         id: docSnap.id,
         alreadyRequested,
+        liked,
       };
 
       if (sendEnquiries && furnitureData.allRequests) {

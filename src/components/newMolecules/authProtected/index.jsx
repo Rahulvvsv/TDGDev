@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 
 export function withAuth(WrappedComponent) {
-  return (props) => {
+  const AuthProtectedComponent = (props) => {
     const Router = useRouter();
     const [verified, setVerified] = useState(false);
 
@@ -24,4 +24,14 @@ export function withAuth(WrappedComponent) {
       return <p>Please sign in</p>;
     }
   };
+
+  AuthProtectedComponent.displayName = `WithAuth(${getDisplayName(
+    WrappedComponent
+  )})`;
+
+  return AuthProtectedComponent;
+}
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || "Component";
 }

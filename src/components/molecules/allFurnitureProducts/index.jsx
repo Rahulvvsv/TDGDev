@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Pagination } from "@mui/material";
 import style from "./index.module.css";
 import FurnitureComp from "../furnitureComp";
+import AxiosService from "../../../lib/services/axios";
 
 const ITEMS_PER_PAGE = 8;
 
 const AllFurnitureProducts = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const filteredData = data.filter((e) => e.status === "showOnPage");
+  let axiosService = new AxiosService();
 
   // Calculate total pages
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
@@ -29,11 +31,14 @@ const AllFurnitureProducts = ({ data }) => {
             <FurnitureComp
               unqId={e.id}
               key={key}
+              axiosService={axiosService}
               Img={e?.files}
-              name={e.productName}
+              name={e.typeOfFurniture}
               desc={e.description}
               location={e.location}
               date={e.date}
+              liked={e.liked}
+              showLikeButton={true}
             />
           );
         })}

@@ -3,7 +3,9 @@ import Image from "next/image";
 import Button from "../../atoms/button";
 import Modal from "react-modal";
 import { useState } from "react";
+import AxiosService from "../../../lib/services/axios";
 import ContactDonarPopUP from "../contactDonarPop";
+
 import {
   TransformWrapper,
   TransformComponent,
@@ -22,9 +24,13 @@ const FurnitureComp = ({
   unqId,
   date = new Date(),
   location,
+  liked = false,
   href = `/donate/getFurnitureById/${unqId}`,
+  axiosService = new AxiosService(),
+  showLikeButton = false,
 }) => {
   //console.log(Img, "img");
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
   const [ImageLink, setImage] = useState();
@@ -82,9 +88,34 @@ const FurnitureComp = ({
   };
   return (
     <div className={style.main} id={style.something} key={key1}>
-      <div className={style.likeButton}>
-        <Heart />
-      </div>
+      {showLikeButton && (
+        <div className={style.likeButton}>
+          <Heart
+            style={{ fill: liked ? "rgba(121, 117, 114, 1)" : "none" }}
+            onClick={async (event) => {
+              const heart = event.currentTarget;
+              const newLikedState = !liked;
+              heart.style.fill = newLikedState
+                ? "rgba(121, 117, 114, 1)"
+                : "none";
+
+              try {
+                const data = {
+                  uploadedImageRefId: unqId,
+                  action: newLikedState ? "like" : "unlike",
+                };
+                const response = await axiosService.userLikeAction(data);
+                // Handle the response if needed
+                console.log("Like action response:", response);
+              } catch (error) {
+                console.error("Error performing like action:", error);
+                // Revert the heart fill if the API call fails
+                heart.style.fill = liked ? "rgba(121, 117, 114, 1)" : "none";
+              }
+            }}
+          />
+        </div>
+      )}
       <div
         className={style.image}
         onClick={() => {

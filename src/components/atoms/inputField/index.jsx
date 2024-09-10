@@ -15,6 +15,17 @@ const InputField = ({ placeholder, height, onChange, name, type = "text" }) => {
           style={{ height: height }}
         ></input>
       )}
+      {type == "password" && (
+        <input
+          required
+          className={style.inputs}
+          name={name}
+          onChange={onChange}
+          type={type}
+          placeholder={placeholder}
+          style={{ height: height }}
+        ></input>
+      )}
 
       {type == "text-area" && (
         <textarea
@@ -29,8 +40,8 @@ const InputField = ({ placeholder, height, onChange, name, type = "text" }) => {
       )}
 
       {type == "dropdown" && (
-        <select  name="location" className={style.inputs} onChange={onChange}>
-          <option className={style.inputs} >LOCATION</option>
+        <select name="location" className={style.inputs} onChange={onChange}>
+          <option className={style.inputs}>LOCATION</option>
           {locationsData.map((option, index) => (
             <option className={style.inputs} key={index} value={option}>
               {option}

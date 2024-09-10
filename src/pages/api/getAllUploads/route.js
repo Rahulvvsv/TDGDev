@@ -1,38 +1,68 @@
-import { collection, getDocs, getDoc } from "firebase/firestore";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { query, where } from "firebase/firestore";
+import { verifyToken } from "../auth/middleware/verifyToken/route";
+export function sortByTimestamp(data) {
+  return data.sort((a, b) => {
+    if (a?.date?.seconds === b?.date?.seconds) {
+      return b?.date?.nanoseconds - a?.date?.nanoseconds;
+    }
+    return b?.date?.seconds - a?.date?.seconds;
+  });
+}
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const uploadsCollection = collection(db, "uploads");
-      const uploadSnapshot = await getDocs(uploadsCollection);
+      const querySnapshot = await getDocs(collection(db, "uploads"));
+      const fetchedData = {};
 
-      const uploadsPromises = uploadSnapshot.docs.map(async (doc) => {
-        const uploadData = doc.data();
-        let userData = null;
-
-        if (uploadData.userRef) {
-          const userDoc = await getDoc(uploadData.userRef);
-          if (userDoc.exists()) {
-            userData = userDoc.data();
-            delete userData.uploads;
-          }
-        }
-
-        return {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        delete data.userRef;
+        fetchedData[doc.id] = {
           id: doc.id,
-          images: uploadData.url,
-          createdAt: uploadData.createdAt?.toDate().toISOString(),
-          user: userData,
+          ...data,
+          createdAt: data.createdAt?.toDate().toISOString(),
+          liked: false,
         };
       });
 
-      const uploads = await Promise.all(uploadsPromises);
+      const decodedToken = await verifyToken(req, res, false);
+      if (decodedToken != null) {
+        const userRefId = decodedToken.userRefId;
+        // Fetch likes data for the user
+        const likesRef = collection(db, "likes");
+        const likesQuery = query(
+          likesRef,
+          where("userId", "==", doc(db, "users", userRefId))
+        );
+        const likesSnapshot = await getDocs(likesQuery);
 
-      res.status(200).json({ uploads });
+        const userLikes = [];
+        likesSnapshot.forEach((doc) => {
+          let imageId = doc.data().uploadRef.id;
+          console.log(imageId, "imageId");
+          if (Object.keys(fetchedData).includes(imageId)) {
+            fetchedData[imageId].liked = true;
+            console.log(imageId, "fetchedData[imageId]");
+          }
+        });
+      }
+
+      const sortedUploads = sortByTimestamp(Object.values(fetchedData));
+      res.status(200).json({
+        data: sortedUploads,
+        message: "Uploads fetched successfully",
+        error: false,
+      });
     } catch (error) {
-      console.error("Error fetching uploads:", error);
-      res.status(500).json({ error: "Failed to fetch uploads" });
+      console.error("Error fetching uploads:", error.message);
+      res.status(500).json({
+        message: error.message,
+        data: [],
+        error: true,
+      });
     }
   } else {
     res.setHeader("Allow", ["GET"]);

@@ -42,15 +42,6 @@ class AxiosService {
     }
   }
 
-  async getAllUploads() {
-    try {
-      const response = await this.api.get("getAllUploads/route");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching all uploads:", error);
-      throw error;
-    }
-  }
   async getMyProfile(cookie) {
     try {
       const response = await this.api.get("getMyProfile/route", {
@@ -127,6 +118,28 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error updating item status:", error);
+      throw error;
+    }
+  }
+  async getAllUploads(cookie) {
+    try {
+      const response = await this.api.get("getAllUploads/route", {
+        headers: {
+          Cookie: cookie,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching all uploads:", error);
+      throw error;
+    }
+  }
+  async userLikeAction(data) {
+    try {
+      const response = await this.api.post("userLikes/route", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error performing user like action:", error);
       throw error;
     }
   }

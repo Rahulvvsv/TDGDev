@@ -11,8 +11,10 @@ import { useState } from "react";
 import style from "./index.module.css";
 
 const ProductPage = ({ furnitureData, furnitureId }) => {
-  console.log(furnitureData, "furnitureData");
+  // console.log(furnitureData, "furnitureData");
   const [item, setItem] = useState(furnitureData.itemStatus);
+  const [liked, setLiked] = useState(furnitureData?.liked);
+
   const [question, setQuestion] = useState("");
   const [donorDetails, setDonorDetails] = useState(false);
   const [showDetails, setShowDetails] = useState(null);
@@ -39,7 +41,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
           uploadedImageRefId: furnitureData?.id,
           question: question,
         });
-        console.log("User request response:", response);
+        // console.log("User request response:", response);
         setDonorDetails(!response.error);
       } catch (error) {
         //console.log(error.message);
@@ -89,10 +91,39 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
 
             <div className={styles.stats}>
               <span className={styles.stat}>
-                <Heart className={styles.icon} /> 74
+                <Heart
+                  style={{
+                    fill: liked ? "rgba(121, 117, 114, 1)" : "none",
+                    color: "rgba(121, 117, 114, 1)",
+                  }}
+                  onClick={async (event) => {
+                    const heart = event.currentTarget;
+                    const newLikedState = !liked;
+                    heart.style.fill = newLikedState
+                      ? "rgba(121, 117, 114, 1)"
+                      : "none";
+
+                    try {
+                      const data = {
+                        uploadedImageRefId: furnitureData?.id,
+                        action: newLikedState ? "like" : "unlike",
+                      };
+                      const response = await axiosService.userLikeAction(data);
+                      // Handle the response if needed
+                      console.log("Like action response:", response);
+                    } catch (error) {
+                      console.error("Error performing like action:", error);
+                      // Revert the heart fill if the API call fails
+                      heart.style.fill = liked
+                        ? "rgba(121, 117, 114, 1)"
+                        : "none";
+                    }
+                  }}
+                />{" "}
+                / {furnitureData?.likesCount}
               </span>
               <span className={styles.stat}>
-                <Eye className={styles.icon} /> 24 views
+                <Eye className={styles.icon} /> {furnitureData?.viewCount} views
               </span>
             </div>
           </div>
@@ -151,6 +182,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
             {enquiryDetails &&
               enquiryDetails.map((detail, index) => (
                 <div
+                  key={index}
                   className={`${styles.circle} ${styles.circleKP}`}
                   onClick={() => {
                     setShowDetails(index);

@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import AxiosService from "@/lib/services/axios";
 
 const Proflie = ({ furnitureData }) => {
-  console.log(furnitureData, "from here");
   const [item, setItem] = useState("yourUploads");
   const [uploads, setUploads] = useState([]);
-  const [favourites, setFavourites] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [data, setData] = useState(furnitureData?.uploads);
   const [myRequests, setMyRequests] = useState([]);
   const [href, setHref] = useState("/profile/viewUpload");
@@ -17,10 +16,11 @@ const Proflie = ({ furnitureData }) => {
   useEffect(() => {
     setUploads(furnitureData?.uploads);
     setMyRequests(furnitureData?.myRequests);
-    setFavourites(furnitureData?.favourites);
+    setLikes(furnitureData?.likes);
     setData(furnitureData?.uploads);
   }, []);
-  console.log(uploads);
+  // console.log(uploads);
+  // console.log(data, "likes");
 
   const handleItemChange = (newItem, newData, newHrefPrefix) => {
     setItem(newItem);
@@ -58,7 +58,11 @@ const Proflie = ({ furnitureData }) => {
 
           <button
             onClick={() => {
-              setItem("yourFavourites");
+              handleItemChange(
+                "yourFavourites",
+                likes,
+                "/donate/getFurnitureById"
+              );
             }}
             className={item == "yourFavourites" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
@@ -97,7 +101,7 @@ export async function getServerSideProps(context) {
 
     const data = await apiService.getMyProfile(cookie);
 
-    console.log(data, "from here data");
+    // console.log(data, "from here data");
 
     return {
       props: {

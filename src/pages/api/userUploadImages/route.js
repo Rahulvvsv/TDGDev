@@ -174,7 +174,10 @@ async function uploadImagesWithReferences(
     address,
     typeOfFurniture,
     description,
+    date: new Date(),
     status: "showOnPage",
+    likesCount: 0,
+    viewCount: 0,
   });
 
   const uploadRef = doc(db, "uploads", uploadDocRef.id);

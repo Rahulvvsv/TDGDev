@@ -10,8 +10,12 @@ import InputField from "@/components/atoms/inputField";
 import { useState } from "react";
 
 const ProductPage = ({ furnitureData }) => {
+  console.log(furnitureData, "furnitureData");
   const [question, setQuestion] = useState("");
+  const [liked, setLiked] = useState(furnitureData?.liked);
   const [donorDetails, setDonorDetails] = useState(false);
+  const axiosService = new AxiosService();
+
   const router = useRouter();
   const ask = async () => {
     const isLoggedIn = document.cookie
@@ -77,10 +81,39 @@ const ProductPage = ({ furnitureData }) => {
 
             <div className={styles.stats}>
               <span className={styles.stat}>
-                <Heart className={styles.icon} /> 74
+                <Heart
+                  style={{
+                    fill: liked ? "rgba(121, 117, 114, 1)" : "none",
+                    color: "rgba(121, 117, 114, 1)",
+                  }}
+                  onClick={async (event) => {
+                    const heart = event.currentTarget;
+                    const newLikedState = !liked;
+                    heart.style.fill = newLikedState
+                      ? "rgba(121, 117, 114, 1)"
+                      : "none";
+
+                    try {
+                      const data = {
+                        uploadedImageRefId: furnitureData?.id,
+                        action: newLikedState ? "like" : "unlike",
+                      };
+                      const response = await axiosService.userLikeAction(data);
+                      // Handle the response if needed
+                      console.log("Like action response:", response);
+                    } catch (error) {
+                      console.error("Error performing like action:", error);
+                      // Revert the heart fill if the API call fails
+                      heart.style.fill = liked
+                        ? "rgba(121, 117, 114, 1)"
+                        : "none";
+                    }
+                  }}
+                />{" "}
+                &nbsp; {furnitureData?.likesCount}
               </span>
               <span className={styles.stat}>
-                <Eye className={styles.icon} /> 24 views
+                <Eye className={styles.icon} /> {furnitureData?.viewCount} views
               </span>
             </div>
           </div>
@@ -139,16 +172,16 @@ const ProductPage = ({ furnitureData }) => {
           )}
 
           <hr />
-          {donorDetails && (
+          {(donorDetails || furnitureData.alreadyRequested) && (
             <section className={styles.section2}>
               <h2 className={styles.sectionTitle}>Donor Details</h2>
-              <p classsName={styles.descriptionProduct}>
+              <p className={styles.descriptionProduct}>
                 Name: {furnitureData.fullName}
               </p>
-              <p classsName={styles.descriptionProduct}>
+              <p className={styles.descriptionProduct}>
                 Email: {furnitureData.email}
               </p>
-              <p classsName={styles.descriptionProduct}>
+              <p className={styles.descriptionProduct}>
                 Location: {furnitureData.location}
               </p>
             </section>
