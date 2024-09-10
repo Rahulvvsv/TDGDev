@@ -1,7 +1,8 @@
 import axios from "axios";
 
 class AxiosService {
-  constructor(baseURL = "http://localhost:3000/api/") {
+  // constructor(baseURL = "http://localhost:3000/api/") {
+  constructor(baseURL = "https://tdg-dev-dugl.vercel.app/") {
     this.api = axios.create({
       baseURL,
       timeout: 10000,
