@@ -36,3 +36,11 @@
   cursor: pointer;
   /* background-color: red; */
 }
+
+@media screen and (max-width: 440px) {
+  .right {
+    width: 80%;
+    height: 500px;
+    margin-bottom: 50px;
+  }
+}

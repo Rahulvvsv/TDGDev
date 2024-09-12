@@ -16,6 +16,27 @@
   /* background-color: red; */
 }
 .container {
+  position: relative;
   display: flex;
   height: 831px;
+  width: 100vw !important;
+}
+@media screen and (max-width: 440px) {
+  .container {
+    flex-direction: column;
+  }
+  .left {
+    width: 100%;
+  }
+  .rightMain {
+    width: 100%;
+  }
+  .right > img {
+    height: 300px !important;
+    object-position: left !important;
+    margin-bottom: 50px;
+  }
+  .right {
+    height: auto;
+  }
 }

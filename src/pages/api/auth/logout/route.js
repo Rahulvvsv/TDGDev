@@ -6,7 +6,11 @@ export default async function handler(req, res) {
       await logout();
       res.setHeader(
         "Set-Cookie",
-        `access_token='';loggedIn:false; HttpOnly; Path=/; Max-Age=3600`
+        `access_token=''; HttpOnly; Path=/; Max-Age=3600`
+      );
+      res.setHeader(
+        "Set-Cookie",
+        `loggedIn=false; HttpOnly; Path=/; Max-Age=3600`
       );
 
       res

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 class AxiosService {
-  // constructor(baseURL = "http://localhost:3000/api/") {
-  constructor(baseURL = "https://tdg-dev-dugl.vercel.app/api/") {
+  constructor(baseURL = "http://localhost:3000/api/") {
+    // constructor(baseURL = "https://tdg-dev-dugl.vercel.app/api/") {
     this.api = axios.create({
       baseURL,
       timeout: 10000,
@@ -39,7 +39,17 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error creating order:", error);
-      throw error;
+      return { data: {}, message: "Invalid email or password", error: true };
+    }
+  }
+
+  async logout() {
+    try {
+      const response = await this.api.post("auth/logout/route");
+      return response.data;
+    } catch (error) {
+      console.error("Error logging out:", error);
+      return { data: {}, message: "Error logging out", error: true };
     }
   }
 
@@ -79,7 +89,7 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error making user request:", error);
-      throw error;
+      return { data: {}, message: "Error making user request", error: true };
     }
   }
   async uploadUserImages(data) {
@@ -106,7 +116,7 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error uploading user images:", error);
-      throw error;
+      return { data: {}, message: "Error uploading user images", error: true };
     }
   }
   async updateItemStatus(uploadedId, status) {
@@ -119,7 +129,7 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error updating item status:", error);
-      throw error;
+      return { data: {}, message: "Error updating item status", error: true };
     }
   }
   async getAllUploads(cookie) {
@@ -132,7 +142,7 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error fetching all uploads:", error);
-      throw error;
+      return { data: {}, message: "Error fetching all uploads", error: true };
     }
   }
   async userLikeAction(data) {
@@ -141,7 +151,11 @@ class AxiosService {
       return response.data;
     } catch (error) {
       console.error("Error performing user like action:", error);
-      throw error;
+      return {
+        data: {},
+        message: "Error performing user like action",
+        error: true,
+      };
     }
   }
 }

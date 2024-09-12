@@ -13,6 +13,7 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import AxiosService from "@/lib/services/axios";
 import { parseCookies } from "nookies";
 const Header = () => {
   const [selected, setSelected] = useState(0);
@@ -20,7 +21,7 @@ const Header = () => {
   const [authCookie, setAuthCookes] = useState(false);
   const router = useRouter();
   const search = router.asPath;
-
+  const axiosService = new AxiosService();
   const cookies = parseCookies();
   useEffect(() => {
     if (search.includes("donate")) {
@@ -36,6 +37,8 @@ const Header = () => {
       setSelected(10);
     } else if (search.includes("login")) {
       setSelected(11);
+    } else if (search.includes("profile")) {
+      setSelected(12);
     } else {
       setSelected(0);
     }
@@ -71,19 +74,24 @@ const Header = () => {
             </div>
           )} */}
 
-          {selected == 0 && (
-            <div
-              className={style.main999}
-              onClick={() => {
-                const route = !authCookie ? "/login" : "/profile";
-
+          {/* {(selected == 0 || selected == 12) && ( */}
+          <div
+            className={style.main999}
+            onClick={async () => {
+              const route = !authCookie ? "/login" : "/profile";
+              if (selected == 12) {
+                await axiosService.logout();
+                router.push("/");
+              } else {
                 router.push(route);
-              }}
-            >
-              <Image src={"/Icon/person.png"} width={16} height={16}></Image>
-              {!authCookie && <p> Login</p>}
-            </div>
-          )}
+              }
+            }}
+          >
+            <Image src={"/Icon/person.png"} width={16} height={16}></Image>
+            {!authCookie && <p> Login</p>}
+            {selected == 12 && <p>Logout</p>}
+          </div>
+          {/* )} */}
           <div className={style.main3}>
             <Link href={"/"} style={{ position: "relative" }}>
               <h1
@@ -246,11 +254,14 @@ const Header = () => {
               zIndex: 5,
               top: 0,
               left: 0,
-              width: "100vw",
-              height: "100vh",
+              width: "100vw !important",
+              height: "100vh !important",
             }}
           >
-            <MobileHeader toggler={setToggleNavbar}></MobileHeader>
+            <MobileHeader
+              toggler={setToggleNavbar}
+              selected={selected}
+            ></MobileHeader>
           </motion.section>
         )}
       </AnimatePresence>

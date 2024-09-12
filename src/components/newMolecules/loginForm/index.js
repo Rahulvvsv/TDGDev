@@ -25,6 +25,7 @@ const LoginForm = ({ onSignUpClick, isSignUp }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setIsLoading(true);
       try {
         // // Call the signup function from AxiosService
         // const response = await apiService.login(data);
@@ -32,6 +33,7 @@ const LoginForm = ({ onSignUpClick, isSignUp }) => {
         // setSubmitted(true);
         // // Here you might want to redirect the user or show a success message
         const { message, error } = await apiService.login(data);
+        console.log(message, "message");
         if (!error) {
           if (message == "success") {
             router.push("/");
@@ -97,6 +99,7 @@ const LoginForm = ({ onSignUpClick, isSignUp }) => {
       <Button
         onClick={handleSubmit}
         placeholder={"SUBMIT"}
+        effect={false}
         content={isLoading ? "SUBMITTING..." : "SUBMIT"}
         href={""}
         fontColor={"white"}
@@ -107,6 +110,7 @@ const LoginForm = ({ onSignUpClick, isSignUp }) => {
           Sign Up
         </span>
       </p>
+      {errors.backend && <div className={style.error}>{errors.backend}</div>}
     </motion.div>
   );
 };

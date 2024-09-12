@@ -2,8 +2,17 @@
 import style from "./index.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
-const MobileHeader = ({ toggler }) => {
+import { useState, useEffect } from "react";
+const MobileHeader = ({ toggler, selected }) => {
+  const [authCookie, setAuthCookie] = useState(false);
+
   const router = useRouter();
+  useEffect(() => {
+    // Check for authentication cookie
+    // This is a placeholder, replace with your actual auth check
+    setAuthCookie(document.cookie.includes("loggedIn"));
+  }, []);
+
   return (
     <div className={style.main}>
       <Image
@@ -17,27 +26,54 @@ const MobileHeader = ({ toggler }) => {
       ></Image>
       <div className={style.main2}>
         <h1
+          className={style.name}
+          onClick={async () => {
+            const route = !authCookie ? "/login" : "/profile";
+            if (selected === 12) {
+              await axiosService.logout();
+              router.push("/");
+            } else {
+              router.push(route);
+            }
+            toggler(false);
+          }}
+        >
+          <span>
+            {!authCookie ? "Login" : selected === 12 ? "Logout" : "Profile"}
+          </span>
+        </h1>
+
+        <h1
           href={"/"}
           className={style.name}
           onClick={() => {
             toggler(false);
-            setTimeout(()=>{router.push("/")},1000)
+            setTimeout(() => {
+              router.push("/");
+            }, 1000);
           }}
         >
           Home
         </h1>
         <h1
-            onClick={() => {
-              toggler(false);
-            setTimeout(()=>{router.push("/donate")},1000)
-            }}
-         className={style.name}>Donate</h1>
+          onClick={() => {
+            toggler(false);
+            setTimeout(() => {
+              router.push("/donate");
+            }, 1000);
+          }}
+          className={style.name}
+        >
+          Donate
+        </h1>
         <div className={style.subnames}>
           <h1
             href={"/donate"}
             onClick={() => {
               toggler(false);
-            setTimeout(()=>{router.push("/donate")},1000)
+              setTimeout(() => {
+                router.push("/donate");
+              }, 1000);
             }}
             className={style.name2}
           >
@@ -47,7 +83,9 @@ const MobileHeader = ({ toggler }) => {
             href={"/donate/getFurniture"}
             onClick={() => {
               toggler(false);
-            setTimeout(()=>{router.push("/donate/getFurniture")},1000)
+              setTimeout(() => {
+                router.push("/donate/getFurniture");
+              }, 1000);
             }}
             className={style.name2}
           >
@@ -58,7 +96,9 @@ const MobileHeader = ({ toggler }) => {
           href={"/aboutUs"}
           onClick={() => {
             toggler(false);
-            setTimeout(()=>{router.push("/aboutUs")},1000)
+            setTimeout(() => {
+              router.push("/aboutUs");
+            }, 1000);
           }}
           className={style.name}
         >
@@ -68,11 +108,13 @@ const MobileHeader = ({ toggler }) => {
           href={"/contactUs"}
           onClick={() => {
             toggler(false);
-            setTimeout(()=>{router.push("/contactUs")},1000)
+            setTimeout(() => {
+              router.push("/contactUs");
+            }, 1000);
           }}
           className={style.name}
         >
-         Contact 
+          Contact
         </h1>
       </div>
     </div>

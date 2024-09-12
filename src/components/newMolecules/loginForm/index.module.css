@@ -9,7 +9,7 @@
   height: 600px;
   /* background-color: red; */
 }
-.right > div > div {
+.right > a {
   width: 100% !important;
 }
 
@@ -21,18 +21,29 @@
   color: red;
 }
 
-.forgot{
+.forgot {
   color: rgba(41, 41, 41, 1);
   font-size: 16px;
   cursor: pointer;
 }
 
-.forgot1{
+.forgot1 {
   color: rgba(41, 41, 41, 1);
   font-size: 16px;
 }
-.signUp{
+.signUp {
   font-weight: 600 !important;
   cursor: pointer;
   /* background-color: red; */
+}
+@media screen and (max-width: 768px) {
+  .right {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .right {
+    height: 400px;
+  }
 }
