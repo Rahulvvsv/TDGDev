@@ -19,10 +19,10 @@ const Header = () => {
   const [selected, setSelected] = useState(0);
   const [toggleNavbar, setToggleNavbar] = useState(false);
   const [authCookie, setAuthCookes] = useState(false);
+  const cookies = parseCookies();
   const router = useRouter();
   const search = router.asPath;
   const axiosService = new AxiosService();
-  const cookies = parseCookies();
   useEffect(() => {
     if (search.includes("donate")) {
       setSelected(1);
@@ -251,7 +251,7 @@ const Header = () => {
             exit={{ x: 550, opacity: 0 }}
             style={{
               position: "absolute",
-              zIndex: 5,
+              zIndex: 5999999999999999,
               top: 0,
               left: 0,
               width: "100vw !important",

@@ -176,6 +176,7 @@ async function uploadImagesWithReferences(
     description,
     date: new Date(),
     status: "showOnPage",
+    itemStatus: "Available",
     likesCount: 0,
     viewCount: 0,
   });

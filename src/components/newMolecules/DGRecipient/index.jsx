@@ -22,7 +22,7 @@ const RecipientDetails = (data) => {
       {data.data.value.itemStatus != undefined ? (
         <div className={style.main222}>
           <p className={name ? "" : style.main333}>
-            Status: {data.data?.value?.itemStatus}
+            &nbsp; {data.data?.value?.itemStatus}
           </p>
           {name && <p>Name: {name}</p>}
           {contact && <p>Contact: {contact}</p>}

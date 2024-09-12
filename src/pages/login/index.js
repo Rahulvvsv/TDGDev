@@ -31,7 +31,6 @@ const Login = () => {
       const { signUp } = router.query;
       setIsSignUp(signUp === undefined ? false : signUp !== "true");
       setIsSignUpSuccess(signUp === undefined ? false : signUp === "true");
-      console.log(isSignUpSuccess, signUp, "isSignUpSuccess");
     }
   }, [router.isReady, router.query]);
   const handleSignUpClick = () => {

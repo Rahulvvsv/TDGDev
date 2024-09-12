@@ -14,8 +14,21 @@ export function sortByTimestamp(data) {
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const querySnapshot = await getDocs(collection(db, "uploads"));
+      const { location } = req.query;
+      console.log(location, "location");
+      // let querySnapshot;
       const fetchedData = {};
+
+      let querySnapshot;
+      if (location && location !== "undefined") {
+        const q = query(
+          collection(db, "uploads"),
+          where("location", "==", location)
+        );
+        querySnapshot = await getDocs(q);
+      } else {
+        querySnapshot = await getDocs(collection(db, "uploads"));
+      }
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();

@@ -126,6 +126,7 @@ export default async function handler(req, res) {
       // Prepare the response
       const response = {
         email: userData.email,
+        isAdmin: userData.isAdmin,
         createdAt: userData.createdAt.toDate().toISOString(),
         uploads,
         myRequests,

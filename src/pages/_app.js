@@ -6,12 +6,13 @@ import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 
 import "./index.css";
+
 export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
         <link rel="icon" type="image/png" href="/Icon/4.png" />
-       
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <section>
         <NextNProgress color="#585552" />

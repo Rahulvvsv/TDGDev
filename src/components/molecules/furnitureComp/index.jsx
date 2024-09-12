@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import AxiosService from "../../../lib/services/axios";
 import ContactDonarPopUP from "../contactDonarPop";
-
+import { useRouter } from "next/router";
 import {
   TransformWrapper,
   TransformComponent,
@@ -25,6 +25,7 @@ const FurnitureComp = ({
   date = new Date(),
   location,
   liked = false,
+  authCookie = false,
   href = `/donate/getFurnitureById/${unqId}`,
   axiosService = new AxiosService(),
   showLikeButton = false,
@@ -34,6 +35,7 @@ const FurnitureComp = ({
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
   const [ImageLink, setImage] = useState();
+  const router = useRouter();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageModalIsOpen, setImageIsOpen] = useState(false);
@@ -89,10 +91,15 @@ const FurnitureComp = ({
   return (
     <div className={style.main} id={style.something} key={key1}>
       {showLikeButton && (
-        <div className={style.likeButton}>
+        <div className={style.likeButton} id={style.likeButton1}>
           <Heart
             style={{ fill: liked ? "rgba(121, 117, 114, 1)" : "none" }}
             onClick={async (event) => {
+              if (!authCookie) {
+                // Redirect to login page if auth cookie is not present
+                router.push("/login");
+                return;
+              }
               const heart = event.currentTarget;
               const newLikedState = !liked;
               heart.style.fill = newLikedState

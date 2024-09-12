@@ -45,7 +45,7 @@ export const Firebase = async () => {
 };
 
 export const updateDocument = async (documentId, newData) => {
-  let docRef = doc(db, "newData", documentId);
+  let docRef = doc(db, "uploads", documentId);
   let result = await setDoc(docRef, newData, { merge: true });
 };
 

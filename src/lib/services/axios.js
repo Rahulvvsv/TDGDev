@@ -55,11 +55,8 @@ class AxiosService {
 
   async getMyProfile(cookie) {
     try {
-      const response = await this.api.get("getMyProfile/route", {
-        headers: {
-          Cookie: cookie,
-        },
-      });
+      const config = cookie ? { headers: { Cookie: cookie } } : {};
+      const response = await this.api.get(`getMyProfile/route`, config);
       return response.data;
     } catch (error) {
       console.error("Error fetching my profile:", error);
@@ -132,17 +129,18 @@ class AxiosService {
       return { data: {}, message: "Error updating item status", error: true };
     }
   }
-  async getAllUploads(cookie) {
+  async getAllUploads(cookie, location) {
     try {
-      const response = await this.api.get("getAllUploads/route", {
-        headers: {
-          Cookie: cookie,
-        },
-      });
+      const config = cookie ? { headers: { Cookie: cookie } } : {};
+      const response = await this.api.get(
+        `getAllUploads/route?location=${location}`,
+        config
+      );
+      console.log(response.data, "response.data");
       return response.data;
     } catch (error) {
       console.error("Error fetching all uploads:", error);
-      return { data: {}, message: "Error fetching all uploads", error: true };
+      return { data: [], message: "Error fetching all uploads", error: true };
     }
   }
   async userLikeAction(data) {

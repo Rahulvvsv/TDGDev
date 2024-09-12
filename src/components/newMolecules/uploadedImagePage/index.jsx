@@ -41,30 +41,18 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
           uploadedImageRefId: furnitureData?.id,
           question: question,
         });
-        // console.log("User request response:", response);
         setDonorDetails(!response.error);
       } catch (error) {
-        //console.log(error.message);
+        console.log(error.message);
       }
     } else {
       router.push("/login");
     }
   };
-  //console.log(furnitureData, "furnitre");
   return (
     <div className={styles.container}>
-      <nav className={styles.breadcrumb}>
-        <ul>
-          <li>Get Furniture</li>
-          <li>&gt;</li>
-          <li>See all Furniture</li>
-          <li>&gt;</li>
-          <li>{furnitureData?.location}</li>
-        </ul>
-      </nav>
-
       <div className={styles.content}>
-        <div className={styles.imageContainer}>
+        <div className={styles.imageContainer} id={styles.imageContainer1}>
           <FurnitureComp
             Img={furnitureData?.files}
             name={furnitureData?.name}
@@ -76,9 +64,6 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
             showButton={false}
             showDetails={false}
           />
-          {/* <button className={styles.likeButton}>
-            <Heart />
-          </button> */}
         </div>
 
         <div className={styles.productDetails}>
@@ -110,7 +95,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
                       };
                       const response = await axiosService.userLikeAction(data);
                       // Handle the response if needed
-                      console.log("Like action response:", response);
+                      // console.log("Like action response:", response);
                     } catch (error) {
                       console.error("Error performing like action:", error);
                       // Revert the heart fill if the API call fails
@@ -120,7 +105,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
                     }
                   }}
                 />{" "}
-                / {furnitureData?.likesCount}
+                &nbsp; {furnitureData?.likesCount}
               </span>
               <span className={styles.stat}>
                 <Eye className={styles.icon} /> {furnitureData?.viewCount} views
@@ -198,6 +183,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
                   </span>
                 </div>
               ))}
+            {!enquiryDetails && <p>No enquiries yet</p>}
           </div>
 
           {detailData && (

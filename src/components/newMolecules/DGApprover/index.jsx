@@ -11,6 +11,7 @@ import Desc from "@/components/newMolecules/DGDescription";
 import Status from "@/components/newMolecules/DGStatus";
 import Reviewer from "@/components/newMolecules/DGReviewer";
 import RecipientDetails from "../DGRecipient";
+import AxiosService from "@/lib/services/axios";
 
 const columns = [
   {
@@ -111,7 +112,7 @@ const columns = [
   },
   {
     field: "Recipient",
-    headerName: "Recipient Details",
+    headerName: "Availability Details",
     width: 350,
     renderCell: (params) => <RecipientDetails data={params}></RecipientDetails>,
   },
@@ -120,23 +121,24 @@ const columns = [
 export default function DataGridApprover() {
   const [rows, setRows] = useState({});
   const [filteredRows, setFilteredRows] = useState([]);
+  const axiosService = new AxiosService();
   useEffect(() => {
     const fetcher = async () => {
-      let data = await fetchData();
-      // //console.log(data);
-      let rowValues = data.map((e) => {
+      let data = await axiosService.getAllUploads();
+      console.log(data.data);
+      let rowValues = data.data.map((e) => {
         let value = {
           id: e.id,
-          Image: e.imageUrl,
+          Image: e.files,
           ProductName: {
-            name: e.productName,
+            name: e.typeOfFurniture,
             desc: e.description,
             date: e.date,
           },
           Description: e.description,
           Location: e.location,
           DonorInfo: {
-            name: e.name,
+            name: e.fullName,
             mail: e.email,
           },
           Phone: e.phone,

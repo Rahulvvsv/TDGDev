@@ -10,7 +10,6 @@ import InputField from "@/components/atoms/inputField";
 import { useState } from "react";
 
 const ProductPage = ({ furnitureData }) => {
-  console.log(furnitureData, "furnitureData");
   const [question, setQuestion] = useState("");
   const [liked, setLiked] = useState(furnitureData?.liked);
   const [donorDetails, setDonorDetails] = useState(false);
@@ -29,7 +28,6 @@ const ProductPage = ({ furnitureData }) => {
           uploadedImageRefId: furnitureData?.id,
           question: question,
         });
-        console.log("User request response:", response);
         setDonorDetails(!response.error);
       } catch (error) {
         //console.log(error.message);
@@ -45,14 +43,14 @@ const ProductPage = ({ furnitureData }) => {
         <ul>
           <li>Get Furniture</li>
           <li>&gt;</li>
-          <li>See all Furniture</li>
-          <li>&gt;</li>
+          {/* <li>See all Furniture</li>
+          <li>&gt;</li> */}
           <li>{furnitureData?.location}</li>
         </ul>
       </nav>
 
       <div className={styles.content}>
-        <div className={styles.imageContainer}>
+        <div className={styles.imageContainer} id={styles.imageContainer1}>
           <FurnitureComp
             Img={furnitureData?.files}
             name={furnitureData?.name}
@@ -100,7 +98,6 @@ const ProductPage = ({ furnitureData }) => {
                       };
                       const response = await axiosService.userLikeAction(data);
                       // Handle the response if needed
-                      console.log("Like action response:", response);
                     } catch (error) {
                       console.error("Error performing like action:", error);
                       // Revert the heart fill if the API call fails
@@ -162,7 +159,7 @@ const ProductPage = ({ furnitureData }) => {
                   content={"Your request has been sent"}
                   fontColor={"rgba(121, 117, 114, 1)"}
                   onClick={() => {
-                    console.log("clicked");
+                    // console.log("clicked");
                   }}
                   href={""}
                   btnClass={2}

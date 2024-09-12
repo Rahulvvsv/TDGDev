@@ -9,10 +9,18 @@ export default async function handler(req, res) {
     const { uploadedId, status } = req.body;
     // console.log(uploadedId, status, "uploadedId, status request received");
     try {
-      await updateDocument(uploadedId, { itemStatus: status });
+      let visibleStatus = "showOnPage";
+      if (status == "Available") {
+        visibleStatus = "showOnPage";
+      } else {
+        visibleStatus = "hidden";
+      }
+      await updateDocument(uploadedId, {
+        itemStatus: status,
+        status: visibleStatus,
+      });
       res.status(200).json({ data: user, error: false, message: "success" });
     } catch (error) {
-      //console.log(error, "error");
       res.status(200).json({ error: true, data: {}, message: error.message });
     }
   } else {

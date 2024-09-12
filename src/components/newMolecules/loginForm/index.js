@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import AxiosService from "@/lib/services/axios";
 
 const LoginForm = ({ onSignUpClick, isSignUp }) => {
-  console.log(isSignUp, "isSignUp from login form");
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({});
   const [submitted, setSubmitted] = useState(false);

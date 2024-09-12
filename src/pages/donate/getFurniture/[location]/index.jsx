@@ -1,6 +1,6 @@
 import style from "./index.module.css";
 import AllFurnitureProducts from "@/components/molecules/allFurnitureProducts";
-import { fetchDataLocation } from "@/lib/firebase";
+import AxiosService from "@/lib/services/axios";
 import BackButton from "@/components/molecules/backButton";
 export const locationsData = [
   "Baltimore",
@@ -22,7 +22,7 @@ const index = ({ data, id }) => {
       </section>
       <h1 className={style.heading}>{id}</h1>
       <Suspense fallback={<h1>Loading</h1>}>
-        <AllFurnitureProducts data={JSON.parse(data)}></AllFurnitureProducts>
+        <AllFurnitureProducts data={data}></AllFurnitureProducts>
       </Suspense>
     </section>
   );
@@ -44,13 +44,13 @@ const index = ({ data, id }) => {
 export async function getServerSideProps(context) {
   const { params } = context;
   let id = params.location;
-  ////console.log(id)
-  let data = await fetchDataLocation(id);
-  data = JSON.stringify(data);
+  let axios = new AxiosService();
+  let cookie = context.req.headers.cookie;
+  let data = await axios.getAllUploads(cookie, id);
 
   return {
     props: {
-      data,
+      data: data.data,
       id,
     },
   };

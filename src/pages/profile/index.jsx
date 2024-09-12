@@ -2,6 +2,7 @@
 import style from "./index.module.css";
 import FurnitureComp from "@/components/molecules/furnitureComp";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import AxiosService from "@/lib/services/axios";
 
 const Proflie = ({ furnitureData }) => {
@@ -12,7 +13,7 @@ const Proflie = ({ furnitureData }) => {
   const [myRequests, setMyRequests] = useState([]);
   const [href, setHref] = useState("/profile/viewUpload");
   const axiosService = new AxiosService();
-
+  const router = useRouter();
   useEffect(() => {
     setUploads(furnitureData?.uploads);
     setMyRequests(furnitureData?.myRequests);
@@ -69,6 +70,22 @@ const Proflie = ({ furnitureData }) => {
           >
             Your Favourites
           </button>
+          {furnitureData?.isAdmin && (
+            <button
+              onClick={() => {
+                // handleItemChange(
+                //   "yourFavourites",
+                //   likes,
+                //   "/donate/getFurnitureById"
+                // );
+                router.push("/requestsHandler/adminPage");
+              }}
+              className={item == "adminProfile" ? style.btn1 : style.btn2}
+              style={{ marginLeft: 50, marginBottom: 50 }}
+            >
+              Admin Profile
+            </button>
+          )}
         </div>
         <div className={style.furnitureList}>
           {data
@@ -89,6 +106,7 @@ const Proflie = ({ furnitureData }) => {
                 href={`${href}/${item.id}`}
               />
             ))}
+          {!data.length && <p>No data yet!</p>}
         </div>
       </div>
     </div>

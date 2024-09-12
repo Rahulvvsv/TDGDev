@@ -37,9 +37,6 @@ export async function getServerSideProps(context) {
   const cookie = context.req.headers.cookie;
 
   let allUploads = await axios.getAllUploads(cookie);
-  // allUploads = JSON.stringify(allUploads);
-  // setDataList(data)
-  // Example data fetching, replace this with your actual data fetching logic
 
   return {
     props: {

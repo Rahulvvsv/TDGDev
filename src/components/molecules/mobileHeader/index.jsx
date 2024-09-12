@@ -2,10 +2,12 @@
 import style from "./index.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import AxiosService from "@/lib/services/axios";
 import { useState, useEffect } from "react";
 const MobileHeader = ({ toggler, selected }) => {
   const [authCookie, setAuthCookie] = useState(false);
 
+  const axiosService = new AxiosService();
   const router = useRouter();
   useEffect(() => {
     // Check for authentication cookie
@@ -38,9 +40,7 @@ const MobileHeader = ({ toggler, selected }) => {
             toggler(false);
           }}
         >
-          <span>
-            {!authCookie ? "Login" : selected === 12 ? "Logout" : "Profile"}
-          </span>
+          {!authCookie ? "Login" : selected === 12 ? "Logout" : "Profile"}
         </h1>
 
         <h1

@@ -3,14 +3,21 @@ import { Pagination } from "@mui/material";
 import style from "./index.module.css";
 import FurnitureComp from "../furnitureComp";
 import AxiosService from "../../../lib/services/axios";
+import { parseCookies } from "nookies";
+import { useEffect } from "react";
 
 const ITEMS_PER_PAGE = 8;
 
 const AllFurnitureProducts = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredData = data.filter((e) => e.status === "showOnPage");
-  let axiosService = new AxiosService();
+  const filteredData = data.filter((item) => item.status === "showOnPage");
+  const axiosService = new AxiosService();
+  const [authCookie, setAuthCookes] = useState(false);
+  const cookies = parseCookies();
 
+  useEffect(() => {
+    setAuthCookes(cookies["loggedIn"]);
+  }, [cookies]);
   // Calculate total pages
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
@@ -29,6 +36,7 @@ const AllFurnitureProducts = ({ data }) => {
         {currentData.map((e, key) => {
           return (
             <FurnitureComp
+              authCookie={authCookie}
               unqId={e.id}
               key={key}
               axiosService={axiosService}

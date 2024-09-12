@@ -61,6 +61,9 @@
   flex-direction: column;
   gap: 1rem;
 }
+.circle:hover {
+  cursor: pointer;
+}
 .circleText {
   position: absolute;
   top: 50%;
@@ -225,5 +228,46 @@
 
   .productDetails {
     width: 50%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .imageContainer {
+    width: 100%;
+  }
+  .productDetails {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #imageContainer1 > div {
+    width: 100% !important;
+  }
+  .productDetails {
+    width: 100%;
+  }
+  .imageContainer > div > div {
+    /* background-color: red; */
+    width: auto !important;
+    height: 400px !important;
+    margin-left: 0px !important;
+  }
+  .imageContainer > div {
+    height: 400px !important;
+  }
+  .imageContainer > div > div > section {
+    left: 55% !important;
+  }
+  .buttonContainer > button {
+    width: 45% !important;
+  }
+  .container {
+    margin-bottom: 40px;
   }
 }
