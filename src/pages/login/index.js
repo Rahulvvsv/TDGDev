@@ -2,14 +2,16 @@
 import styles from "./index.module.css";
 import SignUpForm from "@/components/newMolecules/signUpForm";
 import LoginForm from "@/components/newMolecules/loginForm";
+import ForgotPasswordForm from "@/components/newMolecules/forgotPassword";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 const Login = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [authState, setAuthState] = useState("login");
   const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     const checkLoggedIn = () => {
       const cookies = document.cookie.split(";");
@@ -29,28 +31,40 @@ const Login = () => {
   useEffect(() => {
     if (router.isReady) {
       const { signUp } = router.query;
-      setIsSignUp(signUp === undefined ? false : signUp !== "true");
+      setAuthState(
+        signUp === undefined ? "login" : signUp !== "true" ? "signUp" : "login"
+      );
       setIsSignUpSuccess(signUp === undefined ? false : signUp === "true");
     }
   }, [router.isReady, router.query]);
+
   const handleSignUpClick = () => {
-    setIsSignUp(true);
+    setAuthState("signUp");
   };
 
   const handleLoginClick = () => {
-    setIsSignUp(false);
+    setAuthState("login");
+  };
+
+  const handleForgotPasswordClick = () => {
+    setAuthState("forgotPassword");
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        {isSignUp ? (
+        {authState === "signUp" && (
           <SignUpForm onLoginClick={handleLoginClick} />
-        ) : (
+        )}
+        {authState === "login" && (
           <LoginForm
             onSignUpClick={handleSignUpClick}
+            onForgotPasswordClick={handleForgotPasswordClick}
             isSignUp={isSignUpSuccess}
           />
+        )}
+        {authState === "forgotPassword" && (
+          <ForgotPasswordForm onLoginClick={handleLoginClick} />
         )}
       </div>
       <div className={styles.rightMain}>
@@ -60,7 +74,7 @@ const Login = () => {
             fill
             objectFit="cover"
             objectPosition="top"
-          ></Image>
+          />
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@
   font-size: 12px !important;
   /* top:kj20px; */
 }
-.react-datepicker-popper{
+.react-datepicker-popper {
   z-index: 11 !important;
 }
 
@@ -22,7 +22,7 @@ a {
   text-decoration: none;
 }
 
-.ReactModalPortal{
+.ReactModalPortal {
   z-index: 9 !important;
   position: fixed;
 }
@@ -39,10 +39,10 @@ a {
   margin-left: 40px;
   margin-top: 20px;
 }
-.MuiDataGrid-columnHeaderTitleContainerContent{
+.MuiDataGrid-columnHeaderTitleContainerContent {
   font-weight: 700 !important;
 }
-.css-t89xny-MuiDataGrid-columnHeaderTitle{
+.css-t89xny-MuiDataGrid-columnHeaderTitle {
   font-weight: 700 !important;
 }
 .css-128fb87-MuiDataGrid-toolbarContainer button {
@@ -60,12 +60,12 @@ a {
   width: 100% !important;
   height: 100% !important;
 }
-.Mui-selected{
-  background-color: rgba(146, 135, 123, 1);;
+.Mui-selected {
+  background-color: rgba(146, 135, 123, 1);
 }
 
-.Mui-selected:hover{
-   background-color: rgba(146, 135, 123, 1);;
+.Mui-selected:hover {
+  background-color: rgba(146, 135, 123, 1);
 }
 .transform-component-module_content__FBWxo {
   width: 100% !important;
@@ -104,4 +104,15 @@ select {
 }
 ::-webkit-scrollbar {
   width: thin;
+}
+
+[class*="MuiInputBase"] {
+  /* Your styles here */
+  /* For example: */
+  padding: 10px !important;
+}
+
+[class*="MuiInputBase-root"] {
+  /* padding: 10px !important; */
+  transition: all 1s ease-in-out !important;
 }

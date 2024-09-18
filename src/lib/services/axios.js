@@ -33,6 +33,16 @@ class AxiosService {
     }
   }
 
+  async forgotPassword(data) {
+    try {
+      const response = await this.api.post("auth/forgotPassword/route", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      return { data: {}, message: "Something went wrong", error: true };
+    }
+  }
+
   async login(data) {
     try {
       const response = await this.api.post("auth/signin/route", data);

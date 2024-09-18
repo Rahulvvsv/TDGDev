@@ -1,0 +1,49 @@
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+  gap: 20px;
+  width: 60%;
+  margin-top: 30px;
+  height: 600px;
+  /* background-color: red; */
+}
+.right > a {
+  width: 100% !important;
+}
+
+.heading {
+  font-size: 24px;
+}
+
+.error {
+  color: red;
+}
+
+.forgot {
+  color: rgba(41, 41, 41, 1);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.forgot1 {
+  color: rgba(41, 41, 41, 1);
+  font-size: 16px;
+}
+.signUp {
+  font-weight: 600 !important;
+  cursor: pointer;
+  /* background-color: red; */
+}
+@media screen and (max-width: 768px) {
+  .right {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .right {
+    height: 400px;
+  }
+}

@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useState } from "react";
 import { fetchData } from "@/lib/firebase";
+import TextField from "@mui/material/TextField";
+
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import DGImage from "@/components/newMolecules/DGImage";
@@ -12,6 +14,21 @@ import Status from "@/components/newMolecules/DGStatus";
 import Reviewer from "@/components/newMolecules/DGReviewer";
 import RecipientDetails from "../DGRecipient";
 import AxiosService from "@/lib/services/axios";
+function dateTimeFormateer(timestamp) {
+  try {
+    const { seconds, nanoseconds } = timestamp;
+    const milliseconds = seconds * 1000 + nanoseconds / 1e6;
+    const date = new Date(milliseconds);
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  } catch {
+    const date = new Date();
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  }
+}
 
 const columns = [
   {
@@ -118,84 +135,163 @@ const columns = [
   },
 ];
 
+// export default function DataGridApprover() {
+//   const [rows, setRows] = useState({});
+//   const [filteredRows, setFilteredRows] = useState([]);
+//   const axiosService = new AxiosService();
+//   useEffect(() => {
+//     const fetcher = async () => {
+//       let data = await axiosService.getAllUploads();
+//       console.log(data.data);
+//       let rowValues = data.data.map((e) => {
+//         let value = {
+//           id: e.id,
+//           Image: e.files,
+//           ProductName: {
+//             name: e.typeOfFurniture,
+//             desc: e.description,
+//             date: e.date,
+//           },
+//           Description: e.description,
+//           Location: e.location,
+//           DonorInfo: {
+//             name: e.fullName,
+//             mail: e.email,
+//           },
+//           Phone: e.phone,
+//           Status: { status: e.status, id: e.id },
+//           Reviewer: e.location,
+//           Recipient: {
+//             name: e.recName,
+//             contact: e.recContact,
+//             recDate: e.recipientReceivedDate,
+//             itemStatus: e.itemStatus,
+//           },
+//         };
+//         return value;
+//       });
+//       setRows(rowValues);
+//       setFilteredRows(rowValues);
+//     };
+//     fetcher();
+//   }, []);
+
+//   return (
+//     <div className={style.dataGrid}>
+//       <Box sx={{ height: 1180, width: "100%" }}>
+//         <DataGrid
+//           rows={filteredRows}
+//           columns={columns}
+//           initialState={{
+//             pagination: {
+//               paginationModel: {
+//                 pageSize: 10,
+//               },
+//             },
+//           }}
+//           pageSizeOptions={[5]}
+//           disableRowSelectionOnClick
+//           rowHeight={100}
+//           slots={{
+//             toolbar: GridToolbar,
+//           }}
+//         />
+//       </Box>
+//     </div>
+//   );
+// }
+
 export default function DataGridApprover() {
-  const [rows, setRows] = useState({});
+  const [rows, setRows] = useState([]);
   const [filteredRows, setFilteredRows] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const axiosService = new AxiosService();
+
   useEffect(() => {
     const fetcher = async () => {
       let data = await axiosService.getAllUploads();
-      console.log(data.data);
-      let rowValues = data.data.map((e) => {
-        let value = {
-          id: e.id,
-          Image: e.files,
-          ProductName: {
-            name: e.typeOfFurniture,
-            desc: e.description,
-            date: e.date,
-          },
-          Description: e.description,
-          Location: e.location,
-          DonorInfo: {
-            name: e.fullName,
-            mail: e.email,
-          },
-          Phone: e.phone,
-          Status: { status: e.status, id: e.id },
-          Reviewer: e.location,
-          Recipient: {
-            name: e.recName,
-            contact: e.recContact,
-            recDate: e.recipientReceivedDate,
-            itemStatus: e.itemStatus,
-          },
-        };
-        return value;
-      });
+      let rowValues = data.data.map((e) => ({
+        id: e.id,
+        Image: e.files,
+        ProductName: {
+          name: e.typeOfFurniture,
+          desc: e.description,
+          date: dateTimeFormateer(e.date),
+        },
+        Description: e.description,
+        Location: e.location,
+        DonorInfo: {
+          name: e.fullName,
+          mail: e.email,
+        },
+        Phone: e.phone,
+        Status: { status: e.status, id: e.id },
+        Reviewer: e.location,
+        Recipient: {
+          name: e.recName,
+          contact: e.recContact,
+          recDate: e.recipientReceivedDate,
+          itemStatus: e.itemStatus,
+        },
+      }));
       setRows(rowValues);
       setFilteredRows(rowValues);
     };
     fetcher();
   }, []);
-  const handleSearchChange = (event) => {
-    const value = event.target.value.toLowerCase();
-    const filtered = rows.filter((row) => {
-      // //console.log(row.productName)
-      return (
-        row.ProductName.toString().toLowerCase().includes(value) ||
-        row.Description.toLowerCase().includes(value) ||
-        row.Location.toLowerCase().includes(value) ||
-        row.DonorInfo.name.toLowerCase().includes(value) ||
-        row.DonorInfo.mail.toLowerCase().includes(value) ||
-        row.Phone.toLowerCase().includes(value) ||
-        row.Status.toLowerCase().includes(value)
-      );
-    });
-    setFilteredRows(filtered);
-  };
 
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    if (term === "") {
+      setFilteredRows(rows);
+    } else {
+      const filtered = rows.filter((row) => {
+        return Object.entries(row).some(([key, value]) => {
+          if (typeof value === "object" && value !== null) {
+            return Object.values(value).some((v) =>
+              v && typeof v.toString === "function"
+                ? v.toString().toLowerCase().includes(term)
+                : false
+            );
+          }
+          return value && typeof value.toString === "function"
+            ? value.toString().toLowerCase().includes(term)
+            : false;
+        });
+      });
+      setFilteredRows(filtered);
+    }
+  };
   return (
-    <div className={style.dataGrid}>
-      <Box sx={{ height: 1180, width: "100%" }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          disableRowSelectionOnClick
-          rowHeight={100}
-          slots={{
-            toolbar: GridToolbar,
-          }}
+    <div>
+      <div className={style.dataGrid}>
+        <TextField
+          fullWidth
+          placeholder="Search across all fields..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className={style.search}
+          style={{ marginBottom: 20, padding: 10 }}
         />
-      </Box>
+        <Box sx={{ width: "100%" }}>
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSizeOptions={[5, 10, 25, 50, 100]}
+            disableRowSelectionOnClick
+            rowHeight={100}
+          />
+        </Box>
+      </div>
     </div>
   );
 }

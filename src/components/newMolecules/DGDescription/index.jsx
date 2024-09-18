@@ -26,7 +26,7 @@ const Desc = (data) => {
     <div className={style.something}>
       <p className={style.heading}>{name}</p>
       <p className={style.desc}>{desc}</p>
-      <p className={style.hh2}>{dateTimeFormateer(date)}</p>
+      <p className={style.hh2}>{date}</p>
     </div>
   );
 };

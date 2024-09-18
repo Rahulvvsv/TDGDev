@@ -71,7 +71,7 @@ const FurnitureComp = ({
     const { seconds, nanoseconds } = timestamp;
     const milliseconds = seconds * 1000 + nanoseconds / 1e6;
     const date = new Date(milliseconds);
-    const options = { month: "short", day: "numeric", year: "2-digit" };
+    const options = { month: "short", day: "numeric", year: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
     return formattedDate;
   }

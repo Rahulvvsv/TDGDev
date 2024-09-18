@@ -1,14 +1,26 @@
-.dataGrid{
-    width: 95%;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.dataGrid {
+  width: 95%;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-direction: column;
 }
-.header{
-    padding-left: 20px !important;
-    margin-left: 20px;
-    font-weight: 500;
+.header {
+  padding-left: 20px !important;
+  margin-left: 20px;
+  font-weight: 500;
+}
+.search {
+  width: 100%;
+  padding: 10px !important;
+}
+.search div {
+  height: 40px;
+}
+.search input {
+  height: 40px;
+  padding-left: 10px !important;
 }
