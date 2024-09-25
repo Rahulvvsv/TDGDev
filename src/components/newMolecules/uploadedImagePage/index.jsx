@@ -117,7 +117,7 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>Product Description</h2>
             <p className={styles.descriptionProduct}>
-              {furnitureData?.descriptio}
+              {furnitureData?.description}
             </p>
           </section>
           {furnitureData.alreadyRequested && (
@@ -168,10 +168,13 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
               enquiryDetails.map((detail, index) => (
                 <div
                   key={index}
-                  className={`${styles.circle} ${styles.circleKP}`}
+                  className={`${styles.circle} ${styles.circleKP} ${
+                    showDetails === index ? styles.activeCircle : ""
+                  }`}
                   onClick={() => {
                     setShowDetails(index);
                     setDetailData(detail);
+                    console.log(showDetails, index, "showDetails");
                   }}
                 >
                   <span className={styles.circleText}>

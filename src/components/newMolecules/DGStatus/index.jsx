@@ -27,26 +27,26 @@ const Status = (props) => {
     switch (status) {
       case "showOnPage":
         return [
-          { value: "declined", label: "remove from website" },
-          { value: "donorFound", label: "donor Found" },
+          { value: "declined", label: "Remove from website" },
+          { value: "donorFound", label: "Donor Found" },
         ];
       case "hidden":
         return [
-          { value: "declined", label: "remove from website" },
-          { value: "showOnPage", label: "publish on the website" },
-          { value: "donorFound", label: "donor Found" },
+          { value: "declined", label: "Remove from website" },
+          { value: "showOnPage", label: "Publish on the website" },
+          { value: "donorFound", label: "Donor Found" },
         ];
       case "declined":
         return [
-          { value: "showOnPage", label: "publish on the website" },
-          { value: "donorFound", label: "donor Found" },
+          { value: "showOnPage", label: "Publish on the website" },
+          { value: "donorFound", label: "Donor Found" },
         ];
 
       case "donorFound":
         return [
-          { value: "showOnPage", label: "publish on the website" },
-          { value: "declined", label: "remove from website" },
-          { value: "donorFound", label: "donor Found" },
+          { value: "showOnPage", label: "Publish on the website" },
+          { value: "declined", label: "Remove from website" },
+          { value: "donorFound", label: "Donor Found" },
         ];
       default:
         return [];

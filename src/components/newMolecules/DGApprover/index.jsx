@@ -275,7 +275,7 @@ export default function DataGridApprover() {
           className={style.search}
           style={{ marginBottom: 20, padding: 10 }}
         />
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", height: "1100px" }}>
           <DataGrid
             rows={filteredRows}
             columns={columns}

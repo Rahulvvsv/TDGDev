@@ -1,7 +1,10 @@
 "use client";
 import style from "./index.module.css";
+import { useState } from "react";
 import { locationsData } from "../../../pages/donate/getFurniture/[location]";
+import { Eye, EyeOff } from "react-feather";
 const InputField = ({ placeholder, height, onChange, name, type = "text" }) => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <>
       {type == "text" && (
@@ -16,15 +19,31 @@ const InputField = ({ placeholder, height, onChange, name, type = "text" }) => {
         ></input>
       )}
       {type == "password" && (
-        <input
-          required
-          className={style.inputs}
-          name={name}
-          onChange={onChange}
-          type={type}
-          placeholder={placeholder}
-          style={{ height: height }}
-        ></input>
+        <div className={style.passwordContainer}>
+          <input
+            required
+            className={`${style.inputs}`}
+            name={name}
+            onChange={onChange}
+            type={showPassword ? "text" : "password"}
+            placeholder={placeholder}
+            style={{ height: height }}
+          />
+          <div
+            className={style.eyeIcon}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <Eye
+                style={{ border: "none", color: "rgba(121, 117, 114, 1)" }}
+              ></Eye>
+            ) : (
+              <EyeOff
+                style={{ border: "none", color: "rgba(121, 117, 114, 1)" }}
+              ></EyeOff>
+            )}
+          </div>
+        </div>
       )}
 
       {type == "text-area" && (

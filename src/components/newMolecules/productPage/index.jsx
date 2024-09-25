@@ -141,7 +141,7 @@ const ProductPage = ({ furnitureData }) => {
               <div className={styles.buttonContainer}>
                 <Button
                   backgroundColor={"white"}
-                  content={"Get Donor Details"}
+                  content={"Submit"}
                   fontColor={"rgba(121, 117, 114, 1)"}
                   onClick={ask}
                   btnClass={2}
@@ -180,6 +180,9 @@ const ProductPage = ({ furnitureData }) => {
               </p>
               <p className={styles.descriptionProduct}>
                 Location: {furnitureData.location}
+              </p>
+              <p className={styles.descriptionProduct}>
+                Phone Number: {furnitureData.phone}
               </p>
             </section>
           )}

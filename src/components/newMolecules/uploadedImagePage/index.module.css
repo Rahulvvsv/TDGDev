@@ -64,6 +64,9 @@
 .circle:hover {
   cursor: pointer;
 }
+.activeCircle {
+  background: rgba(212, 198, 184, 1) !important;
+}
 .circleText {
   position: absolute;
   top: 50%;

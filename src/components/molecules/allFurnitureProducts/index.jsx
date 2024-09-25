@@ -10,7 +10,9 @@ const ITEMS_PER_PAGE = 8;
 
 const AllFurnitureProducts = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredData = data.filter((item) => item.status === "showOnPage");
+  const filteredData = data.filter(
+    (item) => item.status === "showOnPage" || item.status === "donorFound"
+  );
   const axiosService = new AxiosService();
   const [authCookie, setAuthCookes] = useState(false);
   const cookies = parseCookies();
@@ -34,6 +36,12 @@ const AllFurnitureProducts = ({ data }) => {
     <>
       <div className={style.mains}>
         {currentData.map((e, key) => {
+          let status = e.status;
+          if (status === "donorFound") {
+            status = "TAKEN";
+          } else if (status === "showOnPage") {
+            status = "REQUEST ITEM";
+          }
           return (
             <FurnitureComp
               authCookie={authCookie}
@@ -47,6 +55,7 @@ const AllFurnitureProducts = ({ data }) => {
               date={e.date}
               liked={e.liked}
               showLikeButton={true}
+              content={status}
             />
           );
         })}

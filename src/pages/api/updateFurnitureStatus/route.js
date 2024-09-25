@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       if (status == "Available") {
         visibleStatus = "showOnPage";
       } else {
-        visibleStatus = "hidden";
+        visibleStatus = "donorFound";
       }
       await updateDocument(uploadedId, {
         itemStatus: status,

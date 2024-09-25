@@ -89,7 +89,7 @@ const Header = () => {
           >
             <Image src={"/Icon/person.png"} width={16} height={16}></Image>
             {!authCookie && <p> Login</p>}
-            {selected == 12 && <p>Logout</p>}
+            {authCookie && (selected == 12 ? <p>Logout</p> : <p>My Account</p>)}
           </div>
           {/* )} */}
           <div className={style.main3}>

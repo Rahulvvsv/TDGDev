@@ -80,7 +80,7 @@ const LoginForm = ({ onSignUpClick, isSignUp, onForgotPasswordClick }) => {
   return (
     <motion.div className={style.right}>
       {isSignUp ? (
-        <p>Your Account is created successfully, please login</p>
+        <p>Your account is created successfully, please login</p>
       ) : (
         ""
       )}
@@ -95,7 +95,7 @@ const LoginForm = ({ onSignUpClick, isSignUp, onForgotPasswordClick }) => {
       />
       {errors.password && <div className={style.error}>{errors.password}</div>}
       <p className={style.forgot} onClick={onForgotPasswordClick}>
-        Forgot Password?
+        Forgot password?
       </p>
       <Button
         onClick={handleSubmit}

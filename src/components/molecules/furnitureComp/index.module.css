@@ -19,7 +19,7 @@
 }
 .likeButton {
   position: absolute;
-  z-index: 99;
+  z-index: 9;
   right: 20px;
   top: 20px;
   color: rgba(121, 117, 114, 1);

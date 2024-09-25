@@ -68,7 +68,7 @@ const Proflie = ({ furnitureData }) => {
             className={item == "yourFavourites" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
-            Your Favourites
+            Your Favourite
           </button>
           {furnitureData?.isAdmin && (
             <button
@@ -106,7 +106,7 @@ const Proflie = ({ furnitureData }) => {
                 href={`${href}/${item.id}`}
               />
             ))}
-          {!data.length && <p>No data yet!</p>}
+          {!data.length && <p>No data</p>}
         </div>
       </div>
     </div>
