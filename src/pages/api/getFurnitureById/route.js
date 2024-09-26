@@ -19,7 +19,6 @@ export async function GET(request, res) {
     const sendEnquiries = url.searchParams.get("sendEnquiries") === "true";
     // Print the cookies in the request
     const cookies = request.cookies;
-    console.log("Cookies:", cookies);
     const decodedToken = await verifyToken(request, res, false);
     let alreadyRequested = false;
     let liked = false;

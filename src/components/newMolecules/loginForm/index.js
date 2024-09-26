@@ -32,7 +32,6 @@ const LoginForm = ({ onSignUpClick, isSignUp, onForgotPasswordClick }) => {
         // setSubmitted(true);
         // // Here you might want to redirect the user or show a success message
         const { message, error } = await apiService.login(data);
-        console.log(message, "message");
         if (!error) {
           if (message == "success") {
             router.push("/");

@@ -1,75 +1,75 @@
-.dataGrid{
-    width: 95%;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.dataGrid {
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-.header{
-    padding-left: 20px !important;
-    margin-left: 20px;
+.header {
+  padding-left: 20px !important;
+  margin-left: 20px;
 }
-.btn1{
-    width: 240px;
-    color: white;
-    background: rgba(121, 117, 114, 1);
-    height: 53px;
-    outline: none;
-    border: 0px solid white;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+.btn1 {
+  width: 240px;
+  color: white;
+  background: rgba(121, 117, 114, 1);
+  height: 53px;
+  outline: none;
+  border: 0px solid white;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
 }
-.btn2{
-    width: 240px;
-    background-color: white;
-    color: rgba(121, 117, 114, 1);
-    height: 53px;
-    outline: none;
-    border: 1px solid rgba(121, 117, 114, 1);
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.input{
-    width: 250px;
-    height: 40px;
-    border: 1px solid rgba(121, 117, 114, 1);
-    border-radius: 4px;
-    padding-left: 10px !important;
+.btn2 {
+  width: 240px;
+  background-color: white;
+  color: rgba(121, 117, 114, 1);
+  height: 53px;
+  outline: none;
+  border: 1px solid rgba(121, 117, 114, 1);
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.formDiv{
-    /* background-color: red; */
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    gap: 10px;
-}
-.btn55{
-    margin-top: 10px;
-    margin-left: 150px;
-    width: 250px !important;
-}
-.formDivinside{
-    width: 400px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
+.input {
+  width: 250px;
+  height: 40px;
+  border: 1px solid rgba(121, 117, 114, 1);
+  border-radius: 4px;
+  padding-left: 10px !important;
 }
 
-.formDivinside1{
-    /* width: 400px; */
-    display: flex;
-    gap: 10px;
-    margin-left: 50px;
-    margin-top: 15px;
-    align-items: center;
+.formDiv {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 10px;
+}
+.btn55 {
+  margin-top: 10px;
+  margin-left: 150px;
+  width: 250px !important;
+}
+.formDivinside {
+  width: 400px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.formDivinside1 {
+  /* width: 400px; */
+  display: flex;
+  gap: 10px;
+  margin-left: 50px;
+  margin-top: 15px;
+  align-items: center;
 }

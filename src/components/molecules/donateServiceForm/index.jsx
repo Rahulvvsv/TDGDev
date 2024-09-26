@@ -1,60 +1,12 @@
 "use client";
-// import style from "./index.module.css"
-// import InputField from "../../atoms/inputField";
-// import { AnimatePresence,motion } from "framer-motion";
-// import Image from "next/image";
-// import Button from "../../atoms/button";
-// import { useState } from "react";
-// const DonateServiceForm = ({href}) => {
-//        const [submitted,setSubmitted] = useState(false)
-// const [data,setData] = useState({})
-//     const dataSetter = (e) =>{
-//         e.preventDefault();
-//         let name = e.target.name;
-//         let value = e.target.value;
-//         setData(prev => ({...prev,[name]:value}))
-//         ////console.log(data)
-//     }
-//     return (
-//         <div className={style.main}>
-// {!submitted?<>
-//            <InputField onChange={dataSetter} placeholder={"FULL NAME*"}></InputField>
-//             <div className={style.main2}>
-//                 <div>
-//                 <InputField onChange={dataSetter}  placeholder={"EMAIL*"}></InputField>
-//                 </div>
 
-//                 <div>
-//                 <InputField placeholder={"PHONE*"}  onChange={dataSetter} ></InputField>
-//                 </div>
-//             </div>
-//             <InputField type="textarea" height={100} onChange={dataSetter}  placeholder={"ENTER SERVICE*"}></InputField>
-//             <Button  onClick={()=>{
-
-//                 setSubmitted(true)
-//                 if(href!=""){
-//                     window.location.href=href
-//                 }
-//             }} content={"SUBMIT"}></Button>
-// </>:<>
-
-//             <motion.div  initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}className={style.main5}>
-//                 <Image alt=" " src={"/Icon/4.png"} width={190} height={190}></Image>
-//                 <h1 className={style.heading}>Thank you for your generous offer to donate your service. We will notify you as soon as an opportunity comes up, and you can confirm your intent to donate. We appreciate your support!</h1>
-//             </motion.div>
-// </>
-// }
-//         </div>
-//      );
-// }
-
-// export default DonateServiceForm;
 import style from "./index.module.css";
 import InputField from "../../atoms/inputField";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Button from "../../atoms/button";
 import { useState } from "react";
+import { Emailer } from "../../../lib/emailjs";
 
 const DonateServiceForm = ({ href }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -107,6 +59,13 @@ const DonateServiceForm = ({ href }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    Emailer({
+      email: data.email,
+      description: data.service,
+      phone: data.phone,
+      to_email: "rahulwork120@gmail.com",
+      name: data.fullName,
+    });
     if (validateForm()) {
       setSubmitted(true);
       if (href !== "") {

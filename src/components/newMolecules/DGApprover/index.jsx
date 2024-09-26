@@ -4,6 +4,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { fetchData } from "@/lib/firebase";
 import TextField from "@mui/material/TextField";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
@@ -135,76 +140,11 @@ const columns = [
   },
 ];
 
-// export default function DataGridApprover() {
-//   const [rows, setRows] = useState({});
-//   const [filteredRows, setFilteredRows] = useState([]);
-//   const axiosService = new AxiosService();
-//   useEffect(() => {
-//     const fetcher = async () => {
-//       let data = await axiosService.getAllUploads();
-//       console.log(data.data);
-//       let rowValues = data.data.map((e) => {
-//         let value = {
-//           id: e.id,
-//           Image: e.files,
-//           ProductName: {
-//             name: e.typeOfFurniture,
-//             desc: e.description,
-//             date: e.date,
-//           },
-//           Description: e.description,
-//           Location: e.location,
-//           DonorInfo: {
-//             name: e.fullName,
-//             mail: e.email,
-//           },
-//           Phone: e.phone,
-//           Status: { status: e.status, id: e.id },
-//           Reviewer: e.location,
-//           Recipient: {
-//             name: e.recName,
-//             contact: e.recContact,
-//             recDate: e.recipientReceivedDate,
-//             itemStatus: e.itemStatus,
-//           },
-//         };
-//         return value;
-//       });
-//       setRows(rowValues);
-//       setFilteredRows(rowValues);
-//     };
-//     fetcher();
-//   }, []);
-
-//   return (
-//     <div className={style.dataGrid}>
-//       <Box sx={{ height: 1180, width: "100%" }}>
-//         <DataGrid
-//           rows={filteredRows}
-//           columns={columns}
-//           initialState={{
-//             pagination: {
-//               paginationModel: {
-//                 pageSize: 10,
-//               },
-//             },
-//           }}
-//           pageSizeOptions={[5]}
-//           disableRowSelectionOnClick
-//           rowHeight={100}
-//           slots={{
-//             toolbar: GridToolbar,
-//           }}
-//         />
-//       </Box>
-//     </div>
-//   );
-// }
-
 export default function DataGridApprover() {
   const [rows, setRows] = useState([]);
   const [filteredRows, setFilteredRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const axiosService = new AxiosService();
 
   useEffect(() => {
@@ -264,6 +204,20 @@ export default function DataGridApprover() {
       setFilteredRows(filtered);
     }
   };
+
+  const handleStatusFilter = (event) => {
+    const status = event.target.value;
+    setStatusFilter(status);
+    if (status == "all") {
+      setFilteredRows(rows);
+    } else {
+      let filtered = rows;
+      filtered = rows.filter((row) => row.Status.status == status);
+
+      setFilteredRows(filtered);
+    }
+  };
+
   return (
     <div>
       <div className={style.dataGrid}>
@@ -275,7 +229,43 @@ export default function DataGridApprover() {
           className={style.search}
           style={{ marginBottom: 20, padding: 10 }}
         />
-        <Box sx={{ width: "100%", height: "1100px" }}>
+        <FormControl component="fieldset" className={style.statusFilter}>
+          <RadioGroup
+            row
+            aria-label="status-filter"
+            name="status-filter"
+            value={statusFilter}
+            onChange={handleStatusFilter}
+          >
+            <FormControlLabel
+              value="all"
+              control={<Radio />}
+              label="All"
+              style={{ marginLeft: 20 }}
+            />
+            <FormControlLabel
+              value="hidden"
+              control={<Radio />}
+              label="New Request"
+            />
+            <FormControlLabel
+              value="showOnPage"
+              control={<Radio />}
+              label="Published On Website"
+            />
+            <FormControlLabel
+              value="donorFound"
+              control={<Radio />}
+              label="Donor Found"
+            />
+            <FormControlLabel
+              value="declined"
+              control={<Radio />}
+              label="Removed From Website"
+            />
+          </RadioGroup>
+        </FormControl>
+        <Box sx={{ width: "100%", height: "1100px", marginTop: 4 }}>
           <DataGrid
             rows={filteredRows}
             columns={columns}

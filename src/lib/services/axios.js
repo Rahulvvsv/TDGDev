@@ -1,8 +1,8 @@
 import axios from "axios";
 
 class AxiosService {
-  // constructor(baseURL = "http://localhost:3000/api/") {
-  constructor(baseURL = "https://tdg-dev-dugl.vercel.app/api/") {
+  constructor(baseURL = "http://localhost:3000/api/") {
+    // constructor(baseURL = "https://tdg-dev-dugl.vercel.app/api/") {
     this.api = axios.create({
       baseURL,
       timeout: 10000,
@@ -132,7 +132,6 @@ class AxiosService {
         uploadedId,
         status,
       });
-      console.log(response, "response");
       return response.data;
     } catch (error) {
       console.error("Error updating item status:", error);
@@ -146,7 +145,6 @@ class AxiosService {
         `getAllUploads/route?location=${location}`,
         config
       );
-      console.log(response.data, "response.data");
       return response.data;
     } catch (error) {
       console.error("Error fetching all uploads:", error);

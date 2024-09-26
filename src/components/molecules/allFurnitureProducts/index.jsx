@@ -37,10 +37,13 @@ const AllFurnitureProducts = ({ data }) => {
       <div className={style.mains}>
         {currentData.map((e, key) => {
           let status = e.status;
+          let href = "/";
           if (status === "donorFound") {
             status = "TAKEN";
+            href = "#!";
           } else if (status === "showOnPage") {
             status = "REQUEST ITEM";
+            href = `/donate/getFurnitureById/${e.id}`;
           }
           return (
             <FurnitureComp
@@ -56,6 +59,7 @@ const AllFurnitureProducts = ({ data }) => {
               liked={e.liked}
               showLikeButton={true}
               content={status}
+              href={href}
             />
           );
         })}

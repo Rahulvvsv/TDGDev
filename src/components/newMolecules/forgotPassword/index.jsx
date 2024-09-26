@@ -27,7 +27,6 @@ const ForgotPasswordForm = ({ onLoginClick }) => {
       setIsLoading(true);
       try {
         const { message, error } = await apiService.forgotPassword(data);
-        console.log(message, "message");
         if (!error) {
           setSubmitted(true);
           // You might want to show a success message or redirect the user

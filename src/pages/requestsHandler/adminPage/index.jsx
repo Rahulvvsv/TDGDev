@@ -79,7 +79,7 @@ const AdminPage = () => {
               setItem("approveImageHandler");
             }}
             className={item == "approveImageHandler" ? style.btn1 : style.btn2}
-            style={{ marginLeft: 50, marginBottom: 50 }}
+            style={{ marginLeft: 0, marginBottom: 50 }}
           >
             Approve Image
           </button>

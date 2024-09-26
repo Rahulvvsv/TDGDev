@@ -15,7 +15,6 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const { location } = req.query;
-      console.log(location, "location");
       // let querySnapshot;
       const fetchedData = {};
 
@@ -55,10 +54,8 @@ export default async function handler(req, res) {
         const userLikes = [];
         likesSnapshot.forEach((doc) => {
           let imageId = doc.data().uploadRef.id;
-          console.log(imageId, "imageId");
           if (Object.keys(fetchedData).includes(imageId)) {
             fetchedData[imageId].liked = true;
-            console.log(imageId, "fetchedData[imageId]");
           }
         });
       }

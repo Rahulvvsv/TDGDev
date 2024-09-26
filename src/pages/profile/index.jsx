@@ -3,30 +3,49 @@ import style from "./index.module.css";
 import FurnitureComp from "@/components/molecules/furnitureComp";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import AdminPage from "../requestsHandler/adminPage";
 import AxiosService from "@/lib/services/axios";
 
 const Proflie = ({ furnitureData }) => {
   const [item, setItem] = useState("yourUploads");
   const [uploads, setUploads] = useState([]);
   const [likes, setLikes] = useState([]);
+  const [authenticated, setAuthenticated] = useState(false);
   const [data, setData] = useState(furnitureData?.uploads);
   const [myRequests, setMyRequests] = useState([]);
   const [href, setHref] = useState("/profile/viewUpload");
   const axiosService = new AxiosService();
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const cookies = document.cookie.split(";");
+      const loggedInCookie = cookies.find((cookie) =>
+        cookie.trim().startsWith("loggedIn=")
+      );
+      return loggedInCookie && loggedInCookie.split("=")[1] === "true";
+    };
+
+    if (checkLoginStatus()) {
+      setIsLoggedIn(true);
+    } else {
+      router.push("/login"); // Redirect to login page if not logged in
+    }
+  }, [router]);
+
   useEffect(() => {
     setUploads(furnitureData?.uploads);
     setMyRequests(furnitureData?.myRequests);
     setLikes(furnitureData?.likes);
     setData(furnitureData?.uploads);
   }, []);
-  // console.log(uploads);
-  // console.log(data, "likes");
 
   const handleItemChange = (newItem, newData, newHrefPrefix) => {
     setItem(newItem);
     setData(newData);
     setHref(newHrefPrefix);
+    setAuthenticated(false);
   };
 
   return (
@@ -68,7 +87,7 @@ const Proflie = ({ furnitureData }) => {
             className={item == "yourFavourites" ? style.btn1 : style.btn2}
             style={{ marginLeft: 50, marginBottom: 50 }}
           >
-            Your Favourite
+            Favourites
           </button>
           {furnitureData?.isAdmin && (
             <button
@@ -78,7 +97,10 @@ const Proflie = ({ furnitureData }) => {
                 //   likes,
                 //   "/donate/getFurnitureById"
                 // );
-                router.push("/requestsHandler/adminPage");
+                setAuthenticated(true);
+                setData([]);
+                setItem("adminProfile");
+                // router.push("/requestsHandler/adminPage");
               }}
               className={item == "adminProfile" ? style.btn1 : style.btn2}
               style={{ marginLeft: 50, marginBottom: 50 }}
@@ -106,9 +128,23 @@ const Proflie = ({ furnitureData }) => {
                 href={`${href}/${item.id}`}
               />
             ))}
-          {!data.length && <p>No data</p>}
+          {!data.length && !authenticated && <p>No data</p>}
         </div>
       </div>
+      {authenticated && (
+        <div
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: 0,
+            width: "95%",
+          }}
+        >
+          <hr />
+          <br />
+          <AdminPage />
+        </div>
+      )}
     </div>
   );
 };

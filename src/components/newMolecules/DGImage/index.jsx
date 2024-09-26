@@ -75,7 +75,7 @@ const FurnitureComp = (params, key = 1) => {
           setImage(Img);
         }}
       >
-        <Image width={75} height={75} src={Img[0]}></Image>
+        <Image width={75} height={75} src={Img[0]} alt="Furniture"></Image>
       </div>
 
       <Modal
@@ -90,6 +90,7 @@ const FurnitureComp = (params, key = 1) => {
           {/* <ContactDonarPopUP data={data} setData={setData} modalCloser={closeModal}></ContactDonarPopUP> */}
           <div className={style.main20}>
             <Image
+              alt="Furniture"
               src={"/Icon/cross.png"}
               width={20}
               height={20}
@@ -132,7 +133,7 @@ const FurnitureComp = (params, key = 1) => {
                   <TransformComponent style={{ width: "100%", height: "100%" }}>
                     <div className={style.modalImage}>
                       <Image
-                        alt=" "
+                        alt="Furniture"
                         src={ImageLink[currentImageIndex]}
                         fill
                       ></Image>

@@ -46,7 +46,6 @@ const Status = (props) => {
         return [
           { value: "showOnPage", label: "Publish on the website" },
           { value: "declined", label: "Remove from website" },
-          { value: "donorFound", label: "Donor Found" },
         ];
       default:
         return [];
@@ -89,7 +88,7 @@ const Status = (props) => {
           </option>
           {dropdownOptions.map((option) => (
             <option
-              className={style.option}
+              className={style.option + " " + style[option.value]}
               key={option.value}
               value={option.value}
             >
