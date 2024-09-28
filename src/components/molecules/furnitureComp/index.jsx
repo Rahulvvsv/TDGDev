@@ -161,6 +161,7 @@ const FurnitureComp = ({
           width={270}
           backgroundColor={"white"}
           content={content}
+          effect={content == "TAKEN" ? false : true}
           fontColor={"rgba(121, 117, 114, 1)"}
           // onClick={openModal}
           href={href}

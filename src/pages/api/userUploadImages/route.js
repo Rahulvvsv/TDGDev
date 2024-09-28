@@ -175,7 +175,7 @@ async function uploadImagesWithReferences(
     typeOfFurniture,
     description,
     date: new Date(),
-    status: "showOnPage",
+    status: "hidden",
     itemStatus: "Available",
     likesCount: 0,
     viewCount: 0,

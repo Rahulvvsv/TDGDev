@@ -120,12 +120,12 @@ const ProductPage = ({ furnitureData, furnitureId }) => {
               {furnitureData?.description}
             </p>
           </section>
-          {furnitureData.alreadyRequested && (
+          {/* {furnitureData.alreadyRequested && (
             <p className={styles.descriptionProduct2}>
               You have already requested this item, Do you want to request
               again?
             </p>
-          )}
+          )} */}
           <br />
           <hr />
           <>
