@@ -3,7 +3,7 @@
 * {
   margin: 0px;
   padding: 0px !important ;
-  font-family: Montserrat;
+  font-family: Montserrat !important;
   /* overflow-x: hidden; */
   box-sizing: border-box;
   /* overflow-x: hidden; */
